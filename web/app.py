@@ -1,5 +1,6 @@
 """Lokální web: python -m uvicorn web.app:app --port 8000 (z kořene projektu)."""
 
+import json
 import pathlib
 import sqlite3
 from urllib.parse import quote
@@ -159,6 +160,37 @@ def obj_icon(kind: str) -> str | None:
     return OBJECTIVE_ICONS.get(kind)
 
 
+# Arena (Cherry) augment id -> {name, icon, rarity}, pre-fetched via a one-off script
+# from CommunityDragon (`cdragon/arena/en_us.json`) into data/arena_augments.json.
+try:
+    ARENA_AUGMENTS: dict[str, dict] = json.loads(
+        (ROOT / "data" / "arena_augments.json").read_text())
+except FileNotFoundError:
+    ARENA_AUGMENTS = {}
+
+
+def augment_icon(aug_id: int) -> str | None:
+    """
+    @brief Look up the small icon URL for an Arena augment.
+
+    @param aug_id Riot `playerAugmentN` id from match participant data.
+    @return Icon URL, or None if the id is unknown (e.g. 0 = no augment in that slot).
+    """
+    a = ARENA_AUGMENTS.get(str(aug_id))
+    return a["icon"] if a else None
+
+
+def augment_name(aug_id: int) -> str:
+    """
+    @brief Look up the display name for an Arena augment.
+
+    @param aug_id Riot `playerAugmentN` id from match participant data.
+    @return Augment name, or a placeholder if the id is unknown.
+    """
+    a = ARENA_AUGMENTS.get(str(aug_id))
+    return a["name"] if a else f"Augment {aug_id}"
+
+
 def _season(season: str):
     return int(season) if season.isdigit() else None
 
@@ -299,9 +331,8 @@ async def match_detail(request: Request, match_id: str, focus: str = ""):
     @param match_id Riot match id, e.g. "EUN1_3626538195".
     @param focus riot_id or puuid to highlight in the player table (threaded through from
                  profile/game-list links so the viewer's own row stands out).
-    @return Rendered `match.html` template response.
+    @return Rendered `match.html` (or `arena.html` for Arena games) template response.
     """
-    import json as _json
     c = con()
     row = c.execute("SELECT raw_json FROM matches WHERE match_id = ?",
                     (match_id,)).fetchone()
@@ -309,7 +340,10 @@ async def match_detail(request: Request, match_id: str, focus: str = ""):
     c.close()
     if not row:
         raise HTTPException(404, f"Zápas {match_id} není v DB")
-    info = _json.loads(row["raw_json"])["info"]
+    info = json.loads(row["raw_json"])["info"]
+
+    if info.get("gameMode") == "CHERRY":
+        return _arena_match_detail(request, match_id, info, tracked, focus)
 
     objectives = {}
     for t in info.get("teams", []):
@@ -364,6 +398,58 @@ async def match_detail(request: Request, match_id: str, focus: str = ""):
         "patch": ".".join(str(info.get("gameVersion", "")).split(".")[:2]),
         "max_damage": max_damage, "max_damage_taken": max_damage_taken, "focus": focus,
         "champ_icon": champ_icon, "item_icon": item_icon, "obj_icon": obj_icon,
+        "rune_icons": RUNE_ICONS, "fmt_int": stats.fmt_int,
+    })
+
+
+def _arena_match_detail(request: Request, match_id: str, info: dict,
+                         tracked: set[str], focus: str):
+    """
+    @brief Render an Arena (Cherry) game as ranked duo/trio subteams.
+
+    Arena has no fixed 5v5 sides — 1700 groups 16 players into 8 duos, 1750 groups
+    18 players into 6 trios (`playerSubteamId`). Every player on a subteam already
+    carries the team's final standing in `placement`, so no extra ranking pass is needed.
+
+    @param match_id Riot match id.
+    @param info Riot API match `info` object (already confirmed `gameMode == "CHERRY"`).
+    @param tracked Set of tracked riot_ids, for linking to friend profiles.
+    @param focus riot_id or puuid to highlight in the player table.
+    @return Rendered `arena.html` template response.
+    """
+    subteams: dict[int, dict] = {}
+    for p in info["participants"]:
+        rid = f"{p.get('riotIdGameName', '?')}#{p.get('riotIdTagline', '')}"
+        try:
+            keystone = p["perks"]["styles"][0]["selections"][0]["perk"]
+        except (KeyError, IndexError):
+            keystone = None
+        sid = p.get("playerSubteamId", 0)
+        team = subteams.setdefault(sid, {
+            "placement": p.get("placement", 0), "players": []})
+        augments = [p[f"playerAugment{i}"] for i in range(1, 7)
+                    if p.get(f"playerAugment{i}")]
+        team["players"].append({
+            "riot_id": rid, "tracked": rid in tracked,
+            "focus": focus in (rid, p.get("puuid")),
+            "champion": p["championName"], "level": p.get("champLevel", 0),
+            "kills": p["kills"], "deaths": p["deaths"], "assists": p["assists"],
+            "damage": p.get("totalDamageDealtToChampions", 0),
+            "damage_taken": p.get("totalDamageTaken", 0),
+            "items": [p.get(f"item{i}", 0) for i in range(6) if p.get(f"item{i}")],
+            "keystone": keystone, "augments": augments,
+        })
+    ordered = sorted(subteams.values(), key=lambda t: t["placement"] or 99)
+    max_damage = max(
+        (pl["damage"] for t in ordered for pl in t["players"]), default=1) or 1
+    return templates.TemplateResponse(request, "arena.html", {
+        "match_id": match_id, "subteams": ordered,
+        "duration": stats.fmt_duration(info.get("gameDuration", 0)),
+        "when": stats._when(info.get("gameCreation", 0)),
+        "patch": ".".join(str(info.get("gameVersion", "")).split(".")[:2]),
+        "max_damage": max_damage, "focus": focus,
+        "champ_icon": champ_icon, "item_icon": item_icon,
+        "augment_icon": augment_icon, "augment_name": augment_name,
         "rune_icons": RUNE_ICONS, "fmt_int": stats.fmt_int,
     })
 

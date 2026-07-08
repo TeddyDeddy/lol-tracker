@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Aréna {{ match_id }}{% endblock %}
+{% block content %}
+<div class="player-head">
+  <h1>Aréna</h1>
+  <span class="muted">{{ duration }} · {{ when }} · patch {{ patch }}</span>
+</div>
+
+{% for team in subteams %}
+<section class="panel team-panel {{ 'team-win' if team.placement == 1 else '' }}">
+  <h2><span class="arena-place">{{ team.placement }}. místo</span></h2>
+  <table class="games match-table">
+    <thead>
+      <tr><th></th><th>Hráč</th><th>K/D/A</th><th>Dmg do champů</th><th>Dmg utrženo</th><th>Itemy</th><th>Augmenty</th></tr>
+    </thead>
+    <tbody>
+    {% for p in team.players %}
+      <tr class="{{ 'focus-row' if p.focus }}">
+        <td class="champ-cell">
+          <img class="avatar sm" src="{{ champ_icon(p.champion) }}" alt="{{ p.champion }}" data-tip="{{ p.champion }} · level {{ p.level }}">
+          {%- if p.keystone and p.keystone in rune_icons -%}
+          <img class="rune" src="{{ rune_icons[p.keystone] }}" alt="">
+          {%- endif -%}
+        </td>
+        <td>
+          {% if p.tracked %}<a class="tracked-link" href="/player/{{ p.riot_id|urlencode }}">{{ p.riot_id }}</a>
+          {% else %}{{ p.riot_id }}{% endif %}
+        </td>
+        <td class="num">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar"><span class="bar-fill" style="width: {{ 100 * p.damage / max_damage }}%"></span></span>
+          <span class="num">{{ fmt_int(p.damage) }}</span>
+        </td>
+        <td class="num">{{ fmt_int(p.damage_taken) }}</td>
+        <td class="items">
+          {% for it in p["items"] %}<img class="item" src="{{ item_icon(it) }}" alt="">{% endfor %}
+        </td>
+        <td class="items">
+          {% for aug in p.augments %}
+            {% set icon = augment_icon(aug) %}
+            {% if icon %}<img class="augment" src="{{ icon }}" alt="{{ augment_name(aug) }}" data-tip="{{ augment_name(aug) }}">
+            {% else %}<span class="augment augment-unknown" data-tip="{{ augment_name(aug) }}">?</span>{% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endfor %}
+{% endblock %}

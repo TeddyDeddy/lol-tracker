@@ -1,0 +1,1132 @@
+{
+ "1": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/acceleratingsorcery_small.png",
+  "name": "Accelerating Sorcery",
+  "rarity": 2
+ },
+ "10": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/cannonfodder_small.png",
+  "name": "Cannon Fodder",
+  "rarity": 0
+ },
+ "102": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dontchase_small.png",
+  "name": "Don't Chase",
+  "rarity": 0
+ },
+ "103": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/breadandbutter_small.png",
+  "name": "Bread And Butter",
+  "rarity": 1
+ },
+ "104": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/minionmancer_small.png",
+  "name": "Minionmancer",
+  "rarity": 1
+ },
+ "105": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/homeguard_small.png",
+  "name": "Homeguard",
+  "rarity": 0
+ },
+ "107": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/twicethrice_small.png",
+  "name": "Twice Thrice",
+  "rarity": 1
+ },
+ "108": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/selfdestruct_small.png",
+  "name": "Self Destruct",
+  "rarity": 0
+ },
+ "109": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/oathsworn_small.png",
+  "name": "Oathsworn",
+  "rarity": 1
+ },
+ "11": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/canttouchthis_small.png",
+  "name": "Can't Touch This",
+  "rarity": 2
+ },
+ "110": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/clothesline_small.png",
+  "name": "Clothesline",
+  "rarity": 0
+ },
+ "112": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/ultimateunstoppable_small.png",
+  "name": "Ultimate Unstoppable",
+  "rarity": 0
+ },
+ "113": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/skilledsniper_small.png",
+  "name": "Skilled Sniper",
+  "rarity": 1
+ },
+ "115": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/scopiestweapons_small.png",
+  "name": "Scopiest Weapons",
+  "rarity": 2
+ },
+ "116": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/flashy_small.png",
+  "name": "Flashy",
+  "rarity": 1
+ },
+ "118": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/criticalhealing_small.png",
+  "name": "Critical Healing",
+  "rarity": 1
+ },
+ "12": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/castle_small.png",
+  "name": "Castle",
+  "rarity": 0
+ },
+ "120": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/servebeyonddeath_small.png",
+  "name": "Serve Beyond Death",
+  "rarity": 0
+ },
+ "123": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/summonersroulette_small.png",
+  "name": "Summoner's Roulette",
+  "rarity": 2
+ },
+ "125": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/raidboss_small.png",
+  "name": "Raid Boss",
+  "rarity": 2
+ },
+ "129": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/marksmage_small.png",
+  "name": "Marksmage",
+  "rarity": 1
+ },
+ "13": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/celestialbody_small.png",
+  "name": "Celestial Body",
+  "rarity": 1
+ },
+ "133": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/magicmissile_small.png",
+  "name": "Magic Missile",
+  "rarity": 1
+ },
+ "134": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/drawyoursword_small.png",
+  "name": "Draw Your Sword",
+  "rarity": 2
+ },
+ "135": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/spellwake_small.png",
+  "name": "Spellwake",
+  "rarity": 2
+ },
+ "136": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/slaparound_small.png",
+  "name": "Slap Around",
+  "rarity": 0
+ },
+ "138": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/goredrink_small.png",
+  "name": "Goredrink",
+  "rarity": 0
+ },
+ "14": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/chauffeur_small.png",
+  "name": "Chauffeur",
+  "rarity": 2
+ },
+ "141": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/allforyou_small.png",
+  "name": "All For You",
+  "rarity": 1
+ },
+ "149": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/impassable_small.png",
+  "name": "Impassable",
+  "rarity": 1
+ },
+ "15": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/circleofdeath_small.png",
+  "name": "Circle of Death",
+  "rarity": 2
+ },
+ "150": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/breadandjam_small.png",
+  "name": "Bread And Jam",
+  "rarity": 1
+ },
+ "151": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/breadandcheese_small.png",
+  "name": "Bread And Cheese",
+  "rarity": 1
+ },
+ "152": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/quest_steelyourheart_small.png",
+  "name": "Quest: Steel Your Heart",
+  "rarity": 1
+ },
+ "154": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/quest_urfschampion_small.png",
+  "name": "Quest: Urf's Champion",
+  "rarity": 1
+ },
+ "156": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/quest_woogletswitchcap_small.png",
+  "name": "Quest: Wooglet's Witchcap",
+  "rarity": 2
+ },
+ "16": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/combomaster_small.png",
+  "name": "Combo Master",
+  "rarity": 1
+ },
+ "165": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/restart_small.png",
+  "name": "Restart",
+  "rarity": 1
+ },
+ "17": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/contractkiller_small.png",
+  "name": "Contract Killer",
+  "rarity": 0
+ },
+ "171": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dematerialize_small.png",
+  "name": "Dematerialize",
+  "rarity": 0
+ },
+ "172": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/mirrorimage_small.png",
+  "name": "Mirror Image",
+  "rarity": 0
+ },
+ "174": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/lasereyes_small.png",
+  "name": "Laser Eyes",
+  "rarity": 2
+ },
+ "175": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/parasiticrelationship_small.png",
+  "name": "Parasitic Relationship",
+  "rarity": 1
+ },
+ "177": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/nesting_doll_small.png",
+  "name": "Nesting Doll",
+  "rarity": 2
+ },
+ "18": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/courageofthecolossus_small.png",
+  "name": "Courage of the Colossus",
+  "rarity": 2
+ },
+ "180": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bigbrain_small.png",
+  "name": "Big Brain",
+  "rarity": 1
+ },
+ "181": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/heavyhitter_small.png",
+  "name": "Heavy Hitter",
+  "rarity": 0
+ },
+ "19": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dashing_small.png",
+  "name": "Dashing",
+  "rarity": 2
+ },
+ "192": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/quest_angelofretribution_small.png",
+  "name": "Quest: Angel of Retribution",
+  "rarity": 1
+ },
+ "193": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/centeroftheuniverse_small.png",
+  "name": "Center of the Universe",
+  "rarity": 2
+ },
+ "194": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/feymagic_small.png",
+  "name": "Fey Magic",
+  "rarity": 2
+ },
+ "195": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/giantslayer_small.png",
+  "name": "Giant Slayer",
+  "rarity": 2
+ },
+ "198": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/holyfire_small.png",
+  "name": "Holy Fire",
+  "rarity": 1
+ },
+ "2": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/apexinventor_small.png",
+  "name": "Apex Inventor",
+  "rarity": 1
+ },
+ "20": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dawnbringersresolve_small.png",
+  "name": "Dawnbringer's Resolve",
+  "rarity": 1
+ },
+ "200": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bloodbrother_small.png",
+  "name": "Blood Brother",
+  "rarity": 1
+ },
+ "204": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/stackosaurusrex_small.png",
+  "name": "Stackosaurus Rex",
+  "rarity": 0
+ },
+ "205": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/adapt_small.png",
+  "name": "ADAPt",
+  "rarity": 0
+ },
+ "206": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/escapade_small.png",
+  "name": "escAPADe",
+  "rarity": 0
+ },
+ "207": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/holdverystill_small.png",
+  "name": "Hold Very Still",
+  "rarity": 0
+ },
+ "208": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/orbitallaser_small.png",
+  "name": "Orbital Laser",
+  "rarity": 2
+ },
+ "21": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/defensivemaneuvers_small.png",
+  "name": "Defensive Maneuvers",
+  "rarity": 1
+ },
+ "211": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/itskillingtime_small.png",
+  "name": "It's Killing Time",
+  "rarity": 1
+ },
+ "214": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/spintowin_small.png",
+  "name": "Spin To Win",
+  "rarity": 0
+ },
+ "215": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/darkblessing_small.png",
+  "name": "Dark Blessing",
+  "rarity": 1
+ },
+ "216": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/plaguebearer_small.png",
+  "name": "Dreadbringer",
+  "rarity": 2
+ },
+ "217": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/deathtouch_small.png",
+  "name": "Deathtouch",
+  "rarity": 1
+ },
+ "218": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/desecrator_small.png",
+  "name": "Desecrator",
+  "rarity": 0
+ },
+ "219": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/doomsayer_small.png",
+  "name": "Doomsayer",
+  "rarity": 2
+ },
+ "22": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/deft_small.png",
+  "name": "Deft",
+  "rarity": 0
+ },
+ "220": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/fanthehammer_small.png",
+  "name": "Fan the Hammer",
+  "rarity": 2
+ },
+ "221": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/trailblazer_small.png",
+  "name": "Trailblazer",
+  "rarity": 0
+ },
+ "222": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/fruitarian_small.png",
+  "name": "Fruits of Your Labor",
+  "rarity": 0
+ },
+ "223": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/summonerrevolution_small.png",
+  "name": "Summoner Revolution",
+  "rarity": 1
+ },
+ "224": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/quest_prismaticegg_small.png",
+  "name": "Prismatic Egg",
+  "rarity": 2
+ },
+ "225": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dualwield_small.png",
+  "name": "Dual Wield",
+  "rarity": 2
+ },
+ "226": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/stats_small.png",
+  "name": "Stats!",
+  "rarity": 0
+ },
+ "227": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/statsonstats_small.png",
+  "name": "Stats on Stats!",
+  "rarity": 1
+ },
+ "228": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/statsonstatsonstats_small.png",
+  "name": "Stats on Stats on Stats!",
+  "rarity": 2
+ },
+ "229": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/firesale_small.png",
+  "name": "Fire Sale",
+  "rarity": 0
+ },
+ "23": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/demonsdance_small.png",
+  "name": "Demon's Dance",
+  "rarity": 1
+ },
+ "231": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/lightwarden_small.png",
+  "name": "Light Warden",
+  "rarity": 1
+ },
+ "232": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/slimetime_small.png",
+  "name": "Slime Time",
+  "rarity": 0
+ },
+ "233": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/ultimaterevolution_small.png",
+  "name": "Ultimate Roulette",
+  "rarity": 2
+ },
+ "234": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/thiefsgloves_small.png",
+  "name": "Gamba Anvil",
+  "rarity": 2
+ },
+ "236": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/tricksterdemon_small.png",
+  "name": "Trickster Demon",
+  "rarity": 1
+ },
+ "237": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/transmutegold_small.png",
+  "name": "Transmute: Gold",
+  "rarity": 0
+ },
+ "238": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/transmuteprismatic_small.png",
+  "name": "Transmute: Prismatic",
+  "rarity": 1
+ },
+ "239": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/symbioticmutation_small.png",
+  "name": "Symbiotic Mutation",
+  "rarity": 1
+ },
+ "24": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dieanotherday_small.png",
+  "name": "Die Another Day",
+  "rarity": 1
+ },
+ "240": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/parasiticmutation_small.png",
+  "name": "Parasitic Mutation",
+  "rarity": 0
+ },
+ "241": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/hattrick_small.png",
+  "name": "Hat Trick",
+  "rarity": 1
+ },
+ "243": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/transmutechaos_small.png",
+  "name": "Transmute: Chaos",
+  "rarity": 2
+ },
+ "25": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/divebomber_small.png",
+  "name": "Dive Bomber",
+  "rarity": 0
+ },
+ "250": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/slowandsteady_small.png",
+  "name": "Slow and Steady",
+  "rarity": 1
+ },
+ "251": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/numbtopain_small.png",
+  "name": "Numb to Pain",
+  "rarity": 0
+ },
+ "26": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dontblink_small.png",
+  "name": "Don't Blink",
+  "rarity": 0
+ },
+ "27": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/earthwake_small.png",
+  "name": "Earthwake",
+  "rarity": 2
+ },
+ "28": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/erosion_small.png",
+  "name": "Erosion",
+  "rarity": 0
+ },
+ "29": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/etherealweapon_small.png",
+  "name": "Ethereal Weapon",
+  "rarity": 1
+ },
+ "3": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/canttouchthis_small.png",
+  "name": "Null Augment",
+  "rarity": 0
+ },
+ "30": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/eureka_small.png",
+  "name": "Eureka",
+  "rarity": 2
+ },
+ "301": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/slowactingpainkillers_small.png",
+  "name": "Divine Intervention",
+  "rarity": 1
+ },
+ "302": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/gohsacrificefor_small.png",
+  "name": "Sacrifice: For Silver",
+  "rarity": 0
+ },
+ "303": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/gohsacrificefor_small.png",
+  "name": "Sacrifice: For Gold",
+  "rarity": 1
+ },
+ "304": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/gohsacrificefor_small.png",
+  "name": "Sacrifice: For Prismatic",
+  "rarity": 2
+ },
+ "305": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/legday_small.png",
+  "name": "Leg Day",
+  "rarity": 0
+ },
+ "308": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/firfox_small.png",
+  "name": "Firefox",
+  "rarity": 0
+ },
+ "309": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/andmyaxe_small.png",
+  "name": "And My Axe!",
+  "rarity": 1
+ },
+ "310": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/clowncollege_small.png",
+  "name": "Clown College",
+  "rarity": 2
+ },
+ "311": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/overflow_small.png",
+  "name": "Overflow",
+  "rarity": 1
+ },
+ "312": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/wellberightback_small.png",
+  "name": "We'll Be Right Back",
+  "rarity": 1
+ },
+ "313": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/tank_engine_small.png",
+  "name": "Tank Engine",
+  "rarity": 1
+ },
+ "314": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/unshackled_small.png",
+  "name": "Unshackled",
+  "rarity": 1
+ },
+ "316": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/grevious_venmon_small.png",
+  "name": "Grievous Venom",
+  "rarity": 0
+ },
+ "317": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/pandoras_box_small.png",
+  "name": "Pandora's Box",
+  "rarity": 2
+ },
+ "318": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/mad_hatter_small.png",
+  "name": "Quest: Mad Hatter",
+  "rarity": 1
+ },
+ "319": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/threesacredtreasures_small.png",
+  "name": "Quest: Three Sacred Treasures",
+  "rarity": 1
+ },
+ "32": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/executioner_small.png",
+  "name": "Executioner",
+  "rarity": 0
+ },
+ "321": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bodyguard_small.png",
+  "name": "Bodyguard",
+  "rarity": 1
+ },
+ "322": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/augmented_power_small.png",
+  "name": "Augmented Power",
+  "rarity": 0
+ },
+ "323": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/cerberus_small.png",
+  "name": "Cerberus",
+  "rarity": 2
+ },
+ "324": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bravestofthebrave_small.png",
+  "name": "Bravest of the Brave",
+  "rarity": 0
+ },
+ "327": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dawnbringersresolve_small.png",
+  "name": "Undying Guard",
+  "rarity": 1
+ },
+ "33": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/extendoarm_small.png",
+  "name": "Extendo-Arm",
+  "rarity": 1
+ },
+ "330": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/desecrator_small.png",
+  "name": "Despoil",
+  "rarity": 0
+ },
+ "333": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/quest_rite_of_the_forge_god_small.png",
+  "name": "Quest: Rite Of The Forge God",
+  "rarity": 2
+ },
+ "335": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/panic_room_small.png",
+  "name": "Panic Room",
+  "rarity": 0
+ },
+ "336": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/aim_for_the_head_small.png",
+  "name": "Aim for the Head",
+  "rarity": 1
+ },
+ "338": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/hive_mind_small.png",
+  "name": "Hive Mind",
+  "rarity": 2
+ },
+ "34": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/fallenaegis_small.png",
+  "name": "Fallen Aegis",
+  "rarity": 0
+ },
+ "340": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/crafting_prisstatanvil_small.png",
+  "name": "Gain a Prismatic Stat Anvil",
+  "rarity": 4
+ },
+ "341": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/crafting_slot_small.png",
+  "name": "Gain an Augment slot",
+  "rarity": 4
+ },
+ "342": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/crafting_sellaug_small.png",
+  "name": "Level Augments",
+  "rarity": 4
+ },
+ "343": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/righteous_fury_small.png",
+  "name": "Righteous Fury",
+  "rarity": 2
+ },
+ "344": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/energetic_small.png",
+  "name": "Energetic",
+  "rarity": 0
+ },
+ "345": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/magic_girl_small.png",
+  "name": "Magical Girl",
+  "rarity": 2
+ },
+ "346": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bread_sandwhich_small.png",
+  "name": "Bread Sandwich",
+  "rarity": 2
+ },
+ "347": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/chemtechpurifier_small.arena_2026_s2_a2.png",
+  "name": "Chemtech Putrifier",
+  "rarity": 4
+ },
+ "348": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bloodrazor_small.arena_2026_s2_a2.png",
+  "name": "Bloodrazor",
+  "rarity": 4
+ },
+ "349": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/dematerializer_small.arena_2026_s2_a2.png",
+  "name": "Dematerializer",
+  "rarity": 4
+ },
+ "35": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/feeltheburn_small.png",
+  "name": "Feel the Burn",
+  "rarity": 2
+ },
+ "350": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/crystallineflask_small.arena_2026_s2_a2.png",
+  "name": "Enchanted Flask",
+  "rarity": 4
+ },
+ "351": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/frozenmallet_small.arena_2026_s2_a2.png",
+  "name": "Frozen Mallet",
+  "rarity": 4
+ },
+ "354": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/remnantofthewatchers_small.arena_2026_s2_a2.png",
+  "name": "Remnant of the Watchers",
+  "rarity": 4
+ },
+ "355": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/gain_stat_anvil_small.png",
+  "name": "Gain Stat Anvil",
+  "rarity": 4
+ },
+ "356": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/silver_spoon_small.png",
+  "name": "Silver Spoon",
+  "rarity": 0
+ },
+ "357": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/hybrid_small.png",
+  "name": "Hybrid",
+  "rarity": 1
+ },
+ "358": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/wolf_small.arena_2026_s2.png",
+  "name": "Wolf's Frenzy",
+  "rarity": 4
+ },
+ "359": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/lamb_small.arena_2026_s2.png",
+  "name": "Lamb's Respite",
+  "rarity": 4
+ },
+ "36": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/firebrand_small.png",
+  "name": "Firebrand",
+  "rarity": 1
+ },
+ "361": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/yonedemon_small.arena_2026_s2_a2.png",
+  "name": "Ally Demon",
+  "rarity": 4
+ },
+ "362": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/yonehunter_small.arena_2026_s2_a2.png",
+  "name": "Ally Hunter",
+  "rarity": 4
+ },
+ "364": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/replace_augment_small.png",
+  "name": "Replace Augment",
+  "rarity": 4
+ },
+ "365": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/wealth_small.arena_2026_s2.png",
+  "name": "Abstain From Wealth",
+  "rarity": 4
+ },
+ "366": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/power_small.arena_2026_s2.png",
+  "name": "Abstain From Power",
+  "rarity": 4
+ },
+ "367": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/risk_small.arena_2026_s2.png",
+  "name": "Abstain From Risk",
+  "rarity": 4
+ },
+ "368": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/wealth_large.arena_2026_s2.png",
+  "name": "Craving For Wealth",
+  "rarity": 4
+ },
+ "369": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/power_small.arena_2026_s2.png",
+  "name": "Craving For Power",
+  "rarity": 4
+ },
+ "37": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/firstaidkit_small.png",
+  "name": "First-Aid Kit",
+  "rarity": 0
+ },
+ "370": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/risk_small.arena_2026_s2.png",
+  "name": "Craving For Risk",
+  "rarity": 4
+ },
+ "371": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/wealth_small.arena_2026_s2.png",
+  "name": "Compulsion For Wealth",
+  "rarity": 4
+ },
+ "372": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/power_small.arena_2026_s2.png",
+  "name": "Compulsion For Power",
+  "rarity": 4
+ },
+ "373": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/risk_small.arena_2026_s2.png",
+  "name": "Compulsion For Risk",
+  "rarity": 4
+ },
+ "38": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/frombeginningtoend_small.png",
+  "name": "From Beginning to End",
+  "rarity": 1
+ },
+ "39": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/frostwraith_small.png",
+  "name": "Frost Wraith",
+  "rarity": 0
+ },
+ "392": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/swindlers_orb_item_small.png",
+  "name": "Swindler's Orb",
+  "rarity": 4
+ },
+ "4": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/backtobasics_small.png",
+  "name": "Back To Basics",
+  "rarity": 2
+ },
+ "404": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/augment404_small.png",
+  "name": "404 Augment Not Found",
+  "rarity": 0
+ },
+ "405": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/augment405_small.png",
+  "name": "Augment 405",
+  "rarity": 2
+ },
+ "41": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/goliath_small.png",
+  "name": "Goliath",
+  "rarity": 2
+ },
+ "42": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/guiltypleasure_small.png",
+  "name": "Guilty Pleasure",
+  "rarity": 0
+ },
+ "43": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/nowyouseeme_small.png",
+  "name": "Now You See Me",
+  "rarity": 0
+ },
+ "44": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/icecold_small.png",
+  "name": "Ice Cold",
+  "rarity": 0
+ },
+ "45": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/infernalconduit_small.png",
+  "name": "Infernal Conduit",
+  "rarity": 2
+ },
+ "46": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/infernalsoul_small.png",
+  "name": "Infernal Soul",
+  "rarity": 0
+ },
+ "47": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/itscritical_small.png",
+  "name": "It's Critical",
+  "rarity": 1
+ },
+ "48": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/jeweledgauntlet_small.png",
+  "name": "Jeweled Gauntlet",
+  "rarity": 2
+ },
+ "49": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/juicebox_small.png",
+  "name": "Juice Box",
+  "rarity": 0
+ },
+ "5": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bannerofcommand_small.png",
+  "name": "Banner of Command",
+  "rarity": 1
+ },
+ "50": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/keystoneconjurer_small.png",
+  "name": "Keystone Conjurer",
+  "rarity": 1
+ },
+ "51": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/lightemup_small.png",
+  "name": "Light 'em Up!",
+  "rarity": 0
+ },
+ "52": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/lightningstrikes_small.png",
+  "name": "Lightning Strikes",
+  "rarity": 1
+ },
+ "53": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/madscientist_small.png",
+  "name": "Mad Scientist",
+  "rarity": 2
+ },
+ "54": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/masterofduality_small.png",
+  "name": "Master of Duality",
+  "rarity": 2
+ },
+ "56": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/mindtomatter_small.png",
+  "name": "Mind to Matter",
+  "rarity": 0
+ },
+ "57": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/mountainsoul_small.png",
+  "name": "Mountain Soul",
+  "rarity": 0
+ },
+ "58": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/mysticpunch_small.png",
+  "name": "Mystic Punch",
+  "rarity": 2
+ },
+ "6": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bladewaltz_small.png",
+  "name": "Blade Waltz",
+  "rarity": 2
+ },
+ "60": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/oceansoul_small.png",
+  "name": "Ocean Soul",
+  "rarity": 0
+ },
+ "61": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/okboomerang_small.png",
+  "name": "OK Boomerang",
+  "rarity": 1
+ },
+ "62": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/omnisoul_small.png",
+  "name": "Omni Soul",
+  "rarity": 2
+ },
+ "63": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/outlawsgrit_small.png",
+  "name": "Outlaw's Grit",
+  "rarity": 1
+ },
+ "64": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/perseverance_small.png",
+  "name": "Perseverance",
+  "rarity": 1
+ },
+ "65": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/phenomenalevil_small.png",
+  "name": "Phenomenal Evil",
+  "rarity": 1
+ },
+ "66": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/quantumcomputing_small.png",
+  "name": "Quantum Computing",
+  "rarity": 2
+ },
+ "67": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/rabblerousing_small.png",
+  "name": "Rabble Rousing",
+  "rarity": 1
+ },
+ "68": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/recursion_small.png",
+  "name": "Recursion",
+  "rarity": 1
+ },
+ "69": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/repulsor_small.png",
+  "name": "Repulsor",
+  "rarity": 0
+ },
+ "7": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/bluntforce_small.png",
+  "name": "Blunt Force",
+  "rarity": 0
+ },
+ "70": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/restlessrestoration_small.png",
+  "name": "Restless Restoration",
+  "rarity": 1
+ },
+ "72": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/searingdawn_small.png",
+  "name": "Searing Dawn",
+  "rarity": 1
+ },
+ "73": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/shadowrunner_small.png",
+  "name": "Shadow Runner",
+  "rarity": 0
+ },
+ "74": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/shrinkray_small.png",
+  "name": "Shrink Ray",
+  "rarity": 1
+ },
+ "75": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/slowcooker_small.png",
+  "name": "Slow Cooker",
+  "rarity": 2
+ },
+ "76": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/sonicboom_small.png",
+  "name": "Sonic Boom",
+  "rarity": 0
+ },
+ "77": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/soulsiphon_small.png",
+  "name": "Soul Siphon",
+  "rarity": 1
+ },
+ "78": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/spiritlink_small.png",
+  "name": "Spirit Link",
+  "rarity": 2
+ },
+ "79": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/symphonyofwar_small.png",
+  "name": "Symphony of War",
+  "rarity": 2
+ },
+ "80": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/tankitorleaveit_small.png",
+  "name": "Tank It Or Leave It",
+  "rarity": 0
+ },
+ "81": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/tapdancer_small.png",
+  "name": "Tap Dancer",
+  "rarity": 2
+ },
+ "82": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/thebrutalizer_small.png",
+  "name": "The Brutalizer",
+  "rarity": 0
+ },
+ "84": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/threadtheneedle_small.png",
+  "name": "Thread the Needle",
+  "rarity": 1
+ },
+ "85": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/tormentor_small.png",
+  "name": "Tormentor",
+  "rarity": 0
+ },
+ "86": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/trueshotprodigy_small.png",
+  "name": "Trueshot Prodigy",
+  "rarity": 2
+ },
+ "87": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/typhoon_small.png",
+  "name": "Typhoon",
+  "rarity": 0
+ },
+ "88": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/ultimaterevolution_small.png",
+  "name": "Ultimate Revolution",
+  "rarity": 2
+ },
+ "89": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/vanish_small.png",
+  "name": "Vanish",
+  "rarity": 1
+ },
+ "9": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/buffbuddies_small.png",
+  "name": "Buff Buddies",
+  "rarity": 0
+ },
+ "90": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/vengeance_small.png",
+  "name": "Vengeance",
+  "rarity": 1
+ },
+ "92": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/vulnerability_small.png",
+  "name": "Vulnerability",
+  "rarity": 1
+ },
+ "93": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/warmuproutine_small.png",
+  "name": "Warmup Routine",
+  "rarity": 0
+ },
+ "94": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/willingsacrifice_small.png",
+  "name": "Willing Sacrifice",
+  "rarity": 1
+ },
+ "96": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/wisdomofages_small.png",
+  "name": "Wisdom of Ages",
+  "rarity": 2
+ },
+ "97": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/witchfulthinking_small.png",
+  "name": "Witchful Thinking",
+  "rarity": 0
+ },
+ "98": {
+  "icon": "https://raw.communitydragon.org/latest/game/assets/ux/cherry/augments/icons/withhaste_small.png",
+  "name": "With Haste",
+  "rarity": 1
+ }
+}

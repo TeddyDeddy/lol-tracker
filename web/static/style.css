@@ -159,6 +159,15 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .tds-seg:nth-child(odd) { filter: brightness(1.25); }
 .tds-seg:last-child { border-right: 0; }
 
+/* ---------- aréna (Cherry): subteam žebříček ---------- */
+.arena-place { font-size: 15px; font-weight: 600; color: var(--ink); }
+.team-panel.team-win .arena-place { color: var(--accent); }
+.augment { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); margin-right: 2px; vertical-align: middle; background: #0d0d0d; }
+.augment-unknown {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--muted);
+}
+
 /* ---------- detail championa: runy + build order ---------- */
 a.bar-row:hover .bar-name { color: var(--accent); }
 .fill-good { background: var(--good) !important; }
