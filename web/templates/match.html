@@ -13,11 +13,19 @@
     {{ 'Modrý tým' if team_id == 100 else 'Červený tým' }}
     <span class="{{ 'good' if obj.win else 'bad' }}">{{ 'VÍTĚZSTVÍ' if obj.win else 'PROHRA' }}</span>
     <span class="muted obj-row">
-      ⚔ {{ obj.kills }} · 🗼 {{ obj.towers }} · 🐉 {{ obj.dragons }} · 👑 {{ obj.barons }}
+      ⚔ {{ obj.kills }}
+      {% for kind in ("towers", "dragons", "barons", "heralds", "inhibitors") %}
+        {% if obj[kind] %}<img class="obj-icon" src="{{ obj_icon(kind) }}" alt="{{ kind }}"> {{ obj[kind] }}{% endif %}
+      {% endfor %}
     </span>
   </h2>
+  <div class="team-dmg-share">
+    {% for p in players %}
+    <span class="tds-seg" style="width: {{ p.dmg_share }}%" title="{{ p.champion }} · {{ fmt_int(p.damage) }} dmg ({{ p.dmg_share }}%)"></span>
+    {% endfor %}
+  </div>
   <table class="games match-table">
-    <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Itemy</th></tr></thead>
+    <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>KP</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Dmg utrženo</th><th>Itemy</th></tr></thead>
     <tbody>
     {% for p in players %}
       <tr class="{{ 'focus-row' if p.focus }}">
@@ -32,12 +40,17 @@
           {% else %}{{ p.riot_id }}{% endif %}
         </td>
         <td class="num">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</td>
+        <td class="num">{{ p.kp }}%</td>
         <td class="num">{{ p.cs }}</td>
         <td class="num">{{ fmt_int(p.gold) }}</td>
         <td class="num">{{ p.vision }}</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: {{ 100 * p.damage / max_damage }}%"></span></span>
           <span class="num">{{ fmt_int(p.damage) }}</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: {{ 100 * p.damage_taken / max_damage_taken }}%"></span></span>
+          <span class="num">{{ fmt_int(p.damage_taken) }}</span>
         </td>
         <td class="items">
           {% for it in p["items"] %}<img class="item" src="{{ item_icon(it) }}" alt="">{% endfor %}

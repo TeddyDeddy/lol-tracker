@@ -33,7 +33,14 @@ RECORDS = [
 
 
 def _when(game_creation_ms: int) -> str:
-    return datetime.datetime.fromtimestamp(game_creation_ms / 1000).strftime("%d.%m.%Y")
+    """
+    @brief Format a Riot API epoch-millisecond timestamp as a Czech date.
+
+    @param game_creation_ms Match creation timestamp in epoch milliseconds (Riot `gameCreation`).
+    @return Date string in `D.M.YYYY` form (no zero-padding), e.g. "20.2.2025".
+    """
+    d = datetime.datetime.fromtimestamp(game_creation_ms / 1000)
+    return f"{d.day}.{d.month}.{d.year}"
 
 
 def fmt_duration(seconds: int) -> str:
