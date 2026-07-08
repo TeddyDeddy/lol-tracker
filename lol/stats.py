@@ -15,8 +15,9 @@ ROOT = pathlib.Path(__file__).parent.parent
 
 # Skupiny queue_id pro filtrování módů (None = všechny hry)
 QUEUE_GROUPS = {
-    "Vše": None,
-    "Ranked": (420, 440),
+    "All": None,  # ASCII klíč — jde do URL (wget2 láme ne-ASCII query při statickém exportu)
+    "SoloQ": (420,),
+    "Flex": (440,),
     "Normal": (400, 430, 490),
     "ARAM": (450,),
 }
@@ -70,7 +71,7 @@ def seasons(con: sqlite3.Connection) -> list[str]:
     """Roky, ze kterých máme zápasy (nejnovější první)."""
     return [r[0] for r in con.execute(
         "SELECT DISTINCT strftime('%Y', game_creation/1000, 'unixepoch')"
-        " FROM matches ORDER BY 1 DESC")]
+        " FROM matches WHERE game_creation > 0 ORDER BY 1 DESC")]
 
 
 def records(con: sqlite3.Connection, riot_id: str, queues=None, season=None) -> list[dict]:

@@ -2,6 +2,7 @@
 
 import pathlib
 import sqlite3
+from urllib.parse import quote
 
 import httpx
 from fastapi import FastAPI, HTTPException, Request
@@ -123,16 +124,27 @@ def _season(season: str):
     return int(season) if season.isdigit() else None
 
 
+def _empty_or_404(request, c, riot_id, message):
+    """Hráč existuje, jen filtr nemá hry -> 200 s prázdnou stránkou (statický export
+    potřebuje 200, jinak wget odkaz nestáhne). Neznámý hráč -> 404."""
+    known = stats._puuid(c, riot_id)
+    c.close()
+    if not known:
+        raise HTTPException(404, f"Žádná data pro {riot_id}")
+    return templates.TemplateResponse(request, "empty.html",
+                                      {"riot_id": riot_id, "message": message})
+
+
 @app.get("/player/{riot_id}")
-async def player(request: Request, riot_id: str, mode: str = "Vše", season: str = ""):
+async def player(request: Request, riot_id: str, mode: str = "All", season: str = ""):
     if mode not in stats.QUEUE_GROUPS:
-        mode = "Vše"
+        mode = "All"
     queues, sez = stats.QUEUE_GROUPS[mode], _season(season)
     c = con()
     s = stats.summary(c, riot_id, queues, sez)
     if not s:
-        c.close()
-        raise HTTPException(404, f"Žádná data pro {riot_id} ({mode}, {season or 'vše'})")
+        return _empty_or_404(request, c, riot_id,
+                             f"Žádné hry pro filtr {mode} / {season or 'všechny roky'}.")
     p = c.execute("SELECT * FROM players WHERE riot_id = ?", (riot_id,)).fetchone()
     ranks = latest_ranks(c, p["puuid"]) if p else {}
     games = stats.recent_games(c, riot_id, 20, queues, sez)
@@ -144,13 +156,14 @@ async def player(request: Request, riot_id: str, mode: str = "Vše", season: str
         f" WHERE p.puuid = ?{stats._filters(queues, sez)}"
         " GROUP BY champion ORDER BY games DESC LIMIT 10",
         (stats._puuid(c, riot_id),)).fetchall()
+    me_puuid = stats._puuid(c, riot_id)
     recs = stats.records(c, riot_id, queues, sez)
     mups = stats.matchups(c, riot_id, 3, queues, sez)
     all_seasons = stats.seasons(c)
     c.close()
     return templates.TemplateResponse(request, "player.html", {
         "riot_id": riot_id, "mode": mode, "modes": list(stats.QUEUE_GROUPS),
-        "season": season, "seasons": all_seasons,
+        "season": season, "seasons": all_seasons, "me_puuid": me_puuid,
         "summary": s, "ranks": ranks, "games": games,
         "winrate_series": rolling_winrate(history),
         "champs": [dict(x) for x in champs], "records": recs,
@@ -166,16 +179,16 @@ GAMES_PER_PAGE = 25
 
 
 @app.get("/player/{riot_id}/games")
-async def games_list(request: Request, riot_id: str, mode: str = "Vše",
+async def games_list(request: Request, riot_id: str, mode: str = "All",
                      season: str = "", page: int = 1):
     if mode not in stats.QUEUE_GROUPS:
-        mode = "Vše"
+        mode = "All"
     queues, sez = stats.QUEUE_GROUPS[mode], _season(season)
     c = con()
     s = stats.summary(c, riot_id, queues, sez)
     if not s:
-        c.close()
-        raise HTTPException(404, f"Žádná data pro {riot_id} ({mode}, {season or 'vše'})")
+        return _empty_or_404(request, c, riot_id,
+                             f"Žádné hry pro filtr {mode} / {season or 'všechny roky'}.")
     pages = max(1, -(-s["games"] // GAMES_PER_PAGE))
     page = max(1, min(page, pages))
     games = stats.recent_games(c, riot_id, GAMES_PER_PAGE, queues, sez,
@@ -201,16 +214,16 @@ async def games_list(request: Request, riot_id: str, mode: str = "Vše",
 
 @app.get("/player/{riot_id}/champ/{champion}")
 async def champion_detail(request: Request, riot_id: str, champion: str,
-                          mode: str = "Vše", season: str = ""):
+                          mode: str = "All", season: str = ""):
     if mode not in stats.QUEUE_GROUPS:
-        mode = "Vše"
+        mode = "All"
     queues, sez = stats.QUEUE_GROUPS[mode], _season(season)
     c = con()
     games = stats.recent_games(c, riot_id, 1000, queues, sez)
     champ_games = [g for g in games if g["champion"] == champion]
     if not champ_games:
-        c.close()
-        raise HTTPException(404, f"{riot_id} nemá hry na {champion} v módu {mode}")
+        return _empty_or_404(request, c, riot_id,
+                             f"Žádné hry na {champion} pro filtr {mode} / {season or 'všechny roky'}.")
     wins = sum(g["win"] for g in champ_games)
     k = sum(g["kills"] for g in champ_games)
     d = sum(g["deaths"] for g in champ_games)
@@ -258,7 +271,8 @@ async def match_detail(request: Request, match_id: str, focus: str = ""):
         except (KeyError, IndexError):
             keystone = None
         teams.setdefault(p["teamId"], []).append({
-            "riot_id": rid, "tracked": rid in tracked, "focus": rid == focus,
+            "riot_id": rid, "tracked": rid in tracked,
+            "focus": focus in (rid, p.get("puuid")),
             "champion": p["championName"], "level": p.get("champLevel", 0),
             "kills": p["kills"], "deaths": p["deaths"], "assists": p["assists"],
             "cs": p.get("totalMinionsKilled", 0) + p.get("neutralMinionsKilled", 0),
@@ -278,7 +292,7 @@ async def match_detail(request: Request, match_id: str, focus: str = ""):
             "dragons": o.get("dragon", {}).get("kills", 0),
             "barons": o.get("baron", {}).get("kills", 0),
         }
-    max_damage = max((pl["damage"] for tm in teams.values() for pl in tm), default=1)
+    max_damage = max((pl["damage"] for tm in teams.values() for pl in tm), default=1) or 1
     return templates.TemplateResponse(request, "match.html", {
         "match_id": match_id, "teams": teams, "objectives": objectives,
         "queue": QUEUE_NAMES.get(info.get("queueId"), f"queue {info.get('queueId')}"),
@@ -348,7 +362,15 @@ async def pro_match(request: Request, match_id: str):
                   (op,)).fetchone()
     c.close()
     if not games:
-        raise HTTPException(404, f"Série {match_id} není v DB")
+        if not m:
+            raise HTTPException(404, f"Série {match_id} není v DB")
+        # série existuje v pavouku, ale hry nejsou stažené -> 200 (statický export)
+        return templates.TemplateResponse(request, "empty.html", {
+            "riot_id": f"{m['team1']} vs {m['team2']}",
+            "message": "Hry této série zatím nejsou stažené.",
+            "back_href": f"/pro/t/{quote(op, safe='')}" if op else "/pro",
+            "back_label": "← zpět na turnaj",
+        })
     return templates.TemplateResponse(request, "pro_match.html", {
         "m": dict(m) if m else None, "games": games, "op": op,
         "tournament": dict(t) if t else None,

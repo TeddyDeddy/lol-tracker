@@ -10,36 +10,85 @@
   </div>
 </div>
 
-{% if rounds %}
+{% macro match_card(m, is_final) %}
+<div class="bracket-cell" data-mid="{{ m.match_id }}" data-feeds="{{ m.feeds_from|join('|') }}">
+  <div class="bm-when"><span class="bo-badge">BO{{ m.best_of }}</span> {{ (m.date or '')[:10] }}
+    {%- if is_final and m.winner %} · 🏆 {{ m.winner }}{% endif %}</div>
+  <a class="bracket-match" href="/pro/m/{{ m.match_id|urlencode }}">
+    <div class="bm-row {{ 'bm-win' if m.winner == m.team1 }}">
+      <span class="bm-logo">{{ (m.team1 or '?')[:2]|upper }}</span>
+      <span class="bm-team">{{ m.team1 or 'TBD' }}</span>
+      <span class="bm-score">{{ m.team1_score }}</span>
+    </div>
+    <div class="bm-row {{ 'bm-win' if m.winner == m.team2 }}">
+      <span class="bm-logo">{{ (m.team2 or '?')[:2]|upper }}</span>
+      <span class="bm-team">{{ m.team2 or 'TBD' }}</span>
+      <span class="bm-score">{{ m.team2_score }}</span>
+    </div>
+  </a>
+</div>
+{% endmacro %}
+
+{% if rounds and t.is_playoffs %}
 <section class="panel">
-  <h2>{{ 'Pavouk' if t.is_playoffs else 'Série' }}</h2>
-  <div class="bracket">
+  <h2>Pavouk</h2>
+  <div class="bracket playoffs" id="bracket">
     {% for r in rounds %}
     <div class="bracket-round">
-      <div class="tile-label">{{ r.round }}</div>
-      {% for m in r.matches %}
-      <a class="bracket-match" href="/pro/m/{{ m.match_id|urlencode }}">
-        <div class="bm-row {{ 'bm-win' if m.winner == m.team1 }}">
-          <span class="bm-team">{{ m.team1 or 'TBD' }}</span>
-          <span class="bm-score">{{ m.team1_score }}</span>
-          {% if forms.get(m.team1) %}<span class="bm-form">
-            {%- for w in forms[m.team1] %}<span class="tick {{ 'w' if w else 'l' }}"></span>{% endfor -%}
-          </span>{% endif %}
-        </div>
-        <div class="bm-row {{ 'bm-win' if m.winner == m.team2 }}">
-          <span class="bm-team">{{ m.team2 or 'TBD' }}</span>
-          <span class="bm-score">{{ m.team2_score }}</span>
-          {% if forms.get(m.team2) %}<span class="bm-form">
-            {%- for w in forms[m.team2] %}<span class="tick {{ 'w' if w else 'l' }}"></span>{% endfor -%}
-          </span>{% endif %}
-        </div>
-        <div class="gc-sub"><span class="bo-badge">BO{{ m.best_of }}</span> {{ (m.date or '')[:10] }}
-          {%- if r.round == rounds[-1].round and m.winner %} · 🏆 {{ m.winner }}{% endif %}</div>
-      </a>
-      {% endfor %}
+      <div class="round-chip">{{ r.round }}</div>
+      {% for m in r.matches %}{{ match_card(m, r.round == rounds[-1].round) }}{% endfor %}
     </div>
     {% endfor %}
   </div>
+</section>
+<script>
+(function () {
+  var root = document.getElementById("bracket");
+  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "bracket-svg");
+  root.appendChild(svg);
+  function draw() {
+    svg.innerHTML = "";
+    var rr = root.getBoundingClientRect();
+    svg.setAttribute("width", root.scrollWidth);
+    svg.setAttribute("height", root.scrollHeight);
+    var cells = {};
+    root.querySelectorAll(".bracket-cell[data-mid]").forEach(function (c) {
+      cells[c.dataset.mid] = c;
+    });
+    Object.values(cells).forEach(function (c) {
+      if (!c.dataset.feeds) return;
+      var to = c.querySelector(".bracket-match").getBoundingClientRect();
+      c.dataset.feeds.split("|").forEach(function (fid) {
+        var f = cells[fid];
+        if (!f) return;
+        var from = f.querySelector(".bracket-match").getBoundingClientRect();
+        var x1 = from.right - rr.left, y1 = from.top + from.height / 2 - rr.top;
+        var x2 = to.left - rr.left, y2 = to.top + to.height / 2 - rr.top;
+        var mx = x1 + (x2 - x1) / 2;
+        var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        p.setAttribute("d", "M" + x1 + " " + y1 + " H" + mx + " V" + y2 + " H" + x2);
+        p.setAttribute("fill", "none");
+        p.setAttribute("stroke", "rgba(255,255,255,0.18)");
+        svg.appendChild(p);
+      });
+    });
+  }
+  draw();
+  addEventListener("resize", draw);
+})();
+</script>
+{% elif rounds %}
+<section class="panel">
+  <h2>Série</h2>
+  {% for r in rounds %}
+  <details class="week-block" {{ 'open' if loop.last }}>
+    <summary>{{ r.round }} <span class="muted">· {{ r.matches|length }} sérií</span></summary>
+    <div class="week-grid">
+      {% for m in r.matches %}{{ match_card(m, False) }}{% endfor %}
+    </div>
+  </details>
+  {% endfor %}
 </section>
 {% endif %}
 

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ riot_id }} — LoL Tracker{% endblock %}
+{% block content %}
+<h1>{{ riot_id }}</h1>
+<section class="panel">
+  <p class="muted">{{ message }}</p>
+  <p><a class="tracked-link" href="{{ back_href if back_href is defined else '/player/' ~ riot_id|urlencode ~ '?mode=All' }}">{{ back_label if back_label is defined else '← zpět na profil (všechny módy)' }}</a></p>
+</section>
+{% endblock %}

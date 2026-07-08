@@ -55,6 +55,23 @@ def test_bracket_groups_by_round():
     assert b[0]["matches"][0]["winner"] == "G2"
 
 
+def test_bracket_feeds_from_team_progression():
+    con = _setup()
+    rows = [
+        ("S1", OP, "Semifinals", "1", 5, "G2", "FNC", 3, 1, "G2", "2025-02-15"),
+        ("S2", OP, "Semifinals", "1", 5, "KC", "BDS", 3, 0, "KC", "2025-02-16"),
+        ("F1", OP, "Finals", "2", 5, "KC", "G2", 3, 2, "KC", "2025-03-01"),
+    ]
+    for r in rows:
+        con.execute("INSERT INTO pro_matches VALUES (?,?,?,?,?,?,?,?,?,?,?)", r)
+    con.commit()
+    b = prostats.bracket(con, OP)
+    semis = {m["match_id"]: m for m in b[0]["matches"]}
+    final = b[1]["matches"][0]
+    assert semis["S1"]["feeds_from"] == []
+    assert sorted(final["feeds_from"]) == ["S1", "S2"]
+
+
 def test_series_games_with_players():
     con = _setup()
     for player, champ, role in (("Caps", "Taliyah", "Mid"), ("BrokenBlade", "Ambessa", "Top")):

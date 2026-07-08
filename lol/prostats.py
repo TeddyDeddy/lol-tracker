@@ -86,8 +86,34 @@ def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
         m = dict(m)
         rnd = m["round"] or m["tab"] or "Zápasy"
         rounds.setdefault(rnd, []).append(m)
-    return [{"round": r, "matches": rounds[r]}
+    cols = [{"round": r, "matches": rounds[r]}
             for r in sorted(rounds, key=_round_key)]
+    _link_feeds(cols)
+    return cols
+
+
+def _link_feeds(cols: list[dict]) -> None:
+    """Odvodí vazby pavouku z postupu týmů: zápas je napájen posledním
+    dřívějším zápasem každého svého týmu. Doplní m["feeds_from"] a seřadí
+    kola podle průměrné pozice feederů (layout jako Leaguepedia)."""
+    last_match: dict[str, str] = {}   # tým -> match_id posledního zápasu
+    for ci, col in enumerate(cols):
+        for m in col["matches"]:
+            feeds = [last_match[t] for t in (m["team1"], m["team2"])
+                     if t and t in last_match]
+            m["feeds_from"] = list(dict.fromkeys(feeds))
+        for m in col["matches"]:
+            for t in (m["team1"], m["team2"]):
+                if t:
+                    last_match[t] = m["match_id"]
+        if ci > 0:
+            prev_pos = {m["match_id"]: i
+                        for i, m in enumerate(cols[ci - 1]["matches"])}
+
+            def key(m):
+                ps = [prev_pos[f] for f in m["feeds_from"] if f in prev_pos]
+                return sum(ps) / len(ps) if ps else len(prev_pos)
+            col["matches"].sort(key=key)
 
 
 def series_games(con: sqlite3.Connection, match_id: str) -> list[dict]:

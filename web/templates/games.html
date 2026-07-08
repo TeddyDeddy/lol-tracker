@@ -28,7 +28,7 @@
   {% set kda = (g.kills + g.assists) / (g.deaths if g.deaths else 1) %}
   {% set mins = g.duration // 60 %}
   <a class="game-card {{ 'row-w' if g.win else 'row-l' }}"
-     href="/match/{{ g.match_id }}?focus={{ riot_id|urlencode }}">
+     href="/match/{{ g.match_id }}?focus={{ me_puuid }}">
     <div class="gc-result">
       <div class="gc-wl {{ 'good' if g.win else 'bad' }}">{{ 'Výhra' if g.win else 'Prohra' }}</div>
       <div class="gc-sub">{{ queue_names.get(g.queue_id, g.queue_id) }}</div>

@@ -115,13 +115,13 @@ class StatsView(discord.ui.View):
         self.bot = bot
         self.riot_id = riot_id
         self.page = "overview"
-        self.mode = "Vše"
+        self.mode = "All"
 
     def queues(self):
         return stats.QUEUE_GROUPS[self.mode]
 
     async def build_embed(self) -> discord.Embed:
-        title = f"📊 {self.riot_id}" + (f" — {self.mode}" if self.mode != "Vše" else "")
+        title = f"📊 {self.riot_id}" + (f" — {self.mode}" if self.mode != "All" else "")
         embed = discord.Embed(title=title, color=0x3498DB)
         s = stats.summary(self.bot.con, self.riot_id, self.queues())
         if not s:
@@ -191,7 +191,7 @@ class StatsView(discord.ui.View):
     async def records_btn(self, interaction, _):
         self.page = "records"; await self.refresh(interaction)
 
-    @discord.ui.select(placeholder="Mód: Vše", options=[
+    @discord.ui.select(placeholder="Mód: All", options=[
         discord.SelectOption(label=m) for m in stats.QUEUE_GROUPS])
     async def mode_select(self, interaction, select):
         self.mode = select.values[0]

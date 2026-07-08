@@ -67,10 +67,10 @@
   </section>
 
   <section class="panel">
-    <h2>Rekordy <span class="muted">{{ mode.lower() if mode != 'Vše' else 'všechny módy' }}</span></h2>
+    <h2>Rekordy <span class="muted">{{ mode.lower() if mode != 'All' else 'všechny módy' }}</span></h2>
     <div class="records">
       {% for r in records %}
-      <a class="record record-link" href="/match/{{ r.match_id }}?focus={{ riot_id|urlencode }}">
+      <a class="record record-link" href="/match/{{ r.match_id }}?focus={{ me_puuid }}">
         <div class="tile-label">{{ r.label }}</div>
         <div class="record-value">{{ fmt_duration(r.val) if r.label == 'Nejdelší hra' else fmt_int(r.val) }}</div>
         <div class="tile-sub">{{ r.champion }} · {{ when(r.game_creation) }} ·
@@ -122,15 +122,14 @@
     <thead><tr><th></th><th>Champion</th><th>K/D/A</th><th>CS</th><th>Itemy</th><th>Mód</th><th>Délka</th><th>Kdy</th></tr></thead>
     <tbody>
     {% for g in games %}
-      <tr class="{{ 'row-w' if g.win else 'row-l' }} row-click"
-          onclick="location.href='/match/{{ g.match_id }}?focus={{ riot_id|urlencode }}'">
+      <tr class="{{ 'row-w' if g.win else 'row-l' }} row-click">
         <td class="champ-cell">
           <img class="avatar sm" src="{{ champ_icon(g.champion) }}" alt="">
           {%- if g.keystone and g.keystone in rune_icons -%}
           <img class="rune" src="{{ rune_icons[g.keystone] }}" alt="keystone">
           {%- endif -%}
         </td>
-        <td>{{ g.champion }}</td>
+        <td><a class="tracked-link" href="/match/{{ g.match_id }}?focus={{ me_puuid }}">{{ g.champion }}</a></td>
         <td class="num">{{ g.kills }}/{{ g.deaths }}/{{ g.assists }}</td>
         <td class="num">{{ g.cs }}</td>
         <td class="items">

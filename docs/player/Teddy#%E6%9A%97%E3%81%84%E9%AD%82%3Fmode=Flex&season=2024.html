@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teddy#暗い魂 — LoL Tracker</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../index.html">⌬ LoL Tracker</a>
+  <a class="nav-link " href="../pro.html">Pro scéna</a>
+  <span class="live-summary" id="live-summary"></span>
+</header>
+<main>
+<div class="player-head">
+  <img class="avatar lg" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MonkeyKing.png" alt="">
+  <h1>Teddy#暗い魂</h1>
+  <nav class="modes">
+    
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=All&season=2024.html">All</a>
+    
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=SoloQ&season=2024.html">SoloQ</a>
+    
+    <a class="pill active" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Flex&season=2024.html">Flex</a>
+    
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Normal&season=2024.html">Normal</a>
+    
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=ARAM&season=2024.html">ARAM</a>
+    
+    <span class="pill-sep"></span>
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Flex.html">Vše roky</a>
+    
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Flex&season=2026.html">2026</a>
+    
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Flex&season=2025.html">2025</a>
+    
+    <a class="pill active" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Flex&season=2024.html">2024</a>
+    
+  </nav>
+</div>
+
+<div class="tiles">
+  
+  
+  <div class="tile">
+    <div class="tile-label">SoloQ</div>
+    <div class="tile-value">Emerald I</div>
+    <div class="tile-sub">75 LP · 21W/13L</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Flex</div>
+    <div class="tile-value">Emerald IV</div>
+    <div class="tile-sub">61 LP · 63W/57L</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Winrate (80 her)</div>
+    <div class="tile-value">43.8%</div>
+    <div class="tile-sub">35W/45L</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">KDA</div>
+    <div class="tile-value">2.49</div>
+    <div class="tile-sub">709/603/792</div>
+  </div>
+</div>
+
+
+<section class="panel">
+  <h2>Vývoj formy <span class="muted">klouzavý winrate přes 10 her</span></h2>
+  <div id="wr-chart" data-series='[{"i": 10, "when": "05.09.2024", "wr": 20.0}, {"i": 11, "when": "05.09.2024", "wr": 20.0}, {"i": 12, "when": "13.09.2024", "wr": 20.0}, {"i": 13, "when": "13.09.2024", "wr": 30.0}, {"i": 14, "when": "13.09.2024", "wr": 20.0}, {"i": 15, "when": "18.09.2024", "wr": 20.0}, {"i": 16, "when": "18.09.2024", "wr": 20.0}, {"i": 17, "when": "08.10.2024", "wr": 20.0}, {"i": 18, "when": "08.10.2024", "wr": 20.0}, {"i": 19, "when": "10.10.2024", "wr": 30.0}, {"i": 20, "when": "10.10.2024", "wr": 20.0}, {"i": 21, "when": "10.10.2024", "wr": 20.0}, {"i": 22, "when": "10.10.2024", "wr": 30.0}, {"i": 23, "when": "12.10.2024", "wr": 30.0}, {"i": 24, "when": "12.10.2024", "wr": 40.0}, {"i": 25, "when": "12.10.2024", "wr": 50.0}, {"i": 26, "when": "12.10.2024", "wr": 60.0}, {"i": 27, "when": "12.10.2024", "wr": 60.0}, {"i": 28, "when": "12.10.2024", "wr": 70.0}, {"i": 29, "when": "12.10.2024", "wr": 60.0}, {"i": 30, "when": "12.10.2024", "wr": 70.0}, {"i": 31, "when": "12.10.2024", "wr": 80.0}, {"i": 32, "when": "15.10.2024", "wr": 70.0}, {"i": 33, "when": "15.10.2024", "wr": 70.0}, {"i": 34, "when": "17.10.2024", "wr": 60.0}, {"i": 35, "when": "17.10.2024", "wr": 60.0}, {"i": 36, "when": "18.10.2024", "wr": 50.0}, {"i": 37, "when": "18.10.2024", "wr": 50.0}, {"i": 38, "when": "18.10.2024", "wr": 40.0}, {"i": 39, "when": "23.10.2024", "wr": 40.0}, {"i": 40, "when": "24.10.2024", "wr": 30.0}, {"i": 41, "when": "05.11.2024", "wr": 30.0}, {"i": 42, "when": "05.11.2024", "wr": 40.0}, {"i": 43, "when": "07.11.2024", "wr": 30.0}, {"i": 44, "when": "07.11.2024", "wr": 30.0}, {"i": 45, "when": "07.11.2024", "wr": 20.0}, {"i": 46, "when": "07.11.2024", "wr": 20.0}, {"i": 47, "when": "08.11.2024", "wr": 30.0}, {"i": 48, "when": "08.11.2024", "wr": 30.0}, {"i": 49, "when": "08.11.2024", "wr": 40.0}, {"i": 50, "when": "08.11.2024", "wr": 50.0}, {"i": 51, "when": "08.11.2024", "wr": 40.0}, {"i": 52, "when": "14.11.2024", "wr": 30.0}, {"i": 53, "when": "14.11.2024", "wr": 40.0}, {"i": 54, "when": "14.11.2024", "wr": 50.0}, {"i": 55, "when": "14.11.2024", "wr": 60.0}, {"i": 56, "when": "14.11.2024", "wr": 70.0}, {"i": 57, "when": "15.11.2024", "wr": 60.0}, {"i": 58, "when": "15.11.2024", "wr": 70.0}, {"i": 59, "when": "15.11.2024", "wr": 60.0}, {"i": 60, "when": "19.11.2024", "wr": 60.0}, {"i": 61, "when": "19.11.2024", "wr": 60.0}, {"i": 62, "when": "19.11.2024", "wr": 70.0}, {"i": 63, "when": "20.11.2024", "wr": 60.0}, {"i": 64, "when": "23.11.2024", "wr": 60.0}, {"i": 65, "when": "23.11.2024", "wr": 50.0}, {"i": 66, "when": "28.11.2024", "wr": 40.0}, {"i": 67, "when": "28.11.2024", "wr": 50.0}, {"i": 68, "when": "12.12.2024", "wr": 50.0}, {"i": 69, "when": "12.12.2024", "wr": 50.0}, {"i": 70, "when": "12.12.2024", "wr": 40.0}, {"i": 71, "when": "13.12.2024", "wr": 50.0}, {"i": 72, "when": "13.12.2024", "wr": 50.0}, {"i": 73, "when": "13.12.2024", "wr": 60.0}, {"i": 74, "when": "16.12.2024", "wr": 60.0}, {"i": 75, "when": "17.12.2024", "wr": 60.0}, {"i": 76, "when": "18.12.2024", "wr": 70.0}, {"i": 77, "when": "18.12.2024", "wr": 70.0}, {"i": 78, "when": "18.12.2024", "wr": 60.0}, {"i": 79, "when": "18.12.2024", "wr": 60.0}, {"i": 80, "when": "19.12.2024", "wr": 60.0}]'></div>
+</section>
+
+
+<div class="two-col">
+  <section class="panel">
+    <h2>Champion pool <span class="muted">podle počtu her</span></h2>
+    <div class="bars">
+      
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Ambessa%253Fmode=Flex.html"
+         data-tip="Ambessa: 5 her · 60% WR · KDA 2.66 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ambessa.png" alt="">
+        <span class="bar-name">Ambessa</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 100.0%"></span></span>
+        <span class="bar-val">5</span>
+        <span class="bar-wr good">60%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Zeri%253Fmode=Flex.html"
+         data-tip="Zeri: 4 her · 50% WR · KDA 2.71 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Zeri.png" alt="">
+        <span class="bar-name">Zeri</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 80.0%"></span></span>
+        <span class="bar-val">4</span>
+        <span class="bar-wr good">50%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Poppy%253Fmode=Flex.html"
+         data-tip="Poppy: 4 her · 25% WR · KDA 2.25 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Poppy.png" alt="">
+        <span class="bar-name">Poppy</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 80.0%"></span></span>
+        <span class="bar-val">4</span>
+        <span class="bar-wr bad">25%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Udyr%253Fmode=Flex.html"
+         data-tip="Udyr: 3 her · 67% WR · KDA 2.53 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Udyr.png" alt="">
+        <span class="bar-name">Udyr</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 60.0%"></span></span>
+        <span class="bar-val">3</span>
+        <span class="bar-wr good">67%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Twitch%253Fmode=Flex.html"
+         data-tip="Twitch: 3 her · 0% WR · KDA 2.68 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Twitch.png" alt="">
+        <span class="bar-name">Twitch</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 60.0%"></span></span>
+        <span class="bar-val">3</span>
+        <span class="bar-wr bad">0%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Nidalee%253Fmode=Flex.html"
+         data-tip="Nidalee: 3 her · 0% WR · KDA 1.77 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nidalee.png" alt="">
+        <span class="bar-name">Nidalee</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 60.0%"></span></span>
+        <span class="bar-val">3</span>
+        <span class="bar-wr bad">0%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Vi%253Fmode=Flex.html"
+         data-tip="Vi: 2 her · 0% WR · KDA 2.23 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vi.png" alt="">
+        <span class="bar-name">Vi</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 40.0%"></span></span>
+        <span class="bar-val">2</span>
+        <span class="bar-wr bad">0%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Thresh%253Fmode=Flex.html"
+         data-tip="Thresh: 2 her · 50% WR · KDA 1.29 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Thresh.png" alt="">
+        <span class="bar-name">Thresh</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 40.0%"></span></span>
+        <span class="bar-val">2</span>
+        <span class="bar-wr good">50%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Sylas%253Fmode=Flex.html"
+         data-tip="Sylas: 2 her · 50% WR · KDA 1.58 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Sylas.png" alt="">
+        <span class="bar-name">Sylas</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 40.0%"></span></span>
+        <span class="bar-val">2</span>
+        <span class="bar-wr good">50%</span>
+      </a>
+      
+      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Singed%253Fmode=Flex.html"
+         data-tip="Singed: 2 her · 50% WR · KDA 1.23 — klikni pro detail">
+        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Singed.png" alt="">
+        <span class="bar-name">Singed</span>
+        <span class="bar-track"><span class="bar-fill" style="width: 40.0%"></span></span>
+        <span class="bar-val">2</span>
+        <span class="bar-wr good">50%</span>
+      </a>
+      
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Rekordy <span class="muted">flex</span></h2>
+    <div class="records">
+      
+      <a class="record record-link" href="../match/EUN1_3660929249%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
+        <div class="tile-label">Nejvíc killů</div>
+        <div class="record-value">27</div>
+        <div class="tile-sub">Twitch · 03.09.2024 ·
+          <span class="bad">L</span></div>
+      </a>
+      
+      <a class="record record-link" href="../match/EUN1_3690008349%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
+        <div class="tile-label">Nejvíc smrtí</div>
+        <div class="record-value">16</div>
+        <div class="tile-sub">Ambessa · 07.11.2024 ·
+          <span class="bad">L</span></div>
+      </a>
+      
+      <a class="record record-link" href="../match/EUN1_3693370288%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
+        <div class="tile-label">Nejvíc asistencí</div>
+        <div class="record-value">34</div>
+        <div class="tile-sub">Rell · 14.11.2024 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      <a class="record record-link" href="../match/EUN1_3678852532%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
+        <div class="tile-label">Nejvíc CS</div>
+        <div class="record-value">372</div>
+        <div class="tile-sub">Graves · 12.10.2024 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      <a class="record record-link" href="../match/EUN1_3678852532%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
+        <div class="tile-label">Nejvíc dmg do championů</div>
+        <div class="record-value">74 997</div>
+        <div class="tile-sub">Graves · 12.10.2024 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      <a class="record record-link" href="../match/EUN1_3678852532%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
+        <div class="tile-label">Nejvíc goldů</div>
+        <div class="record-value">29 362</div>
+        <div class="tile-sub">Graves · 12.10.2024 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      <a class="record record-link" href="../match/EUN1_3678852532%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
+        <div class="tile-label">Nejdelší hra</div>
+        <div class="record-value">54:33</div>
+        <div class="tile-sub">Graves · 12.10.2024 ·
+          <span class="good">W</span></div>
+      </a>
+      
+    </div>
+  </section>
+</div>
+
+
+
+<section class="panel">
+  <h2>Posledních 20 her
+    <a class="muted all-games-link" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/games%253Fmode=Flex&season=2024.html">Všechny hry →</a></h2>
+  <table class="games">
+    <thead><tr><th></th><th>Champion</th><th>K/D/A</th><th>CS</th><th>Itemy</th><th>Mód</th><th>Délka</th><th>Kdy</th></tr></thead>
+    <tbody>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MonkeyKing.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3712829160%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">MonkeyKing</a></td>
+        <td class="num">17/7/6</td>
+        <td class="num">221</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6698.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6699.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3035.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">37:34</td>
+        <td class="muted">19.12.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vi.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3712474138%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Vi</a></td>
+        <td class="num">0/4/0</td>
+        <td class="num">92</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1102.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1001.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">15:26</td>
+        <td class="muted">18.12.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jinx.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3712442738%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Jinx</a></td>
+        <td class="num">5/3/3</td>
+        <td class="num">141</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3042.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3158.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3133.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">27:42</td>
+        <td class="muted">18.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Braum.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Guardian/Guardian.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3712412666%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Braum</a></td>
+        <td class="num">1/4/26</td>
+        <td class="num">36</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3190.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3222.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1057.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3109.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3876.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">34:16</td>
+        <td class="muted">18.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/XinZhao.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3712394692%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">XinZhao</a></td>
+        <td class="num">13/2/5</td>
+        <td class="num">109</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3035.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">18:23</td>
+        <td class="muted">18.12.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nidalee.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3711720579%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Nidalee</a></td>
+        <td class="num">4/13/6</td>
+        <td class="num">210</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3078.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1054.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3111.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6333.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6610.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3067.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">39:25</td>
+        <td class="muted">17.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Udyr.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3711374212%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Udyr</a></td>
+        <td class="num">9/7/8</td>
+        <td class="num">213</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1018.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3134.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">33:42</td>
+        <td class="muted">16.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Zeri.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3709459984%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Zeri</a></td>
+        <td class="num">11/1/0</td>
+        <td class="num">105</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3086.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3032.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3144.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">15:18</td>
+        <td class="muted">13.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jinx.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3709437496%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Jinx</a></td>
+        <td class="num">21/12/8</td>
+        <td class="num">198</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3042.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6696.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6701.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6694.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3158.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">49:00</td>
+        <td class="muted">13.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3709422247%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Jhin</a></td>
+        <td class="num">15/0/8</td>
+        <td class="num">190</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3086.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">30:23</td>
+        <td class="muted">13.12.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Twitch.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3709141041%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Twitch</a></td>
+        <td class="num">13/10/6</td>
+        <td class="num">236</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3140.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3032.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3085.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">35:59</td>
+        <td class="muted">12.12.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/FirstStrike/FirstStrike.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3709110261%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Viktor</a></td>
+        <td class="num">17/9/17</td>
+        <td class="num">220</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3157.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3089.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3100.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6655.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3020.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4645.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">35:33</td>
+        <td class="muted">12.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Singed.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3708977098%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Singed</a></td>
+        <td class="num">9/13/10</td>
+        <td class="num">282</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3116.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4633.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6653.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3742.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3089.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">42:22</td>
+        <td class="muted">12.12.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Maokai.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/VeteranAftershock/VeteranAftershock.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3701147275%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Maokai</a></td>
+        <td class="num">5/4/25</td>
+        <td class="num">59</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3190.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3082.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3075.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6665.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3876.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">32:06</td>
+        <td class="muted">28.11.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Chogath.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3701102475%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Chogath</a></td>
+        <td class="num">3/13/8</td>
+        <td class="num">58</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3075.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3084.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3024.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3082.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3876.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">34:21</td>
+        <td class="muted">28.11.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Darius.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3698070921%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Darius</a></td>
+        <td class="num">10/12/7</td>
+        <td class="num">175</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3142.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6699.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3035.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">35:06</td>
+        <td class="muted">23.11.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Thresh.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/GraspOfTheUndying/GraspOfTheUndying.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3698043805%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Thresh</a></td>
+        <td class="num">4/6/11</td>
+        <td class="num">158</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3748.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3084.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2501.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">29:02</td>
+        <td class="muted">23.11.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vi.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3696108487%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Vi</a></td>
+        <td class="num">19/9/10</td>
+        <td class="num">179</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3158.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6692.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">32:37</td>
+        <td class="muted">20.11.2024</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Shaco.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3695564935%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Shaco</a></td>
+        <td class="num">8/6/9</td>
+        <td class="num">101</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3142.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1018.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">21:46</td>
+        <td class="muted">19.11.2024</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Poppy.png" alt=""><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png" alt="keystone"></td>
+        <td><a class="tracked-link" href="../match/EUN1_3695542258%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">Poppy</a></td>
+        <td class="num">6/10/18</td>
+        <td class="num">39</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3877.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3083.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4401.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3742.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1028.png" alt="">
+        </td>
+        <td>Ranked Flex</td>
+        <td class="num">37:42</td>
+        <td class="muted">19.11.2024</td>
+      </tr>
+    
+    </tbody>
+  </table>
+</section>
+</main>
+<footer class="footer muted">
+  Data: Riot Games API · pro scéna: <a href="../index.html">Leaguepedia</a> (CC BY-SA)
+</footer>
+<div class="tooltip" id="tooltip" hidden></div>
+<script src="../static/app.js"></script>
+</body>
+</html>
