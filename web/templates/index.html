@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Sledovaní hráči</h1>
+<div class="cards">
+  {% for p in players %}
+  <a class="card player-card {{ 'tier-' ~ p.solo.tier|lower if p.solo }}"
+     href="/player/{{ p.riot_id|urlencode }}" data-puuid="">
+    {% if p.main %}<img class="avatar" src="{{ champ_icon(p.main) }}" alt="">{% endif %}
+    <div class="card-body">
+      <div class="card-title">
+        {{ p.riot_id }}
+        <span class="badge live-badge" data-riot-id="{{ p.riot_id }}"
+              {% if not p.live %}hidden{% endif %}>● LIVE</span>
+      </div>
+      <div class="card-sub">
+        {% if p.solo %}
+          {{ p.solo.tier.title() }} {{ p.solo.division }} · {{ p.solo.lp }} LP
+        {% else %}Unranked{% endif %}
+        · {{ p.platform|upper }}
+      </div>
+      <div class="form-row" title="Posledních {{ p.n20 }} her (zleva nejnovější)">
+        {% for w in p.form %}<span class="tick {{ 'w' if w else 'l' }}"></span>{% endfor %}
+        <span class="form-label">{{ p.wins20 }}W/{{ p.n20 - p.wins20 }}L</span>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% if not players %}<p class="muted">Zatím nikdo — přidej hráče přes /track v Discordu.</p>{% endif %}
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Hry — {{ riot_id }}{% endblock %}
+{% block content %}
+<div class="player-head">
+  <div>
+    <h1>Seznam her</h1>
+    <a class="muted" href="/player/{{ riot_id|urlencode }}?mode={{ mode }}&season={{ season }}">← {{ riot_id }}</a>
+  </div>
+  <nav class="modes">
+    {% for m in modes %}
+    <a class="pill {{ 'active' if m == mode }}"
+       href="/player/{{ riot_id|urlencode }}/games?mode={{ m }}&season={{ season }}">{{ m }}</a>
+    {% endfor %}
+    <span class="pill-sep"></span>
+    <a class="pill {{ 'active' if not season }}"
+       href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}">Vše roky</a>
+    {% for y in seasons %}
+    <a class="pill {{ 'active' if season == y }}"
+       href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}&season={{ y }}">{{ y }}</a>
+    {% endfor %}
+  </nav>
+</div>
+
+<p class="muted">{{ total }} her · strana {{ page }}/{{ pages }}</p>
+
+<div class="game-list">
+  {% for g in games %}
+  {% set kda = (g.kills + g.assists) / (g.deaths if g.deaths else 1) %}
+  {% set mins = g.duration // 60 %}
+  <a class="game-card {{ 'row-w' if g.win else 'row-l' }}"
+     href="/match/{{ g.match_id }}?focus={{ riot_id|urlencode }}">
+    <div class="gc-result">
+      <div class="gc-wl {{ 'good' if g.win else 'bad' }}">{{ 'Výhra' if g.win else 'Prohra' }}</div>
+      <div class="gc-sub">{{ queue_names.get(g.queue_id, g.queue_id) }}</div>
+      <div class="gc-sub">{{ fmt_duration(g.duration) }} · {{ when(g.game_creation) }}</div>
+    </div>
+    <div class="champ-cell">
+      <img class="avatar" src="{{ champ_icon(g.champion) }}" alt="{{ g.champion }}">
+      {%- if g.keystone and g.keystone in rune_icons -%}
+      <img class="rune" src="{{ rune_icons[g.keystone] }}" alt="">
+      {%- endif -%}
+    </div>
+    <div class="gc-stats">
+      <div class="gc-kda"><b>{{ g.kills }}/{{ g.deaths }}/{{ g.assists }}</b></div>
+      <div class="gc-sub">KDA {{ '%.2f'|format(kda) }}</div>
+      <div class="gc-sub">{{ g.cs }} CS ({{ '%.1f'|format(g.cs / (mins if mins else 1)) }}/min)</div>
+    </div>
+    <div class="items gc-items">
+      {% for it in (g["items"] or "").split() %}<img class="item" src="{{ item_icon(it) }}" alt="">{% endfor %}
+    </div>
+    <div class="gc-roster">
+      {% for team_id in (100, 200) %}
+      <div class="gc-team">
+        {% for p in rosters.get(g.match_id, []) if p.team_id == team_id %}
+        <span class="gc-part {{ 'me' if p.puuid == me_puuid }}">
+          <img class="avatar xs" src="{{ champ_icon(p.champion) }}" alt="{{ p.champion }}">
+          {% if p.puuid in tracked %}
+          <span class="gc-name tracked-link"
+                onclick="event.preventDefault(); event.stopPropagation(); location.href='/player/{{ tracked[p.puuid]|urlencode }}'"
+                title="{{ tracked[p.puuid] }}">{{ tracked[p.puuid].split('#')[0] }}</span>
+          {% else %}
+          <span class="gc-name" title="{{ p.riot_id }}">{{ p.riot_id.split('#')[0] }}</span>
+          {% endif %}
+        </span>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </a>
+  {% else %}
+  <p class="muted">Žádné hry pro tenhle filtr.</p>
+  {% endfor %}
+</div>
+
+<nav class="pager">
+  {% set qs = 'mode=' ~ mode ~ '&season=' ~ season %}
+  {% if page > 1 %}
+  <a class="pill" href="/player/{{ riot_id|urlencode }}/games?{{ qs }}&page={{ page - 1 }}">← Novější</a>
+  {% endif %}
+  <span class="muted">strana {{ page }}/{{ pages }}</span>
+  {% if page < pages %}
+  <a class="pill" href="/player/{{ riot_id|urlencode }}/games?{{ qs }}&page={{ page + 1 }}">Starší →</a>
+  {% endif %}
+</nav>
+{% endblock %}

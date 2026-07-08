@@ -1,0 +1,12 @@
+# Ručně kurátorované buffy/nerfy championů per patch (pro /pro/meta stránku).
+# Import: automaticky při `python -m lol.leaguepedia ingest|update`.
+#
+# Formát:
+# [[change]]
+# patch = "25.05"        # přesně jak ho hlásí Leaguepedia (sloupec patch v pro_games)
+# champion = "Ambessa"   # display jméno
+# kind = "nerf"          # buff | nerf | adjust
+# note = "Q damage 90-190 -> 80-180"
+#
+# Zdroj: oficiální patch notes (patch před eventem). Doplňovat postupně
+# pro patche hlavních eventů — web ukáže label + posun presence.

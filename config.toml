@@ -1,0 +1,8 @@
+# Sledovaní hráči: "GameName#TAG" + platforma (eune -> eun1, euw -> euw1)
+[[players]]
+riot_id = "Teddy#暗い魂"
+platform = "eun1"
+
+[tracker]
+live_poll_seconds = 120
+match_sync_count = 20

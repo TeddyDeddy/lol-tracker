@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}{{ m.team1 }} vs {{ m.team2 }} — Pro scéna{% endblock %}
+{% block content %}
+<div class="player-head">
+  <div>
+    <h1>{{ m.team1 if m else '?' }} <span class="muted">{{ m.team1_score if m else '' }} : {{ m.team2_score if m else '' }}</span> {{ m.team2 if m else '?' }}</h1>
+    <a class="muted" href="/pro/t/{{ op|urlencode }}">← {{ tournament.name if tournament else op }}</a>
+    {% if m %}<span class="muted">{% if m.round or m.tab %}· {{ m.round or m.tab }} {% endif %}· BO{{ m.best_of }} · {{ (m.date or '')[:16] }} UTC</span>{% endif %}
+  </div>
+</div>
+
+{% for g in games %}
+<section class="panel">
+  <h2>Hra {{ loop.index }}
+    <span class="muted">{{ (g.date or '')[:16] }} UTC · {{ '%.0f'|format(g.duration) }} min · patch {{ g.patch }}</span>
+    <span class="{{ 'good' }}">{{ g.winner }} ✓</span>
+  </h2>
+  <div class="two-col">
+    {% for side in (1, 2) %}
+    {% set team = g.team1 if side == 1 else g.team2 %}
+    {% set picks = (g.team1_picks if side == 1 else g.team2_picks) or '' %}
+    {% set bans = (g.team1_bans if side == 1 else g.team2_bans) or '' %}
+    {% set kills = g.team1_kills if side == 1 else g.team2_kills %}
+    <div class="draft {{ 'team-win' if g.winner == team }}">
+      <div class="tile-label">{{ team }} {{ '· vítěz' if g.winner == team }}
+        {% if kills is not none %}· ⚔ {{ kills }}{% endif %}</div>
+      <div class="draft-row">
+        <span class="muted">Picky:</span>
+        {% for c in split(picks) %}
+        <span class="pick-slot" data-tip="{{ c }} (pick {{ loop.index }})">
+          <img class="avatar" src="{{ champ_icon(c) }}" alt="{{ c }}">
+          <span class="pick-idx">{{ loop.index }}</span>
+        </span>
+        {% endfor %}
+      </div>
+      <div class="draft-row">
+        <span class="muted">Bany:</span>
+        {% for c in split(bans) %}
+        <span class="ban-slot" data-tip="{{ c }} (ban {{ loop.index }})">
+          <img class="avatar banned" src="{{ champ_icon(c) }}" alt="{{ c }}">
+        </span>
+        {% else %}<span class="muted">—</span>{% endfor %}
+      </div>
+      <table class="games">
+        <tbody>
+        {% for p in g.players if p.team == team %}
+        <tr>
+          <td class="champ-cell"><img class="avatar sm" src="{{ champ_icon(p.champion) }}" alt=""></td>
+          <td><a class="tracked-link" href="/pro/player/{{ p.player|urlencode }}">{{ p.player }}</a>
+            <span class="muted">{{ p.role }}</span></td>
+          <td class="num">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

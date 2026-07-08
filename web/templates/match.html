@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Zápas {{ match_id }}{% endblock %}
+{% block content %}
+<div class="player-head">
+  <h1>Detail zápasu</h1>
+  <span class="muted">{{ queue }} · {{ duration }} · {{ when }} · patch {{ patch }}</span>
+</div>
+
+{% for team_id, players in teams.items() %}
+{% set obj = objectives.get(team_id, {}) %}
+<section class="panel team-panel {{ 'team-win' if obj.win else 'team-loss' }}">
+  <h2>
+    {{ 'Modrý tým' if team_id == 100 else 'Červený tým' }}
+    <span class="{{ 'good' if obj.win else 'bad' }}">{{ 'VÍTĚZSTVÍ' if obj.win else 'PROHRA' }}</span>
+    <span class="muted obj-row">
+      ⚔ {{ obj.kills }} · 🗼 {{ obj.towers }} · 🐉 {{ obj.dragons }} · 👑 {{ obj.barons }}
+    </span>
+  </h2>
+  <table class="games match-table">
+    <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Itemy</th></tr></thead>
+    <tbody>
+    {% for p in players %}
+      <tr class="{{ 'focus-row' if p.focus }}">
+        <td class="champ-cell">
+          <img class="avatar sm" src="{{ champ_icon(p.champion) }}" alt="{{ p.champion }}" data-tip="{{ p.champion }} · level {{ p.level }}">
+          {%- if p.keystone and p.keystone in rune_icons -%}
+          <img class="rune" src="{{ rune_icons[p.keystone] }}" alt="">
+          {%- endif -%}
+        </td>
+        <td>
+          {% if p.tracked %}<a class="tracked-link" href="/player/{{ p.riot_id|urlencode }}">{{ p.riot_id }}</a>
+          {% else %}{{ p.riot_id }}{% endif %}
+        </td>
+        <td class="num">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</td>
+        <td class="num">{{ p.cs }}</td>
+        <td class="num">{{ fmt_int(p.gold) }}</td>
+        <td class="num">{{ p.vision }}</td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar"><span class="bar-fill" style="width: {{ 100 * p.damage / max_damage }}%"></span></span>
+          <span class="num">{{ fmt_int(p.damage) }}</span>
+        </td>
+        <td class="items">
+          {% for it in p["items"] %}<img class="item" src="{{ item_icon(it) }}" alt="">{% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endfor %}
+{% endblock %}

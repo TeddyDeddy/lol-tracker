@@ -1,0 +1,296 @@
+/* Dark-only téma — tokeny z validované dataviz palety + zlatý brand akcent. */
+:root {
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #ffffff;
+  --ink-2: #c3c2b7;
+  --muted: #898781;
+  --grid: #2c2c2a;
+  --border: rgba(255, 255, 255, 0.10);
+  --series: #3987e5;       /* datová modrá */
+  --good: #0ca30c;
+  --bad: #d03b3b;
+  --accent: #c8aa6e;       /* hextech gold — jen brand/nadpisy, nikdy data */
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--page); color: var(--ink-2);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+main { max-width: 1080px; margin: 0 auto; padding: 24px 20px 60px; }
+h1 { color: var(--ink); font-size: 30px; margin: 18px 0; letter-spacing: -0.3px; }
+h2 {
+  color: var(--ink); font-size: 16px; margin: 0 0 14px;
+  padding-left: 10px; border-left: 3px solid var(--accent);
+}
+h2 .muted { font-weight: 400; font-size: 13px; margin-left: 6px; }
+a { color: inherit; text-decoration: none; }
+.muted { color: var(--muted); }
+.good { color: var(--good); }
+.bad { color: var(--bad); }
+.num { font-variant-numeric: tabular-nums; }
+
+.topbar {
+  display: flex; align-items: center;
+  padding: 12px 20px; border-bottom: 1px solid var(--border);
+  background: rgba(26, 26, 25, 0.92); backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 5;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.brand { color: var(--accent); font-weight: 600; letter-spacing: 0.4px; }
+.topbar .live-summary { margin-left: auto; }
+.nav-link.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+.live-summary { font-size: 13px; color: var(--muted); }
+
+/* ---------- karty hráčů ---------- */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.card {
+  background: linear-gradient(180deg, #1d1d1b, #171716);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px; display: flex; gap: 12px;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+a.card:hover {
+  border-color: var(--accent); transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+.card-title { color: var(--ink); font-weight: 600; display: flex; gap: 8px; align-items: center; }
+.card-sub { font-size: 13px; color: var(--muted); margin: 2px 0 8px; }
+.badge {
+  font-size: 11px; font-weight: 700; color: var(--good);
+  border: 1px solid var(--good); border-radius: 20px; padding: 1px 8px;
+}
+.avatar { width: 48px; height: 48px; border-radius: 8px; border: 1px solid var(--border); }
+.avatar.lg { width: 64px; height: 64px; }
+.avatar.sm { width: 26px; height: 26px; border-radius: 6px; vertical-align: middle; }
+
+/* forma: 20 čárek W/L */
+.form-row { display: flex; gap: 3px; align-items: center; }
+.tick { width: 6px; height: 16px; border-radius: 2px 2px 0 0; }
+.tick.w { background: var(--good); }
+.tick.l { background: var(--bad); opacity: 0.55; height: 10px; align-self: flex-end; }
+.form-label { margin-left: 8px; font-size: 12px; color: var(--muted); }
+
+/* ---------- profil ---------- */
+.player-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 18px 0; }
+.player-head h1 { margin: 0; }
+.modes { margin-left: auto; display: flex; gap: 6px; }
+.pill {
+  padding: 5px 14px; border-radius: 20px; font-size: 13px;
+  border: 1px solid var(--border); color: var(--ink-2);
+}
+.pill.active {
+  background: var(--accent); color: #0d0d0d; border-color: var(--accent);
+  font-weight: 600; box-shadow: 0 2px 10px rgba(200, 170, 110, 0.25);
+}
+.pill:not(.active):hover { border-color: var(--accent); }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.tile, .panel {
+  background: linear-gradient(180deg, #1d1d1b, #171716);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px;
+}
+.tile-label { font-size: 12px; color: var(--muted); }
+.tile-value { font-size: 26px; font-weight: 600; color: var(--ink); margin: 2px 0; }
+.tile-sub { font-size: 13px; color: var(--muted); }
+
+.panel { margin-bottom: 20px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 820px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ---------- bar chart (champion pool) ---------- */
+.bars { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 26px 92px 1fr 34px 44px; gap: 10px; align-items: center; }
+.bar-name { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { display: block; height: 14px; }
+.bar-fill {
+  display: block; height: 100%; max-height: 24px; background: var(--series);
+  border-radius: 0 4px 4px 0; min-width: 2px;
+}
+.bar-val { font-size: 13px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.bar-wr { font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- rekordy ---------- */
+.records { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.record-value { font-size: 20px; font-weight: 600; color: var(--ink); }
+
+/* ---------- tabulka her ---------- */
+table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
+.games th {
+  text-align: left; font-size: 12px; font-weight: 500; color: var(--muted);
+  border-bottom: 1px solid var(--grid); padding: 6px 8px;
+}
+.games td { padding: 6px 8px; border-bottom: 1px solid var(--grid); }
+.games tbody tr:hover td { background: rgba(255, 255, 255, 0.03); }
+.games thead th { position: sticky; top: 49px; background: #1c1c1a; z-index: 1; }
+.games tr:last-child td { border-bottom: 0; }
+.games tr { border-left: 3px solid transparent; }
+.games tr.row-w td:first-child { box-shadow: inset 3px 0 0 var(--good); }
+.games tr.row-l td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
+
+/* ---------- matchupy + itemy/runy ---------- */
+.matchup { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--grid); }
+.matchup:last-child { border-bottom: 0; }
+.mu-name { flex: 1; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mu-games { font-size: 12px; width: 30px; text-align: right; }
+.items { white-space: nowrap; }
+.item { width: 22px; height: 22px; border-radius: 4px; border: 1px solid var(--border); margin-right: 2px; vertical-align: middle; }
+.champ-cell { white-space: nowrap; position: relative; }
+.rune { width: 16px; height: 16px; border-radius: 50%; background: #0d0d0d; vertical-align: bottom; margin-left: -10px; border: 1px solid var(--border); }
+
+/* ---------- sezóny, prokliky, detail zápasu ---------- */
+.pill-sep { width: 1px; height: 20px; background: var(--grid); margin: 0 4px; align-self: center; }
+.record-link { display: block; }
+.record-link:hover .record-value { color: var(--accent); }
+.row-click { cursor: pointer; }
+.row-click:hover td { background: rgba(255, 255, 255, 0.03); }
+.team-panel h2 { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.obj-row { font-weight: 400; font-size: 13px; margin-left: auto; }
+.focus-row td { background: rgba(200, 170, 110, 0.08); box-shadow: inset 2px 0 0 var(--accent); }
+.tracked-link { color: var(--accent); }
+.dmg-cell { min-width: 130px; }
+.dmg-bar { display: inline-block; width: 60px; height: 8px; margin-right: 6px; vertical-align: middle; background: var(--grid); border-radius: 4px; overflow: hidden; }
+.dmg-bar .bar-fill { border-radius: 0; }
+
+/* ---------- detail championa: runy + build order ---------- */
+a.bar-row:hover .bar-name { color: var(--accent); }
+.fill-good { background: var(--good) !important; }
+.fill-bad { background: var(--bad) !important; }
+.mu-bar { max-width: 140px; }
+.rune-page { padding: 8px 0; border-bottom: 1px solid var(--grid); }
+.rune-page:last-child { border-bottom: 0; }
+.rune-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.rune-tree { width: 20px; height: 20px; opacity: 0.8; }
+.rune-perk { width: 26px; height: 26px; border-radius: 50%; background: #0d0d0d; border: 1px solid var(--border); }
+.rune-perk.keystone { width: 34px; height: 34px; border-color: var(--accent); }
+.rune-sep { width: 1px; height: 24px; background: var(--grid); margin: 0 6px; }
+.build-order { display: flex; align-items: center; gap: 6px; padding: 8px 0; border-bottom: 1px solid var(--grid); }
+.build-order:last-child { border-bottom: 0; }
+.build-item { width: 30px; height: 30px; }
+
+/* ---------- line chart + tooltip ---------- */
+#wr-chart svg { display: block; width: 100%; height: 220px; }
+.tooltip {
+  position: fixed; z-index: 10; pointer-events: none;
+  background: #0d0d0d; border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 10px; font-size: 13px; color: var(--ink);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- seznam her (rewind styl) ---------- */
+.all-games-link { float: right; font-size: 14px; font-weight: 400; }
+.all-games-link:hover { color: var(--accent); }
+.game-list { display: flex; flex-direction: column; gap: 8px; }
+.game-card {
+  display: flex; align-items: center; gap: 16px; padding: 10px 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; color: inherit; text-decoration: none;
+}
+.game-card:hover { border-color: var(--accent); }
+.game-card.row-w { box-shadow: inset 4px 0 0 var(--good); }
+.game-card.row-l { box-shadow: inset 4px 0 0 var(--bad); }
+.gc-result { width: 120px; flex-shrink: 0; }
+.gc-wl { font-weight: 700; }
+.gc-sub { font-size: 12px; color: var(--muted); }
+.gc-stats { width: 130px; flex-shrink: 0; }
+.gc-kda { font-size: 15px; }
+.gc-items { width: 170px; flex-shrink: 0; }
+.gc-roster { display: flex; gap: 18px; margin-left: auto; }
+.gc-team { display: flex; flex-direction: column; gap: 2px; }
+.gc-part { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+.gc-part.me .gc-name { color: var(--accent); font-weight: 700; }
+.gc-name { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+.gc-name.tracked-link:hover { text-decoration: underline; }
+.avatar.xs { width: 16px; height: 16px; border-radius: 4px; }
+.pager { display: flex; align-items: center; gap: 14px; justify-content: center; margin: 18px 0; }
+@media (max-width: 900px) { .gc-roster { display: none; } }
+
+/* ---------- pro scéna ---------- */
+.nav-link { color: var(--ink-2); text-decoration: none; margin-left: 18px; }
+.nav-link:hover { color: var(--accent); }
+.footer { padding: 24px 32px; font-size: 12px; border-top: 1px solid var(--grid); margin-top: 32px; }
+.footer a { color: var(--muted); }
+.pro-card .card-title { font-size: 15px; }
+.bracket { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 8px; }
+.bracket-round { display: flex; flex-direction: column; gap: 10px; justify-content: space-around; min-width: 210px; }
+.bracket-match {
+  display: block; padding: 8px 10px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+  color: inherit; text-decoration: none;
+}
+.bracket-match:hover { border-color: var(--accent); }
+.bm-row { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+.bm-team { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bm-score { font-weight: 700; min-width: 16px; text-align: right; }
+.bm-win .bm-team, .bm-win .bm-score { color: var(--good); font-weight: 700; }
+.bm-form { display: flex; gap: 2px; }
+.draft { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+.draft.team-win { border-color: var(--good); }
+.draft-row { display: flex; align-items: center; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
+.avatar.banned { filter: grayscale(1) brightness(0.6); position: relative; }
+
+/* ---------- vizuální upgrade (empty stavy, pro polish, rank tinty) ---------- */
+.empty { text-align: center; padding: 48px 20px; color: var(--muted); }
+.empty-icon { font-size: 40px; margin-bottom: 8px; }
+.empty code { background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 2px 8px; }
+.db-status { margin: -6px 0 18px; font-size: 13px; }
+
+.pro-card.no-data { opacity: 0.45; }
+.pro-card.has-data { border-color: rgba(200, 170, 110, 0.35); }
+.badge-soon {
+  font-size: 11px; border: 1px solid var(--grid); border-radius: 20px;
+  padding: 1px 8px; color: var(--muted);
+}
+
+/* draft: pořadí picků + přeškrtnuté bany */
+.pick-slot, .ban-slot { position: relative; display: inline-flex; flex-direction: column; align-items: center; gap: 1px; }
+.pick-slot .avatar, .ban-slot .avatar { width: 34px; height: 34px; }
+.pick-idx { font-size: 10px; color: var(--muted); }
+.ban-slot::after {
+  content: "✕"; position: absolute; top: 6px; left: 0; right: 0;
+  text-align: center; color: var(--bad); font-weight: 700; font-size: 16px;
+  text-shadow: 0 0 4px #000;
+}
+.draft.team-win { background: rgba(12, 163, 12, 0.05); }
+.bo-badge {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  border: 1px solid var(--grid); border-radius: 4px; padding: 0 4px;
+}
+
+/* pick/ban tabulka: presence mini bar, top3 větší ikona */
+.presence-cell { min-width: 110px; }
+.presence-bar { display: inline-block; width: 52px; height: 8px; margin-right: 6px;
+  vertical-align: middle; background: var(--grid); border-radius: 4px; overflow: hidden; }
+.presence-bar .bar-fill { border-radius: 0; }
+tr.top-champ .avatar.sm { width: 34px; height: 34px; }
+
+/* meta: delta bar od středu */
+.delta-cell { min-width: 130px; }
+.delta-track { display: inline-block; width: 72px; height: 8px; vertical-align: middle;
+  background: var(--grid); border-radius: 4px; position: relative; margin-right: 6px; }
+.delta-fill { position: absolute; top: 0; height: 100%; }
+.delta-fill.pos { left: 50%; background: var(--good); border-radius: 0 4px 4px 0; }
+.delta-fill.neg { right: 50%; background: var(--bad); border-radius: 4px 0 0 4px; }
+.delta-track::before { content: ""; position: absolute; left: 50%; top: -2px;
+  width: 1px; height: 12px; background: var(--muted); }
+
+/* dashboard: tint karty podle ranku */
+.player-card { border-left: 3px solid var(--grid); }
+.player-card.tier-iron { border-left-color: #5e5654; }
+.player-card.tier-bronze { border-left-color: #8a5a3c; }
+.player-card.tier-silver { border-left-color: #9fa8b0; }
+.player-card.tier-gold { border-left-color: #c8aa6e; }
+.player-card.tier-platinum { border-left-color: #3e9e8f; }
+.player-card.tier-emerald { border-left-color: #1fa85c; }
+.player-card.tier-diamond { border-left-color: #576ace; }
+.player-card.tier-master { border-left-color: #9d4dc3; }
+.player-card.tier-grandmaster { border-left-color: #c23c3c; }
+.player-card.tier-challenger { border-left-color: #e5c15e; }
+.player-card .avatar { width: 56px; height: 56px; }
+
+/* sladit game-card se zbytkem */
+.game-card { border-radius: 12px; background: linear-gradient(180deg, #1d1d1b, #171716); }
+.bracket-match { background: linear-gradient(180deg, #1d1d1b, #171716); border-radius: 10px; }
+.bracket-match:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4); }

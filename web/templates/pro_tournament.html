@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}{{ t.name }} — Pro scéna{% endblock %}
+{% block content %}
+<div class="player-head">
+  <div>
+    <h1>{{ t.name }}</h1>
+    <a class="muted" href="/pro?year={{ t.year }}">← Pro scéna</a>
+    <span class="muted">· {{ t.date_start }} → {{ t.date_end }}</span>
+    {% if rounds and t.is_playoffs %}<span class="muted">· play-off</span>{% endif %}
+  </div>
+</div>
+
+{% if rounds %}
+<section class="panel">
+  <h2>{{ 'Pavouk' if t.is_playoffs else 'Série' }}</h2>
+  <div class="bracket">
+    {% for r in rounds %}
+    <div class="bracket-round">
+      <div class="tile-label">{{ r.round }}</div>
+      {% for m in r.matches %}
+      <a class="bracket-match" href="/pro/m/{{ m.match_id|urlencode }}">
+        <div class="bm-row {{ 'bm-win' if m.winner == m.team1 }}">
+          <span class="bm-team">{{ m.team1 or 'TBD' }}</span>
+          <span class="bm-score">{{ m.team1_score }}</span>
+          {% if forms.get(m.team1) %}<span class="bm-form">
+            {%- for w in forms[m.team1] %}<span class="tick {{ 'w' if w else 'l' }}"></span>{% endfor -%}
+          </span>{% endif %}
+        </div>
+        <div class="bm-row {{ 'bm-win' if m.winner == m.team2 }}">
+          <span class="bm-team">{{ m.team2 or 'TBD' }}</span>
+          <span class="bm-score">{{ m.team2_score }}</span>
+          {% if forms.get(m.team2) %}<span class="bm-form">
+            {%- for w in forms[m.team2] %}<span class="tick {{ 'w' if w else 'l' }}"></span>{% endfor -%}
+          </span>{% endif %}
+        </div>
+        <div class="gc-sub"><span class="bo-badge">BO{{ m.best_of }}</span> {{ (m.date or '')[:10] }}
+          {%- if r.round == rounds[-1].round and m.winner %} · 🏆 {{ m.winner }}{% endif %}</div>
+      </a>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<div class="two-col">
+  <section class="panel">
+    <h2>Pick / ban <span class="muted">{{ champs[0].games if champs else 0 }} her</span></h2>
+    <table class="games">
+      <thead><tr><th></th><th>Champion</th><th>Picky</th><th>Bany</th>
+        <th>Presence</th><th>WR</th></tr></thead>
+      <tbody>
+      {% for ch in champs[:30] %}
+      <tr class="{{ 'top-champ' if loop.index <= 3 }}">
+        <td class="champ-cell"><img class="avatar sm" src="{{ champ_icon(ch.champion) }}" alt=""></td>
+        <td>{{ ch.champion }}</td>
+        <td class="num">{{ ch.picks }}</td>
+        <td class="num">{{ ch.bans }}</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: {{ [ch.presence, 100]|min }}%"></span></span>
+          <b>{{ '%.0f'|format(ch.presence) }}%</b></td>
+        <td class="num {{ 'good' if ch.winrate and ch.winrate >= 50 else 'bad' if ch.winrate is not none }}">
+          {{ '%.0f'|format(ch.winrate) ~ '%' if ch.winrate is not none else '—' }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Týmy</h2>
+    <table class="games">
+      <thead><tr><th>Tým</th><th>Hry</th><th>W/L</th><th>WR</th></tr></thead>
+      <tbody>
+      {% for tm in teams %}
+      <tr>
+        <td>{{ tm.team }}</td>
+        <td class="num">{{ tm.games }}</td>
+        <td class="num">{{ tm.wins }}/{{ tm.games - tm.wins }}</td>
+        <td class="num {{ 'good' if tm.wins * 2 >= tm.games else 'bad' }}">
+          {{ (100 * tm.wins / tm.games)|round|int }}%</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p class="muted">Meta analýza eventu:
+      <a class="tracked-link" href="/pro/meta/{{ t.overview_page|urlencode }}">buffy/nerfy a presence →</a></p>
+  </section>
+</div>
+{% endblock %}

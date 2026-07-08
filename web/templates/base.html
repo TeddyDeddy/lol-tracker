@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}LoL Tracker{% endblock %}</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">⌬ LoL Tracker</a>
+  <a class="nav-link {{ 'active' if request.url.path.startswith('/pro') }}" href="/pro">Pro scéna</a>
+  <span class="live-summary" id="live-summary"></span>
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer class="footer muted">
+  Data: Riot Games API · pro scéna: <a href="https://lol.fandom.com">Leaguepedia</a> (CC BY-SA)
+</footer>
+<div class="tooltip" id="tooltip" hidden></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

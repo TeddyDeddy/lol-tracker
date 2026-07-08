@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}{{ riot_id }} — LoL Tracker{% endblock %}
+{% block content %}
+<div class="player-head">
+  {% if games %}<img class="avatar lg" src="{{ champ_icon(games[0].champion) }}" alt="">{% endif %}
+  <h1>{{ riot_id }}</h1>
+  <nav class="modes">
+    {% for m in modes %}
+    <a class="pill {{ 'active' if m == mode }}" href="/player/{{ riot_id|urlencode }}?mode={{ m }}&season={{ season }}">{{ m }}</a>
+    {% endfor %}
+    <span class="pill-sep"></span>
+    <a class="pill {{ 'active' if not season }}" href="/player/{{ riot_id|urlencode }}?mode={{ mode }}">Vše roky</a>
+    {% for y in seasons %}
+    <a class="pill {{ 'active' if season == y }}" href="/player/{{ riot_id|urlencode }}?mode={{ mode }}&season={{ y }}">{{ y }}</a>
+    {% endfor %}
+  </nav>
+</div>
+
+<div class="tiles">
+  {% set solo = ranks.get('RANKED_SOLO_5x5') %}
+  {% set flex = ranks.get('RANKED_FLEX_SR') %}
+  <div class="tile">
+    <div class="tile-label">SoloQ</div>
+    <div class="tile-value">{{ solo.tier.title() ~ ' ' ~ solo.division if solo else '—' }}</div>
+    {% if solo %}<div class="tile-sub">{{ solo.lp }} LP · {{ solo.wins }}W/{{ solo.losses }}L</div>{% endif %}
+  </div>
+  <div class="tile">
+    <div class="tile-label">Flex</div>
+    <div class="tile-value">{{ flex.tier.title() ~ ' ' ~ flex.division if flex else '—' }}</div>
+    {% if flex %}<div class="tile-sub">{{ flex.lp }} LP · {{ flex.wins }}W/{{ flex.losses }}L</div>{% endif %}
+  </div>
+  <div class="tile">
+    <div class="tile-label">Winrate ({{ summary.games }} her)</div>
+    <div class="tile-value">{{ '%.1f'|format(summary.winrate) }}%</div>
+    <div class="tile-sub">{{ summary.wins }}W/{{ summary.games - summary.wins }}L</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">KDA</div>
+    <div class="tile-value">{{ '%.2f'|format(summary.kda) }}</div>
+    <div class="tile-sub">{{ summary.kills }}/{{ summary.deaths }}/{{ summary.assists }}</div>
+  </div>
+</div>
+
+{% if winrate_series|length > 1 %}
+<section class="panel">
+  <h2>Vývoj formy <span class="muted">klouzavý winrate přes 10 her</span></h2>
+  <div id="wr-chart" data-series='{{ winrate_series|tojson }}'></div>
+</section>
+{% endif %}
+
+<div class="two-col">
+  <section class="panel">
+    <h2>Champion pool <span class="muted">podle počtu her</span></h2>
+    <div class="bars">
+      {% set maxg = champs[0].games if champs else 1 %}
+      {% for ch in champs %}
+      <a class="bar-row" href="/player/{{ riot_id|urlencode }}/champ/{{ ch.champion|urlencode }}?mode={{ mode }}"
+         data-tip="{{ ch.champion }}: {{ ch.games }} her · {{ (100 * ch.wins / ch.games)|round|int }}% WR · KDA {{ '%.2f'|format((ch.k + ch.a) / (ch.d if ch.d else 1)) }} — klikni pro detail">
+        <img class="avatar sm" src="{{ champ_icon(ch.champion) }}" alt="">
+        <span class="bar-name">{{ ch.champion }}</span>
+        <span class="bar-track"><span class="bar-fill" style="width: {{ 100 * ch.games / maxg }}%"></span></span>
+        <span class="bar-val">{{ ch.games }}</span>
+        <span class="bar-wr {{ 'good' if ch.wins / ch.games >= 0.5 else 'bad' }}">{{ (100 * ch.wins / ch.games)|round|int }}%</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Rekordy <span class="muted">{{ mode.lower() if mode != 'Vše' else 'všechny módy' }}</span></h2>
+    <div class="records">
+      {% for r in records %}
+      <a class="record record-link" href="/match/{{ r.match_id }}?focus={{ riot_id|urlencode }}">
+        <div class="tile-label">{{ r.label }}</div>
+        <div class="record-value">{{ fmt_duration(r.val) if r.label == 'Nejdelší hra' else fmt_int(r.val) }}</div>
+        <div class="tile-sub">{{ r.champion }} · {{ when(r.game_creation) }} ·
+          <span class="{{ 'good' if r.win else 'bad' }}">{{ 'W' if r.win else 'L' }}</span></div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+{% if matchups_best %}
+<section class="panel">
+  <h2>Lane matchupy <span class="muted">min. 3 střetnutí ve stejné roli</span></h2>
+  <div class="two-col">
+    <div>
+      <div class="tile-label">Nejlepší</div>
+      {% for mu in matchups_best %}
+      <div class="matchup">
+        <img class="avatar sm" src="{{ champ_icon(mu.my_champ) }}" alt="{{ mu.my_champ }}">
+        <span class="muted">vs</span>
+        <img class="avatar sm" src="{{ champ_icon(mu.enemy) }}" alt="">
+        <span class="mu-name">{{ mu.my_champ }} vs {{ mu.enemy }}</span>
+        <span class="bar-wr good">{{ (100 * mu.wins / mu.games)|round|int }}%</span>
+        <span class="muted mu-games">{{ mu.games }}×</span>
+      </div>
+      {% endfor %}
+    </div>
+    <div>
+      <div class="tile-label">Nejhorší</div>
+      {% for mu in matchups_worst %}
+      <div class="matchup">
+        <img class="avatar sm" src="{{ champ_icon(mu.my_champ) }}" alt="{{ mu.my_champ }}">
+        <span class="muted">vs</span>
+        <img class="avatar sm" src="{{ champ_icon(mu.enemy) }}" alt="">
+        <span class="mu-name">{{ mu.my_champ }} vs {{ mu.enemy }}</span>
+        <span class="bar-wr bad">{{ (100 * mu.wins / mu.games)|round|int }}%</span>
+        <span class="muted mu-games">{{ mu.games }}×</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="panel">
+  <h2>Posledních {{ games|length }} her
+    <a class="muted all-games-link" href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}&season={{ season }}">Všechny hry →</a></h2>
+  <table class="games">
+    <thead><tr><th></th><th>Champion</th><th>K/D/A</th><th>CS</th><th>Itemy</th><th>Mód</th><th>Délka</th><th>Kdy</th></tr></thead>
+    <tbody>
+    {% for g in games %}
+      <tr class="{{ 'row-w' if g.win else 'row-l' }} row-click"
+          onclick="location.href='/match/{{ g.match_id }}?focus={{ riot_id|urlencode }}'">
+        <td class="champ-cell">
+          <img class="avatar sm" src="{{ champ_icon(g.champion) }}" alt="">
+          {%- if g.keystone and g.keystone in rune_icons -%}
+          <img class="rune" src="{{ rune_icons[g.keystone] }}" alt="keystone">
+          {%- endif -%}
+        </td>
+        <td>{{ g.champion }}</td>
+        <td class="num">{{ g.kills }}/{{ g.deaths }}/{{ g.assists }}</td>
+        <td class="num">{{ g.cs }}</td>
+        <td class="items">
+          {% for it in (g["items"] or "").split() %}<img class="item" src="{{ item_icon(it) }}" alt="">{% endfor %}
+        </td>
+        <td>{{ queue_names.get(g.queue_id, g.queue_id) }}</td>
+        <td class="num">{{ fmt_duration(g.duration) }}</td>
+        <td class="muted">{{ when(g.game_creation) }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

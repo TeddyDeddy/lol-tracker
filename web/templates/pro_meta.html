@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Meta — {{ event.name }}{% endblock %}
+{% block content %}
+<div class="player-head">
+  <div>
+    <h1>Meta: {{ event.name }}</h1>
+    <a class="muted" href="/pro/t/{{ op|urlencode }}">← {{ event.name }}</a>
+    <span class="muted">· patche {{ patches|join(', ') or '?' }}
+      · baseline: {{ baseline_games }} her hlavních lig za ~2 měsíce před eventem
+      · event: {{ event_games }} her</span>
+  </div>
+</div>
+
+<section class="panel">
+  <h2>Presence: před eventem vs. na eventu
+    <span class="muted">🟢 buff · 🔴 nerf · 🔵 adjust na patchi eventu</span></h2>
+  <table class="games">
+    <thead><tr><th></th><th>Champion</th><th>Změna v patchi</th>
+      <th>Před</th><th>Na eventu</th><th>Δ</th><th>P/B na eventu</th></tr></thead>
+    <tbody>
+    {% for r in rows[:40] %}
+    <tr>
+      <td class="champ-cell"><img class="avatar sm" src="{{ champ_icon(r.champion) }}" alt=""></td>
+      <td>{{ r.champion }}</td>
+      <td>
+        {% if r.kind == 'buff' %}<span class="good">🟢 buff</span>
+        {% elif r.kind == 'nerf' %}<span class="bad">🔴 nerf</span>
+        {% elif r.kind %}<span>🔵 {{ r.kind }}</span>
+        {% else %}<span class="muted">—</span>{% endif %}
+        {% if r.note %}<span class="muted" data-tip="{{ r.note }}"> ⓘ</span>{% endif %}
+      </td>
+      <td class="num">{{ '%.0f'|format(r.before) }}%</td>
+      <td class="num"><b>{{ '%.0f'|format(r.at) }}%</b></td>
+      <td class="num delta-cell">
+        <span class="delta-track"><span class="delta-fill {{ 'pos' if r.delta >= 0 else 'neg' }}"
+          style="width: {{ ([r.delta|abs, 100]|min) / 2 }}%"></span></span>
+        <span class="{{ 'good' if r.delta > 0 else 'bad' if r.delta < 0 }}">{{ '%+.0f'|format(r.delta) }} pb</span></td>
+      <td class="num muted">{{ r.picks }}/{{ r.bans }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

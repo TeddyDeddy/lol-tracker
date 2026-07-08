@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Pro scéna — LoL Tracker{% endblock %}
+{% block content %}
+<div class="player-head">
+  <h1>Pro scéna</h1>
+  <nav class="modes">
+    {% for y in years %}
+    <a class="pill {{ 'active' if y == year }}" href="/pro?year={{ y }}">{{ y }}</a>
+    {% endfor %}
+  </nav>
+</div>
+
+{% if not years %}
+<div class="empty">
+  <div class="empty-icon">🏆</div>
+  <p>Žádná pro data.</p>
+  <p class="muted">Spusť <code>python -m lol.leaguepedia ingest 2025</code>.</p>
+</div>
+{% else %}
+<p class="muted db-status">V DB: {{ n_with_data }} turnaj{{ 'e' if 1 < n_with_data < 5 else ('ů' if n_with_data != 1 else '') }} s hrami
+  {% if last_data %}· poslední zápas {{ last_data }}{% endif %}
+  · ostatní čekají na ingest</p>
+{% endif %}
+
+{% if events %}
+<section class="panel">
+  <h2>Hlavní eventy {{ year }}</h2>
+  <div class="cards">
+    {% for t in events %}
+    {% if t.games %}
+    <div class="card pro-card has-data">
+      <div class="card-body">
+        <div class="card-title"><a class="tracked-link" href="/pro/t/{{ t.overview_page|urlencode }}">{{ t.name }}</a></div>
+        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub"><span class="good">{{ t.games }} her</span>
+          · <a class="tracked-link" href="/pro/meta/{{ t.overview_page|urlencode }}">meta →</a></div>
+      </div>
+    </div>
+    {% else %}
+    <div class="card pro-card no-data">
+      <div class="card-body">
+        <div class="card-title">{{ t.name }}</div>
+        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub"><span class="badge-soon">zatím nestaženo</span></div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% for league, ts in leagues %}
+<section class="panel">
+  <h2>{{ short(league) }} <span class="muted">{{ league }}</span></h2>
+  <div class="cards">
+    {% for t in ts %}
+    {% if t.games %}
+    <a class="card pro-card has-data" href="/pro/t/{{ t.overview_page|urlencode }}">
+      <div class="card-body">
+        <div class="card-title">{{ t.name }}{% if t.is_playoffs %} 🏆{% endif %}</div>
+        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub"><span class="good">{{ t.games }} her</span></div>
+      </div>
+    </a>
+    {% else %}
+    <div class="card pro-card no-data">
+      <div class="card-body">
+        <div class="card-title">{{ t.name }}{% if t.is_playoffs %} 🏆{% endif %}</div>
+        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub"><span class="badge-soon">zatím nestaženo</span></div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

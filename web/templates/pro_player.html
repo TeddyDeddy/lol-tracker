@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ player }} — Pro scéna{% endblock %}
+{% block content %}
+<div class="player-head">
+  {% if tournaments and tournaments[0].champs %}
+  <img class="avatar lg" src="{{ champ_icon(tournaments[0].champs[0].champion) }}" alt="">
+  {% endif %}
+  <div>
+    <h1>{{ player }}</h1>
+    <a class="muted" href="/pro">← Pro scéna</a>
+    <a class="muted" href="https://lol.fandom.com/wiki/{{ player|urlencode }}" target="_blank">· Leaguepedia ↗</a>
+  </div>
+</div>
+
+{% if not tournaments %}
+<section class="panel">
+  <p class="muted">Hráč `{{ player }}` není v DB.</p>
+  {% if suggestions %}
+  <p>Mysleli jste:
+    {% for s in suggestions %}
+    <a class="pill" href="/pro/player/{{ s|urlencode }}">{{ s }}</a>
+    {% endfor %}</p>
+  {% endif %}
+</section>
+{% endif %}
+
+{% for t in tournaments %}
+<section class="panel">
+  <h2><a class="tracked-link" href="/pro/t/{{ t.overview_page|urlencode }}">{{ t.name }}</a>
+    <span class="muted">{{ t.games }} her · {{ '%.0f'|format(t.winrate) }}% WR · KDA {{ '%.2f'|format(t.kda) }}</span>
+  </h2>
+  <div class="bars">
+    {% set maxg = t.champs[0].games if t.champs else 1 %}
+    {% for ch in t.champs %}
+    <div class="bar-row">
+      <img class="avatar sm" src="{{ champ_icon(ch.champion) }}" alt="">
+      <span class="bar-name">{{ ch.champion }}</span>
+      <span class="bar-track"><span class="bar-fill" style="width: {{ 100 * ch.games / maxg }}%"></span></span>
+      <span class="bar-val">{{ ch.games }}×</span>
+      <span class="num muted">{{ ch.k }}/{{ ch.d }}/{{ ch.a }}</span>
+      <span class="bar-wr {{ 'good' if ch.wins * 2 >= ch.games else 'bad' }}">{{ (100 * ch.wins / ch.games)|round|int }}%</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}
