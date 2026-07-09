@@ -105,6 +105,22 @@ for (const tr of document.querySelectorAll("tr.row-click")) {
 }
 
 /**
+ * @brief Whole-card click on `.card-click` cards that also contain a nested
+ *        secondary link (e.g. "meta →").
+ *
+ * A card can't be a single `<a>` when it needs a second, differently-targeted
+ * link inside it (nested anchors are invalid HTML) — so the card carries
+ * `data-href` for the primary target and this delegates clicks to it, except
+ * when the click landed on a real `<a>`, which keeps its own href.
+ */
+for (const card of document.querySelectorAll(".card-click")) {
+  card.addEventListener("click", e => {
+    if (e.target.closest("a")) return;
+    if (card.dataset.href) location.href = card.dataset.href;
+  });
+}
+
+/**
  * @brief Wire up phase tab buttons (Základní část / Play-off / Play-In / ...)
  *        on a tournament page to switch which `.phase-panel` is visible.
  *

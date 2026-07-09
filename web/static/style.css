@@ -50,10 +50,11 @@ a { color: inherit; text-decoration: none; }
   border-radius: 12px; padding: 14px; display: flex; gap: 12px;
   transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
-a.card:hover {
+a.card:hover, .card-click:hover {
   border-color: var(--accent); transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
+.card-click { cursor: pointer; }
 .card-title { color: var(--ink); font-weight: 600; display: flex; gap: 8px; align-items: center; }
 .card-sub { font-size: 13px; color: var(--muted); margin: 2px 0 8px; }
 .badge {
