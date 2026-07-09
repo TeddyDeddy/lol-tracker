@@ -177,7 +177,34 @@ GAME_FIELDS = ("GameId,MatchId,Tournament,DateTime_UTC,Patch,"
 PLAYER_FIELDS = "GameId,Link,Team,Champion,Kills,Deaths,Assists,Role,PlayerWin"
 
 MATCH_FIELDS = ("MatchId,Team1,Team2,Winner,Team1Score,Team2Score,"
-                "DateTime_UTC,Round,Tab,BestOf")
+                "DateTime_UTC,Round,Tab,BestOf,"
+                "Phase,GroupName,N_TabInPage,N_MatchInTab,N_Page")
+
+PATCH_NOTE_FIELDS = "EntityType,Entity,Changes,Patch"
+
+# Slova indikující směr balance změny (angličtina — Leaguepedia patch notes jsou EN).
+# Best-effort: bez lepšího zdroje nejde spolehlivě rozlišit "adjust" (smíšená změna)
+# od jednoznačného buff/nerf jinak než klíčovými slovy v popisu.
+_BUFF_WORDS = ("increased", "buffed", "reduced cooldown", "lowered cost", "faster")
+_NERF_WORDS = ("decreased", "nerfed", "increased cooldown", "increased cost", "reduced", "slower")
+
+
+def _classify_change(text: str) -> str:
+    """
+    @brief Best-effort buff/nerf/adjust classification from a patch-note description.
+
+    @param text Free-text "Changes" field from Leaguepedia's PatchNotes Cargo table.
+    @return "buff" or "nerf" if the text unambiguously leans one way, else "adjust"
+            (mixed or neither keyword set matched).
+    """
+    t = (text or "").lower()
+    buffed = any(w in t for w in _BUFF_WORDS)
+    nerfed = any(w in t for w in _NERF_WORDS)
+    if buffed and not nerfed:
+        return "buff"
+    if nerfed and not buffed:
+        return "nerf"
+    return "adjust"
 
 
 def ingest_tournament(con, t: dict) -> int:
@@ -224,13 +251,51 @@ def ingest_tournament(con, t: dict) -> int:
             continue
         winner = {"1": m.get("Team1"), "2": m.get("Team2")}.get(m.get("Winner"))
         con.execute(
-            "INSERT OR REPLACE INTO pro_matches VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT OR REPLACE INTO pro_matches"
+            " (match_id, overview_page, round, tab, best_of, team1, team2,"
+            "  team1_score, team2_score, winner, date,"
+            "  phase, group_name, n_tab_in_page, n_match_in_tab, n_page)"
+            " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (m["MatchId"], op, m.get("Round"), m.get("Tab"),
              int(m["BestOf"]) if m.get("BestOf") else None,
              m.get("Team1"), m.get("Team2"),
              int(m["Team1Score"] or 0), int(m["Team2Score"] or 0),
-             winner, m.get("DateTime UTC")))
+             winner, m.get("DateTime UTC"),
+             m.get("Phase") or None, m.get("GroupName") or None,
+             int(m["N TabInPage"]) if m.get("N TabInPage") else None,
+             int(m["N MatchInTab"]) if m.get("N MatchInTab") else None,
+             int(m["N Page"]) if m.get("N Page") else None))
 
+    con.commit()
+    return n
+
+
+def ingest_patch_notes(con, patches: list[str]) -> int:
+    """
+    @brief Pull champion balance changes from Leaguepedia's PatchNotes Cargo table
+           for the given patches and upsert them into patch_changes.
+
+    Only covers patches that actually appear in `pro_games.patch` — there is no
+    point pulling the whole balance-change history when we only need context for
+    events we've actually ingested.
+
+    @param patches Patch version strings as Leaguepedia/pro_games reports them,
+                    e.g. ["25.05", "25.06"].
+    @return Number of (patch, champion) rows upserted.
+    """
+    n = 0
+    for patch in patches:
+        if not patch:
+            continue
+        where = f"EntityType='Champion' AND Patch='{_esc(patch)}'"
+        for row in cargo_query_all("PatchNotes", PATCH_NOTE_FIELDS, where):
+            champion, changes = row.get("Entity"), row.get("Changes")
+            if not champion or not changes:
+                continue
+            con.execute(
+                "INSERT OR REPLACE INTO patch_changes VALUES (?,?,?,?)",
+                (patch, champion, _classify_change(changes), changes))
+            n += 1
     con.commit()
     return n
 
@@ -251,18 +316,33 @@ def load_patch_changes(con):
 
 
 def _is_done(con, t: dict) -> bool:
-    """Ukončený turnaj s daty v DB se nepřestahovává."""
+    """
+    @brief Decide whether a finished tournament already has all the data we need,
+           so `ingest()` can skip re-downloading it.
+
+    Requires BOTH `pro_games` (ScoreboardGames) and `pro_matches` (MatchSchedule) —
+    a tournament ingested before match-schedule ingestion existed (e.g. MSI 2025)
+    has games but zero matches, which used to be silently treated as "done" and
+    left the bracket permanently empty. Checking both closes that gap on the next
+    `ingest`/`update` run.
+
+    @param t A `pro_tournaments` row dict.
+    @return True if the tournament is past its end date and has both games and matches.
+    """
     today = datetime.date.today().isoformat()
     if not t["date_end"] or t["date_end"] >= today:
         return False
-    return con.execute("SELECT 1 FROM pro_games WHERE overview_page = ? LIMIT 1",
-                       (t["overview_page"],)).fetchone() is not None
+    op = t["overview_page"]
+    has_games = con.execute(
+        "SELECT 1 FROM pro_games WHERE overview_page = ? LIMIT 1", (op,)).fetchone()
+    has_matches = con.execute(
+        "SELECT 1 FROM pro_matches WHERE overview_page = ? LIMIT 1", (op,)).fetchone()
+    return has_games is not None and has_matches is not None
 
 
 def ingest(since_year: int = 2023, only: str | None = None):
     con = db.connect(str(ROOT / "lol.db"))
     login()
-    print(f"patch_changes: {load_patch_changes(con)} záznamů", flush=True)
     tournaments = ingest_tournaments(con, since_year)
     print(f"turnajů celkem: {len(tournaments)}", flush=True)
     for t in tournaments:
@@ -275,6 +355,16 @@ def ingest(since_year: int = 2023, only: str | None = None):
             print(f"   uloženo {ingest_tournament(con, t)} her", flush=True)
         except Exception as e:
             print(f"   CHYBA: {e}", flush=True)
+    patches = [r[0] for r in con.execute(
+        "SELECT DISTINCT patch FROM pro_games WHERE patch IS NOT NULL AND patch != ''")]
+    try:
+        pn = ingest_patch_notes(con, patches)
+        print(f"patch_changes (Leaguepedia, {len(patches)} patchů): {pn} záznamů", flush=True)
+    except Exception as e:
+        print(f"patch notes CHYBA: {e}", flush=True)
+    # ruční data/patch_changes.toml se aplikuje AŽ PO auto-ingestu — funguje jako
+    # override pro záznamy, které chceme doladit ručně (viz komentář v souboru).
+    print(f"patch_changes (ruční override): {load_patch_changes(con)} záznamů", flush=True)
     total = con.execute("SELECT COUNT(*) FROM pro_games").fetchone()[0]
     print(f"HOTOVO — pro_games: {total} her", flush=True)
     con.close()

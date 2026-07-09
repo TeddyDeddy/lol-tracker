@@ -43,10 +43,14 @@ def test_tournament_champs_presence_and_winrate():
 
 def test_bracket_groups_by_round():
     con = _setup()
-    con.execute("INSERT INTO pro_matches VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+    con.execute("INSERT INTO pro_matches (match_id, overview_page, round, tab, best_of,"
+                " team1, team2, team1_score, team2_score, winner, date) VALUES"
+                " (?,?,?,?,?,?,?,?,?,?,?)",
                 ("M1", OP, "Semifinals", "1", 5, "G2", "FNC", 3, 1, "G2",
                  "2025-02-15 17:00:00"))
-    con.execute("INSERT INTO pro_matches VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+    con.execute("INSERT INTO pro_matches (match_id, overview_page, round, tab, best_of,"
+                " team1, team2, team1_score, team2_score, winner, date) VALUES"
+                " (?,?,?,?,?,?,?,?,?,?,?)",
                 ("M2", OP, "Finals", "2", 5, "G2", "KC", 3, 2, "G2",
                  "2025-03-01 17:00:00"))
     con.commit()
@@ -63,7 +67,9 @@ def test_bracket_feeds_from_team_progression():
         ("F1", OP, "Finals", "2", 5, "KC", "G2", 3, 2, "KC", "2025-03-01"),
     ]
     for r in rows:
-        con.execute("INSERT INTO pro_matches VALUES (?,?,?,?,?,?,?,?,?,?,?)", r)
+        con.execute("INSERT INTO pro_matches (match_id, overview_page, round, tab, best_of,"
+                " team1, team2, team1_score, team2_score, winner, date) VALUES"
+                " (?,?,?,?,?,?,?,?,?,?,?)", r)
     con.commit()
     b = prostats.bracket(con, OP)
     semis = {m["match_id"]: m for m in b[0]["matches"]}

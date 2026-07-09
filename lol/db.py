@@ -132,6 +132,14 @@ def connect(path: str = "lol.db") -> sqlite3.Connection:
         if col not in cols:
             con.execute(f"ALTER TABLE pro_games ADD COLUMN {col} {typ}")
     con.execute("CREATE INDEX IF NOT EXISTS idx_pro_games_op ON pro_games (overview_page)")
+    # Leaguepedia's own bracket ordinals (Phase/GroupName/N_TabInPage/N_MatchInTab/N_Page) —
+    # authoritative round/position data, replacing the old date-order guesswork in bracket().
+    cols = {r[1] for r in con.execute("PRAGMA table_info(pro_matches)")}
+    for col, typ in (("phase", "TEXT"), ("group_name", "TEXT"),
+                     ("n_tab_in_page", "INTEGER"), ("n_match_in_tab", "INTEGER"),
+                     ("n_page", "INTEGER")):
+        if col not in cols:
+            con.execute(f"ALTER TABLE pro_matches ADD COLUMN {col} {typ}")
     return con
 
 
