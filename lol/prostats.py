@@ -66,7 +66,8 @@ def tournament_teams(con: sqlite3.Connection, op: str) -> list[dict]:
 
 
 def _round_key(name: str) -> tuple:
-    """Přirozené pořadí kol: Round 1 < Round 2 … < Semifinals < Finals."""
+    """Přirozené pořadí kol podle NÁZVU — fallback pro staré řádky bez
+    N_TabInPage (viz `_round_sort_key`). Round 1 < Round 2 … < Semifinals < Finals."""
     m = re.search(r"(\d+)", name)
     if m:
         return (0, int(m.group(1)))
@@ -77,8 +78,44 @@ def _round_key(name: str) -> tuple:
     return (2, 0)
 
 
+def _round_sort_key(rnd: str, matches: list[dict]) -> tuple:
+    """
+    @brief Ordering key for one bracket column (round/tab).
+
+    Prefers Leaguepedia's own `N_TabInPage` ordinal (authoritative — it's the
+    exact order their own page renders tabs in) when the round's matches were
+    ingested with it. Falls back to the old name-based `_round_key` heuristic
+    for matches ingested before that field existed.
+
+    @param rnd Round/tab display name (the grouping key used by `bracket()`).
+    @param matches Matches already grouped under this round name.
+    @return Sortable tuple; N_TabInPage-backed rounds always sort as a group
+            before name-heuristic rounds (fine in practice — ingestion runs
+            per tournament, so a given tournament's matches are consistently
+            either fully migrated or not).
+    """
+    n = next((m["n_tab_in_page"] for m in matches
+              if m.get("n_tab_in_page") is not None), None)
+    if n is not None:
+        return (0, n)
+    return (1,) + _round_key(rnd)
+
+
 def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
-    """Série seskupené po kolech (pro pavouk), kola v herním pořadí."""
+    """
+    @brief Build the round-by-round bracket/results structure for a tournament.
+
+    Groups `pro_matches` by round (`round` column, falling back to `tab`, then
+    a literal "Zápasy"), orders rounds by `_round_sort_key` and matches within
+    a round by Leaguepedia's `N_MatchInTab` ordinal when available (else by
+    date). Each column is flagged `is_bracket` — False when its matches carry
+    a `group_name` (round-robin/group-stage rounds, e.g. MSI's Play-In, render
+    as a results list rather than a bracket tree; see `web/templates/pro_tournament.html`).
+
+    @param op Tournament's Leaguepedia OverviewPage.
+    @return List of {round, matches, is_bracket}, in play order. Each match
+            dict additionally carries `feeds_from` (see `_link_feeds`).
+    """
     rounds: dict[str, list[dict]] = {}
     for m in con.execute(
             "SELECT * FROM pro_matches WHERE overview_page = ?"
@@ -86,16 +123,31 @@ def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
         m = dict(m)
         rnd = m["round"] or m["tab"] or "Zápasy"
         rounds.setdefault(rnd, []).append(m)
-    cols = [{"round": r, "matches": rounds[r]}
-            for r in sorted(rounds, key=_round_key)]
+    for matches in rounds.values():
+        matches.sort(key=lambda m: (
+            m["n_match_in_tab"] if m.get("n_match_in_tab") is not None else 1 << 30,
+            m["date"] or ""))
+    cols = [{"round": r, "matches": rounds[r],
+             "is_bracket": not any(m.get("group_name") for m in rounds[r])}
+            for r in sorted(rounds, key=lambda r: _round_sort_key(r, rounds[r]))]
     _link_feeds(cols)
     return cols
 
 
 def _link_feeds(cols: list[dict]) -> None:
-    """Odvodí vazby pavouku z postupu týmů: zápas je napájen posledním
-    dřívějším zápasem každého svého týmu. Doplní m["feeds_from"] a seřadí
-    kola podle průměrné pozice feederů (layout jako Leaguepedia)."""
+    """
+    @brief Derive bracket connector edges from team progression.
+
+    A match is "fed by" the last earlier match each of its two teams played —
+    Leaguepedia doesn't expose an explicit feeder-match field, so this is
+    still a heuristic. Sets `m["feeds_from"]`. Also re-sorts a column's
+    matches by average feeder position in the previous column, but ONLY when
+    that column lacks Leaguepedia's own `N_MatchInTab` ordering — when the
+    authoritative order is present (set by `bracket()`), it's trusted as-is
+    rather than overridden by the heuristic.
+
+    @param cols Bracket columns as built by `bracket()`, mutated in place.
+    """
     last_match: dict[str, str] = {}   # tým -> match_id posledního zápasu
     for ci, col in enumerate(cols):
         for m in col["matches"]:
@@ -106,7 +158,9 @@ def _link_feeds(cols: list[dict]) -> None:
             for t in (m["team1"], m["team2"]):
                 if t:
                     last_match[t] = m["match_id"]
-        if ci > 0:
+        has_authoritative_order = col["matches"] and all(
+            m.get("n_match_in_tab") is not None for m in col["matches"])
+        if ci > 0 and not has_authoritative_order:
             prev_pos = {m["match_id"]: i
                         for i, m in enumerate(cols[ci - 1]["matches"])}
 

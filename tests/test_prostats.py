@@ -78,6 +78,50 @@ def test_bracket_feeds_from_team_progression():
     assert sorted(final["feeds_from"]) == ["S1", "S2"]
 
 
+def test_bracket_group_stage_vs_bracket_and_authoritative_order():
+    """MSI-like mix: a round-robin group stage (Play-In) followed by an
+    elimination bracket, both under one overview_page. Play-In's tab name has
+    no digit/quarter/semi/final keyword, so the old name-only heuristic would
+    sort it LAST — n_tab_in_page must override that and put it first. Within
+    the bracket round, n_match_in_tab must override date order too."""
+    con = _setup()
+    cols = ("match_id", "overview_page", "round", "tab", "best_of", "team1", "team2",
+            "team1_score", "team2_score", "winner", "date", "group_name",
+            "n_tab_in_page", "n_match_in_tab", "n_page")
+    rows = [
+        dict(match_id="P1", overview_page=OP, round="", tab="Play-In",
+             best_of=1, team1="G2", team2="FNC", team1_score=1, team2_score=0,
+             winner="G2", date="2025-02-10", group_name="Group A",
+             n_tab_in_page=1, n_match_in_tab=1, n_page=1),
+        dict(match_id="P2", overview_page=OP, round="", tab="Play-In",
+             best_of=1, team1="KC", team2="BDS", team1_score=1, team2_score=0,
+             winner="KC", date="2025-02-11", group_name="Group A",
+             n_tab_in_page=1, n_match_in_tab=2, n_page=1),
+        # n_match_in_tab (1,2) deliberately conflicts with date order (later, earlier)
+        # to prove the authoritative field wins over the date fallback.
+        dict(match_id="B2", overview_page=OP, round="", tab="Bracket Round 1",
+             best_of=5, team1="KC", team2="BDS", team1_score=3, team2_score=1,
+             winner="KC", date="2025-02-19", group_name=None,
+             n_tab_in_page=2, n_match_in_tab=2, n_page=1),
+        dict(match_id="B1", overview_page=OP, round="", tab="Bracket Round 1",
+             best_of=5, team1="G2", team2="FNC", team1_score=3, team2_score=0,
+             winner="G2", date="2025-02-20", group_name=None,
+             n_tab_in_page=2, n_match_in_tab=1, n_page=1),
+    ]
+    for r in rows:
+        con.execute(
+            f"INSERT INTO pro_matches ({', '.join(cols)}) VALUES"
+            f" ({', '.join('?' * len(cols))})", tuple(r[c] for c in cols))
+    con.commit()
+
+    b = prostats.bracket(con, OP)
+    assert [r["round"] for r in b] == ["Play-In", "Bracket Round 1"]
+    play_in, bracket_round = b
+    assert play_in["is_bracket"] is False
+    assert bracket_round["is_bracket"] is True
+    assert [m["match_id"] for m in bracket_round["matches"]] == ["B1", "B2"]
+
+
 def test_series_games_with_players():
     con = _setup()
     for player, champ, role in (("Caps", "Taliyah", "Mid"), ("BrokenBlade", "Ambessa", "Top")):
