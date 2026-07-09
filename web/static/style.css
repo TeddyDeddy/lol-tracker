@@ -243,12 +243,14 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 /* bracket — styl lolesports Pick'Ems: tmavé karty, skóre v odděleném sloupci,
    vítězný řádek zeleně orámovaný, chip hlavičky kol, spojovací stuby v playoff */
 .bracket { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 8px; }
-.bracket-round { display: flex; flex-direction: column; gap: 14px; justify-content: space-around; min-width: 220px; }
+.bracket-round { display: flex; flex-direction: column; min-width: 220px; }
 .round-chip {
+  flex: 0 0 auto; margin-bottom: 14px;
   background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
   padding: 7px 10px; text-align: center; font-size: 12px; font-weight: 600;
   color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px;
 }
+.bracket-round-body { display: flex; flex-direction: column; gap: 14px; justify-content: space-around; flex: 1; }
 .bracket-cell { position: relative; }
 .bm-when { font-size: 11px; color: var(--muted); margin: 0 0 3px 2px; }
 .bracket-match {
@@ -275,11 +277,18 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .bm-win .bm-team, .bm-win .bm-score { color: var(--good); font-weight: 700; }
 .bm-win .bm-logo { color: var(--good); }
 .bracket.playoffs { position: relative; overflow: visible; width: 100%; }
-.bracket.playoffs .bracket-round { flex: 1; min-width: 150px; }
+.bracket.playoffs .bracket-round { flex: 1; min-width: 190px; }
 .bracket-svg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .bracket .bracket-cell, .bracket .round-chip { position: relative; z-index: 1; }
 
-/* základní část: rozklikávací týdny místo horizontálního scrollu */
+/* panel roztažený přes celou šířku okna (uniká z max-width: 1080px u main) */
+.panel-fullbleed {
+  width: 100vw; position: relative; left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw;
+  padding-left: max(20px, calc(50vw - 500px)); padding-right: max(20px, calc(50vw - 500px));
+}
+
+/* základní část: rozklikávací týdny + odrážkový seznam sérií (žádný horizontální scroll) */
 .week-block { margin: 10px 0; }
 .week-block summary {
   cursor: pointer; background: var(--surface); border: 1px solid var(--border);
@@ -290,10 +299,20 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .week-block summary::before { content: "▸"; transition: transform 0.15s; }
 .week-block[open] summary::before { transform: rotate(90deg); }
 .week-block summary:hover { border-color: var(--accent); }
-.week-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 12px; padding: 12px 2px 4px;
+.results-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.results-list li { border-bottom: 1px solid var(--grid); }
+.results-list li:last-child { border-bottom: 0; }
+.results-list a {
+  display: flex; align-items: center; gap: 12px; padding: 8px 4px;
+  color: inherit; text-decoration: none;
 }
+.results-list a:hover { background: rgba(255, 255, 255, 0.03); }
+.rl-date { flex: 0 0 90px; font-size: 12px; color: var(--muted); }
+.rl-team { flex: 1; font-size: 14px; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rl-team.rl-team2 { text-align: left; }
+.rl-win { color: var(--good); font-weight: 700; }
+.rl-score { flex: 0 0 52px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.rl-bo { flex: 0 0 44px; text-align: right; font-size: 12px; }
 .draft { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
 .draft.team-win { border-color: var(--good); }
 .draft-row { display: flex; align-items: center; gap: 6px; margin: 8px 0; flex-wrap: wrap; }

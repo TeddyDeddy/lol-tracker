@@ -5,14 +5,14 @@
   <div>
     <h1>{{ m.team1 if m else '?' }} <span class="muted">{{ m.team1_score if m else '' }} : {{ m.team2_score if m else '' }}</span> {{ m.team2 if m else '?' }}</h1>
     <a class="muted" href="/pro/t/{{ op|urlencode }}">← {{ tournament.name if tournament else op }}</a>
-    {% if m %}<span class="muted">{% if m.round or m.tab %}· {{ m.round or m.tab }} {% endif %}· BO{{ m.best_of }} · {{ (m.date or '')[:16] }} UTC</span>{% endif %}
+    {% if m %}<span class="muted">{% if m.round or m.tab %}· {{ m.round or m.tab }} {% endif %}· BO{{ m.best_of }} · {{ m.date|cz_date }}</span>{% endif %}
   </div>
 </div>
 
 {% for g in games %}
 <section class="panel">
   <h2>Hra {{ loop.index }}
-    <span class="muted">{{ (g.date or '')[:16] }} UTC · {{ '%.0f'|format(g.duration) }} min · patch {{ g.patch }}</span>
+    <span class="muted">{{ g.date|cz_date }} · {{ '%.0f'|format(g.duration) }} min · patch {{ g.patch }}</span>
     <span class="{{ 'good' }}">{{ g.winner }} ✓</span>
   </h2>
   <div class="two-col">
@@ -49,6 +49,7 @@
           <td><a class="tracked-link" href="/pro/player/{{ p.player|urlencode }}">{{ p.player }}</a>
             <span class="muted">{{ p.role }}</span></td>
           <td class="num">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</td>
+          <td class="num muted">{{ (100 * (p.kills + p.assists) / kills)|round|int if kills else 0 }}% KP</td>
         </tr>
         {% endfor %}
         </tbody>
