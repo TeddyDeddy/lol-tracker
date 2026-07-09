@@ -149,7 +149,19 @@ def list_leagues(year: int = 2025):
 # ---------- ingest ----------
 
 def ingest_tournaments(con, since_year: int) -> list[dict]:
-    """Turnaje hlavních lig od roku → pro_tournaments. Vrací řádky z DB."""
+    """
+    @brief Fetch major-league tournaments from `since_year` onward and upsert
+           them into `pro_tournaments`.
+
+    @param since_year Only tournaments with Year >= this are fetched AND
+                       returned — a caller doing `ingest(2026)` must not get
+                       back 2023-2025 rows that happen to already sit in the
+                       DB from earlier ingests, or it ends up re-walking the
+                       whole history regardless of the year argument (that
+                       bug previously made `ingest(2026)` burn its rate-limit
+                       budget re-processing 2025 tournaments).
+    @return `pro_tournaments` rows with year >= since_year, oldest first.
+    """
     leagues = ",".join(f"'{_esc(x)}'" for x in MAJOR_LEAGUES)
     rows = cargo_query_all(
         "Tournaments", "Name,OverviewPage,League,Year,DateStart,Date",
@@ -166,7 +178,8 @@ def ingest_tournaments(con, since_year: int) -> list[dict]:
              int("playoff" in (t.get("Name") or "").lower())))
     con.commit()
     return [dict(r) for r in con.execute(
-        "SELECT * FROM pro_tournaments ORDER BY date_start")]
+        "SELECT * FROM pro_tournaments WHERE year >= ? ORDER BY date_start",
+        (since_year,))]
 
 
 GAME_FIELDS = ("GameId,MatchId,Tournament,DateTime_UTC,Patch,"
