@@ -104,12 +104,15 @@ def _round_is_bracket(name: str, matches: list[dict], has_finals: bool) -> bool:
       2. Round name says "week" -> standings; "bracket" -> bracket
          (Leaguepedia literally names MSI-style rounds "Bracket Round N");
          "final" (also matches semifinal/quarterfinal) -> bracket;
-         "play-in"/"group"/"swiss" -> standings.
-      3. Remaining ambiguous case ("Round N" with no other signal): bracket
-         only if this OverviewPage ALSO has a Finals/Semifinal/Quarterfinal
-         -named round somewhere — real playoff brackets end in one;
-         standalone round-robin splits that reuse "Round N" for match days
-         (e.g. PCS Split 3, LTA Split 1) never do.
+         "group"/"swiss" -> standings. "play-in" is deliberately NOT in this
+         list: real Play-In stages (LPL/LCK "Play-In Round N") are elimination
+         gauntlets, not round-robins — they fall through to rule 3 like any
+         other numbered round and get classified bracket via `has_finals`.
+      3. Remaining ambiguous case ("Round N"/"Play-In Round N" with no other
+         signal): bracket only if this OverviewPage ALSO has a Finals/
+         Semifinal/Quarterfinal-named round somewhere — real playoff brackets
+         (Play-In included) end in one; standalone round-robin splits that
+         reuse "Round N" for match days (e.g. PCS Split 3, LTA Split 1) never do.
 
     @param name Round/tab display name.
     @param matches Matches already grouped under this round.
@@ -124,7 +127,7 @@ def _round_is_bracket(name: str, matches: list[dict], has_finals: bool) -> bool:
         return False
     if "bracket" in lowered or any(kw in lowered for kw in ("final", "semifinal", "quarterfinal")):
         return True
-    if any(kw in lowered for kw in ("play-in", "play in", "group", "swiss")):
+    if any(kw in lowered for kw in ("group", "swiss")):
         return False
     return has_finals
 
@@ -147,6 +150,14 @@ def _round_sort_key(rnd: str, matches: list[dict], is_bracket: bool) -> tuple:
     events (e.g. LPL Grand Finals' "Play-In" tab), which used to sort dead
     last after "Finals" under the old name-only heuristic.
 
+    When the authoritative ordinal is present, it's additionally prefixed by
+    `n_page` (Leaguepedia's page-break ordinal). `n_tab_in_page` RESETS on
+    every page break — long tournaments get split across multiple Leaguepedia
+    sub-pages (e.g. First Stand's group stage is page 1, its bracket is page
+    2), so two rounds on different pages can share the same n_tab_in_page
+    (page 1's "Groups Day 1" and page 2's "Semifinals" are both tab 1) and
+    would tie/interleave without the page number leading the sort.
+
     @param rnd Round/tab display name (the grouping key used by `bracket()`).
     @param matches Matches already grouped under this round name.
     @param is_bracket This round's `_round_is_bracket` result.
@@ -155,8 +166,10 @@ def _round_sort_key(rnd: str, matches: list[dict], is_bracket: bool) -> tuple:
     n = next((m["n_tab_in_page"] for m in matches
               if m.get("n_tab_in_page") is not None), None)
     if n is not None:
-        return (0, n)
-    return (1, int(is_bracket)) + _round_key(rnd)
+        page = next((m["n_page"] for m in matches
+                     if m.get("n_page") is not None), 0) or 0
+        return (0, page, n)
+    return (1, 0, int(is_bracket)) + _round_key(rnd)
 
 
 def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
@@ -234,11 +247,11 @@ def _phase_label(kind: str, round_names: list[str]) -> str:
     @param round_names Round/tab names making up this phase.
     @return Czech display label for the phase tab button.
     """
-    if kind == "bracket":
-        return "Play-off"
     text = " ".join(round_names).lower()
     if "play-in" in text or "play in" in text:
         return "Play-In"
+    if kind == "bracket":
+        return "Play-off"
     if "swiss" in text:
         return "Swiss stage"
     if "group" in text:
@@ -246,35 +259,126 @@ def _phase_label(kind: str, round_names: list[str]) -> str:
     return "Základní část"
 
 
+def _is_play_in(round_name: str) -> bool:
+    """@brief Whether a round/tab name marks it as a Play-In stage."""
+    lowered = round_name.lower()
+    return lowered.startswith("play-in") or lowered.startswith("play in")
+
+
+def _bracket_sections(rounds: list[dict]) -> dict:
+    """
+    @brief Split a bracket-kind phase's rounds into upper/lower/grand-final
+           sections when it's structurally double-elimination, or leave it as
+           one tree when it's single-elimination — including gauntlet-style
+           multi-decider stages (Play-In) that give some losers a second life
+           but don't converge onto one final match.
+
+    Leaguepedia exposes no upper/lower flag (`Phase`/`GroupName` are empty
+    even on freshly-ingested data), so this reconstructs it purely from match
+    results, in play order: a loss sends a team to the lower bracket UNLESS
+    they play again later in the phase (a second life = they were still in
+    the upper bracket when they lost — this also correctly handles teams
+    seeded directly into the lower bracket with zero prior losses, e.g. LEC's
+    5th-8th seeds, since it never looks at loss COUNT, only "do they play
+    again"). The single deciding match is tagged Grand Final — but ONLY when
+    the phase's last round has exactly one match; when it has several (Play-
+    In's parallel decider round, several teams promoting at once with no
+    single champion to converge on), there's nothing to call a "final", so
+    the whole phase falls back to one tree instead of guessing wrong.
+
+    @param rounds Bracket-kind rounds (as built by `bracket()`), in play order.
+    @return `{"double": False, "rounds": rounds}` for a single/gauntlet tree,
+            or `{"double": True, "upper": [...], "lower": [...], "final": [...]}`
+            — same round-dict shape, each column filtered to that section's
+            matches (empty columns dropped, original order preserved). Upper/
+            lower get their own `_link_feeds` pass (connectors only within a
+            section); the final section's match(es) get `feeds_from = []`
+            since it's rendered as its own separate bracket root.
+    """
+    matches = [m for r in rounds for m in r["matches"]]
+    later: dict[str, list[int]] = {}
+    for i, m in enumerate(matches):
+        for t in (m["team1"], m["team2"]):
+            if t:
+                later.setdefault(t, []).append(i)
+    losses: dict[str, int] = {}
+    tags: dict[str, str] = {}
+    any_second_life = False
+    for i, m in enumerate(matches):
+        t1, t2, w = m["team1"], m["team2"], m["winner"]
+        if not (t1 and t2 and w):
+            continue
+        loser = t2 if w == t1 else t1
+        plays_again = any(j > i for j in later.get(loser, ()))
+        if plays_again:
+            any_second_life = True
+        tags[m["match_id"]] = "U" if plays_again else "L"
+        losses[loser] = losses.get(loser, 0) + 1
+
+    last_round_size = len(rounds[-1]["matches"]) if rounds else 0
+    if not any_second_life or last_round_size != 1:
+        return {"double": False, "rounds": rounds}
+    tags[rounds[-1]["matches"][0]["match_id"]] = "GF"
+
+    def pick(kind: str) -> list[dict]:
+        cols = []
+        for r in rounds:
+            ms = [m for m in r["matches"] if tags.get(m["match_id"]) == kind]
+            if ms:
+                cols.append({"round": r["round"], "matches": ms, "is_bracket": True})
+        return cols
+
+    upper, lower, final = pick("U"), pick("L"), pick("GF")
+    _link_feeds(upper)
+    _link_feeds(lower)
+    for r in final:
+        for m in r["matches"]:
+            m["feeds_from"] = []
+    return {"double": True, "upper": upper, "lower": lower, "final": final}
+
+
 def tournament_phases(con: sqlite3.Connection, op: str) -> list[dict]:
     """
     @brief Group a tournament's `bracket()` rounds into UI-navigable phases.
 
-    A phase is a maximal run of consecutive same-kind rounds (all bracket, or
-    all standings) — e.g. a season+playoffs page combined into one
-    OverviewPage becomes two phases: "Základní část" then "Play-off". A plain
-    single-shape tournament (most playoff-only or season-only pages) yields
-    exactly one phase; the web layer skips the tab UI entirely in that case.
+    A phase is a maximal run of consecutive rounds that share both kind
+    (bracket/standings) AND Play-In-ness — e.g. a season+playoffs page
+    combined into one OverviewPage becomes two phases: "Základní část" then
+    "Play-off". A Play-In stage followed by the main bracket becomes two
+    SEPARATE bracket-kind phases (not merged) even though both are "bracket",
+    because they're different elimination pools: a team's Play-In loss must
+    not carry over as a loss when `_bracket_sections` reconstructs the main
+    bracket's upper/lower split. A plain single-shape tournament (most
+    playoff-only or season-only pages) yields exactly one phase; the web
+    layer skips the tab UI entirely in that case.
 
     Standings-kind phases get a computed win/loss table (`phase["standings"]`,
-    see `_standings`) alongside their round match lists; bracket-kind phases
-    get `[]` there since they're read as a tree, not a ranking.
+    see `_standings`); bracket-kind phases get `phase["sections"]` (see
+    `_bracket_sections`) instead — either a single tree or an upper/lower/
+    grand-final split.
 
     @param op Tournament's Leaguepedia OverviewPage.
-    @return List of {label, kind, rounds, standings}, in play order.
+    @return List of {label, kind, rounds, standings, sections}, in play order.
     """
     rounds = bracket(con, op)
     phases: list[dict] = []
     for r in rounds:
         kind = "bracket" if r["is_bracket"] else "standings"
-        if phases and phases[-1]["kind"] == kind:
+        key = (kind, _is_play_in(r["round"]))
+        if phases and phases[-1]["_key"] == key:
             phases[-1]["rounds"].append(r)
         else:
-            phases.append({"kind": kind, "rounds": [r]})
+            phases.append({"kind": kind, "rounds": [r], "_key": key})
     for p in phases:
+        del p["_key"]
         p["label"] = _phase_label(p["kind"], [r["round"] for r in p["rounds"]])
-        all_matches = [m for r in p["rounds"] for m in r["matches"]]
-        p["standings"] = _standings(all_matches) if p["kind"] == "standings" else []
+        if p["kind"] == "standings":
+            all_matches = [m for r in p["rounds"] for m in r["matches"]]
+            p["standings"] = _standings(all_matches)
+            p["sections"] = None
+        else:
+            p["standings"] = []
+            p["sections"] = _bracket_sections(p["rounds"])
     return phases
 
 

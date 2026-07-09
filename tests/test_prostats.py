@@ -222,6 +222,126 @@ def test_tournament_phases_splits_season_and_playoff_without_authoritative_field
     assert playoff["standings"] == []
 
 
+def test_bracket_sections_splits_double_elim_upper_lower_final():
+    """4-team double-elim: A beats B and C beats D in Round 1 (both losers get
+    a second life -> upper); B beats D in Round 2 (lower bracket, D truly
+    eliminated -> lower); A beats C in Round 3 (upper final, C drops to lower
+    -> upper); C beats B in Round 4 (lower final, B truly eliminated ->
+    lower); Finals is the sole decider -> forced GF regardless of the loop's
+    own tag. Mirrors the real LEC/LPL 2026 playoff shape verified live."""
+    con = db.connect(":memory:")
+    _match(con, match_id="R1a", tab="Round 1", n_tab_in_page=1, n_match_in_tab=1,
+           team1="A", team2="B", winner="A", date="2025-02-01")
+    _match(con, match_id="R1b", tab="Round 1", n_tab_in_page=1, n_match_in_tab=2,
+           team1="C", team2="D", winner="C", date="2025-02-01")
+    _match(con, match_id="R2", tab="Round 2", n_tab_in_page=2, n_match_in_tab=1,
+           team1="B", team2="D", winner="B", date="2025-02-02")
+    _match(con, match_id="R3", tab="Round 3", n_tab_in_page=3, n_match_in_tab=1,
+           team1="A", team2="C", winner="A", date="2025-02-03")
+    _match(con, match_id="R4", tab="Round 4", n_tab_in_page=4, n_match_in_tab=1,
+           team1="C", team2="B", winner="C", date="2025-02-04")
+    _match(con, match_id="GF", tab="Finals", n_tab_in_page=5, n_match_in_tab=1,
+           team1="A", team2="C", winner="C", date="2025-02-05")
+    con.commit()
+
+    phases = prostats.tournament_phases(con, OP)
+    assert len(phases) == 1
+    sec = phases[0]["sections"]
+    assert sec["double"] is True
+    assert [r["round"] for r in sec["upper"]] == ["Round 1", "Round 3"]
+    assert [m["match_id"] for r in sec["upper"] for m in r["matches"]] == \
+        ["R1a", "R1b", "R3"]
+    assert [r["round"] for r in sec["lower"]] == ["Round 2", "Round 4"]
+    assert [m["match_id"] for r in sec["lower"] for m in r["matches"]] == \
+        ["R2", "R4"]
+    assert [m["match_id"] for r in sec["final"] for m in r["matches"]] == ["GF"]
+    # spojnice jen uvnitř sekce, nikdy napříč (upper feeds upper, lower feeds lower)
+    r3 = sec["upper"][1]["matches"][0]
+    assert sorted(r3["feeds_from"]) == ["R1a", "R1b"]
+    # R4's other feeder (upper final loser C) isn't tracked: connectors are
+    # computed per-section, and C's prior match lives in the upper section's
+    # own match list, not lower's — the upper->lower drop-in line is
+    # deliberately not drawn (see `_bracket_sections` docstring).
+    r4 = sec["lower"][1]["matches"][0]
+    assert r4["feeds_from"] == ["R2"]
+    assert sec["final"][0]["matches"][0]["feeds_from"] == []
+
+
+def test_bracket_sections_single_elim_stays_one_tree():
+    """No loser ever gets a second life -> not double-elim, sections falls
+    back to the plain single-tree shape (sections["rounds"] == input)."""
+    con = db.connect(":memory:")
+    _match(con, match_id="M1", tab="Round 1", team1="A", team2="B",
+           winner="A", date="2025-02-01")
+    _match(con, match_id="M2", tab="Finals", team1="A", team2="C",
+           winner="A", date="2025-02-08")
+    con.commit()
+    phases = prostats.tournament_phases(con, OP)
+    sec = phases[0]["sections"]
+    assert sec["double"] is False
+    assert [r["round"] for r in sec["rounds"]] == ["Round 1", "Finals"]
+
+
+def test_tournament_phases_keeps_play_in_separate_from_main_bracket():
+    """Play-In (gauntlet: losers CAN reappear, but its last round has TWO
+    parallel deciders promoting two different teams -> no single champion to
+    converge on -> single tree, not upper/lower) must stay its own phase, not
+    merge into the main bracket that follows — a Play-In loss must not carry
+    over as a bracket-loss into the main bracket's upper/lower
+    reconstruction. Regression for the real LPL/LCK 2026 shape verified live."""
+    con = db.connect(":memory:")
+    _match(con, match_id="P1a", tab="Play-In Round 1", n_tab_in_page=1,
+           n_match_in_tab=1, team1="E", team2="F", winner="E", date="2025-02-01")
+    _match(con, match_id="P1b", tab="Play-In Round 1", n_tab_in_page=1,
+           n_match_in_tab=2, team1="I", team2="J", winner="I", date="2025-02-01")
+    _match(con, match_id="P2a", tab="Play-In Round 2", n_tab_in_page=2,
+           n_match_in_tab=1, team1="G", team2="H", winner="H", date="2025-02-02")
+    _match(con, match_id="P2b", tab="Play-In Round 2", n_tab_in_page=2,
+           n_match_in_tab=2, team1="K", team2="L", winner="L", date="2025-02-02")
+    _match(con, match_id="P3a", tab="Play-In Round 3", n_tab_in_page=3,
+           n_match_in_tab=1, team1="F", team2="H", winner="F", date="2025-02-03")
+    _match(con, match_id="P3b", tab="Play-In Round 3", n_tab_in_page=3,
+           n_match_in_tab=2, team1="J", team2="L", winner="J", date="2025-02-03")
+    _match(con, match_id="B1", tab="Round 1", n_tab_in_page=4, n_match_in_tab=1,
+           team1="A", team2="E", winner="A", date="2025-02-10")
+    _match(con, match_id="B2", tab="Finals", n_tab_in_page=5, n_match_in_tab=1,
+           team1="A", team2="F", winner="F", date="2025-02-15")
+    con.commit()
+
+    phases = prostats.tournament_phases(con, OP)
+    assert [p["label"] for p in phases] == ["Play-In", "Play-off"]
+    assert all(p["kind"] == "bracket" for p in phases)
+    play_in, playoff = phases
+    assert play_in["sections"]["double"] is False
+    assert [r["round"] for r in play_in["sections"]["rounds"]] == \
+        ["Play-In Round 1", "Play-In Round 2", "Play-In Round 3"]
+    assert [r["round"] for r in playoff["rounds"]] == ["Round 1", "Finals"]
+
+
+def test_tournament_phases_orders_by_page_before_tab_ordinal():
+    """First Stand shape: `n_tab_in_page` RESETS per Leaguepedia page break,
+    so a group-stage round on page 1 and a bracket round on page 2 can share
+    the same ordinal (both "tab 1") and must not tie/interleave — page must
+    lead the sort. Regression for the real fragmentation bug found live
+    (5 phases instead of 2) before `n_page` was added to `_round_sort_key`."""
+    con = db.connect(":memory:")
+    _match(con, match_id="G1", tab="Groups Day 1", n_page=1, n_tab_in_page=1,
+           n_match_in_tab=1, team1="A", team2="B", winner="A", date="2025-03-16")
+    _match(con, match_id="G2", tab="Groups Day 2", n_page=1, n_tab_in_page=2,
+           n_match_in_tab=1, team1="C", team2="D", winner="C", date="2025-03-17")
+    _match(con, match_id="S1", tab="Semifinals", n_page=2, n_tab_in_page=1,
+           n_match_in_tab=1, team1="A", team2="C", winner="A", date="2025-03-20")
+    _match(con, match_id="F1", tab="Finals", n_page=2, n_tab_in_page=2,
+           n_match_in_tab=1, team1="A", team2="E", winner="A", date="2025-03-22")
+    con.commit()
+
+    phases = prostats.tournament_phases(con, OP)
+    assert [p["kind"] for p in phases] == ["standings", "bracket"]
+    groups, playoff = phases
+    assert [r["round"] for r in groups["rounds"]] == ["Groups Day 1", "Groups Day 2"]
+    assert [r["round"] for r in playoff["rounds"]] == ["Semifinals", "Finals"]
+
+
 def test_tournament_phases_single_shape_is_one_phase():
     """A plain playoff-only page (Type B) must stay a single bracket phase —
     no spurious splitting when there's nothing to split."""
