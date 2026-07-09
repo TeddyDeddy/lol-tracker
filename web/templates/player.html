@@ -20,12 +20,12 @@
   {% set solo = ranks.get('RANKED_SOLO_5x5') %}
   {% set flex = ranks.get('RANKED_FLEX_SR') %}
   <div class="tile">
-    <div class="tile-label">SoloQ</div>
+    <div class="tile-label">SoloQ{{ ' (aktuální)' if season else '' }}</div>
     <div class="tile-value">{{ solo.tier.title() ~ ' ' ~ solo.division if solo else '—' }}</div>
     {% if solo %}<div class="tile-sub">{{ solo.lp }} LP · {{ solo.wins }}W/{{ solo.losses }}L</div>{% endif %}
   </div>
   <div class="tile">
-    <div class="tile-label">Flex</div>
+    <div class="tile-label">Flex{{ ' (aktuální)' if season else '' }}</div>
     <div class="tile-value">{{ flex.tier.title() ~ ' ' ~ flex.division if flex else '—' }}</div>
     {% if flex %}<div class="tile-sub">{{ flex.lp }} LP · {{ flex.wins }}W/{{ flex.losses }}L</div>{% endif %}
   </div>
@@ -41,29 +41,72 @@
   </div>
 </div>
 
-{% if winrate_series|length > 1 %}
 <section class="panel">
-  <h2>Vývoj formy <span class="muted">klouzavý winrate přes 10 her</span></h2>
-  <div id="wr-chart" data-series='{{ winrate_series|tojson }}'></div>
+  <h2>Herní aktivita <span class="muted">podle módu{{ ' · ' + season if season }}</span></h2>
+  <div class="mode-counts">
+    {% set maxc = (mode_counts|map(attribute='games')|max) or 1 %}
+    {% for mc in mode_counts %}
+    <div class="mc-row">
+      <span class="mc-name">{{ mc.mode }}</span>
+      <span class="bar-track"><span class="bar-fill" style="width: {{ 100 * mc.games / maxc }}%"></span></span>
+      <span class="bar-val">{{ mc.games }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% if rank_series.solo|length > 1 or rank_series.flex|length > 1 %}
+  <div class="rank-sparks">
+    {% if rank_series.solo|length > 1 %}
+    <div>
+      <div class="tile-label">SoloQ LP</div>
+      <div class="rank-chart" data-series='{{ rank_series.solo|tojson }}'></div>
+    </div>
+    {% endif %}
+    {% if rank_series.flex|length > 1 %}
+    <div>
+      <div class="tile-label">Flex LP</div>
+      <div class="rank-chart" data-series='{{ rank_series.flex|tojson }}'></div>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
 </section>
-{% endif %}
 
 <div class="two-col">
   <section class="panel">
-    <h2>Champion pool <span class="muted">podle počtu her</span></h2>
-    <div class="bars">
-      {% set maxg = champs[0].games if champs else 1 %}
-      {% for ch in champs %}
-      <a class="bar-row" href="/player/{{ riot_id|urlencode }}/champ/{{ ch.champion|urlencode }}?mode={{ mode }}"
-         data-tip="{{ ch.champion }}: {{ ch.games }} her · {{ (100 * ch.wins / ch.games)|round|int }}% WR · KDA {{ '%.2f'|format((ch.k + ch.a) / (ch.d if ch.d else 1)) }} — klikni pro detail">
-        <img class="avatar sm" src="{{ champ_icon(ch.champion) }}" alt="">
-        <span class="bar-name">{{ ch.champion }}</span>
-        <span class="bar-track"><span class="bar-fill" style="width: {{ 100 * ch.games / maxg }}%"></span></span>
-        <span class="bar-val">{{ ch.games }}</span>
-        <span class="bar-wr {{ 'good' if ch.wins / ch.games >= 0.5 else 'bad' }}">{{ (100 * ch.wins / ch.games)|round|int }}%</span>
-      </a>
-      {% endfor %}
-    </div>
+    <h2>Champion pool <span class="muted">klikni na hlavičku pro řazení</span></h2>
+    <table class="games sortable" id="champ-table">
+      <thead>
+        <tr>
+          <th data-sort="name">Champion</th>
+          <th data-sort="games" class="num">Her</th>
+          <th data-sort="wr" class="num">WR</th>
+          <th data-sort="kda" class="num">KDA</th>
+          <th data-sort="kills" class="num">Kills</th>
+          <th data-sort="deaths" class="num">Deaths</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ch in champs %}
+        <tr data-name="{{ ch.champion }}" data-games="{{ ch.games }}"
+            data-wr="{{ 100 * ch.wins / ch.games }}"
+            data-kda="{{ (ch.k + ch.a) / (ch.d if ch.d else 1) }}"
+            data-kills="{{ '%.1f'|format(ch.k / ch.games) }}"
+            data-deaths="{{ '%.1f'|format(ch.d / ch.games) }}">
+          <td class="champ-cell">
+            <a class="tracked-link" href="/player/{{ riot_id|urlencode }}/champ/{{ ch.champion|urlencode }}?mode={{ mode }}">
+              <img class="avatar sm" src="{{ champ_icon(ch.champion) }}" alt="">
+              {{ ch.champion }}
+            </a>
+          </td>
+          <td class="num">{{ ch.games }}</td>
+          <td class="num {{ 'good' if ch.wins / ch.games >= 0.5 else 'bad' }}">{{ (100 * ch.wins / ch.games)|round|int }}%</td>
+          <td class="num">{{ '%.2f'|format((ch.k + ch.a) / (ch.d if ch.d else 1)) }}</td>
+          <td class="num">{{ '%.1f'|format(ch.k / ch.games) }}</td>
+          <td class="num">{{ '%.1f'|format(ch.d / ch.games) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </section>
 
   <section class="panel">
@@ -72,8 +115,12 @@
       {% for r in records %}
       <a class="record record-link" href="/match/{{ r.match_id }}?focus={{ me_puuid }}">
         <div class="tile-label">{{ r.label }}</div>
-        <div class="record-value">{{ fmt_duration(r.val) if r.label == 'Nejdelší hra' else fmt_int(r.val) }}</div>
-        <div class="tile-sub">{{ r.champion }} · {{ when(r.game_creation) }} ·
+        <div class="record-value">
+          {% if r.label == 'Nejdelší hra' %}{{ fmt_duration(r.val) }}
+          {% elif r.label == 'Nejhorší KDA' %}{{ '%.2f'|format(r.val) }}
+          {% else %}{{ fmt_int(r.val) }}{% endif %}
+        </div>
+        <div class="tile-sub">{{ r.champion }} · {{ r.kills }}/{{ r.deaths }}/{{ r.assists }} · {{ when(r.game_creation) }} ·
           <span class="{{ 'good' if r.win else 'bad' }}">{{ 'W' if r.win else 'L' }}</span></div>
       </a>
       {% endfor %}

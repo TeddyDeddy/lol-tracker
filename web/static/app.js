@@ -16,76 +16,92 @@ for (const el of document.querySelectorAll("[data-tip]")) {
   el.addEventListener("mouseleave", hideTip);
 }
 
-/* ---------- rolling winrate line chart ---------- */
-const chartEl = document.getElementById("wr-chart");
-if (chartEl) {
-  const data = JSON.parse(chartEl.dataset.series);
-  const W = chartEl.clientWidth || 900, H = 220;
-  const M = { l: 40, r: 14, t: 12, b: 24 };
+/**
+ * @brief Draw a minimal LP sparkline into a `.rank-chart` element.
+ *
+ * Autoscales to the series' own min/max (with a small padding) rather than a
+ * fixed 0-100 range, since LP has no universal ceiling. Series are usually
+ * short/flat right now (rank history only just started being recorded) —
+ * this still renders correctly and will show real trends as history grows.
+ *
+ * @param el Container element with a `data-series` JSON attribute:
+ *           [{lp, tier, division, when}, ...], chronological.
+ */
+function renderRankSpark(el) {
+  const data = JSON.parse(el.dataset.series);
+  const W = el.clientWidth || 260, H = 60;
+  const M = { l: 4, r: 4, t: 8, b: 8 };
+  const lps = data.map(d => d.lp);
+  const lo = Math.min(...lps), hi = Math.max(...lps);
+  const pad = Math.max(5, (hi - lo) * 0.15);
+  const yMin = lo - pad, yMax = hi + pad;
   const xs = i => M.l + (i / (data.length - 1)) * (W - M.l - M.r);
-  const ys = wr => M.t + (1 - wr / 100) * (H - M.t - M.b);
+  const ys = v => M.t + (1 - (v - yMin) / (yMax - yMin || 1)) * (H - M.t - M.b);
   const NS = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(NS, "svg");
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-
-  const add = (tag, attrs, parent = svg) => {
-    const el = document.createElementNS(NS, tag);
-    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
-    parent.appendChild(el);
-    return el;
+  const add = attrs => {
+    const line = document.createElementNS(NS, "polyline");
+    for (const [k, v] of Object.entries(attrs)) line.setAttribute(k, v);
+    svg.appendChild(line);
+    return line;
   };
-
-  // mřížka: 0/25/50/75/100 %
-  for (const v of [0, 25, 50, 75, 100]) {
-    add("line", { x1: M.l, x2: W - M.r, y1: ys(v), y2: ys(v),
-                  stroke: "#2c2c2a", "stroke-width": 1 });
-    add("text", { x: M.l - 8, y: ys(v) + 4, "text-anchor": "end",
-                  fill: "#898781", "font-size": 11 }).textContent = v + " %";
-  }
-  // 50% referenční linka o chlup výraznější
-  add("line", { x1: M.l, x2: W - M.r, y1: ys(50), y2: ys(50),
-                stroke: "#383835", "stroke-width": 1 });
-
-  // plocha (wash 10 %) + čára 2px
-  const pts = data.map((d, i) => `${xs(i)},${ys(d.wr)}`).join(" ");
-  add("polygon", { points: `${M.l},${ys(0)} ${pts} ${W - M.r},${ys(0)}`,
-                   fill: "#3987e5", opacity: 0.1 });
-  add("polyline", { points: pts, fill: "none", stroke: "#3987e5",
-                    "stroke-width": 2, "stroke-linejoin": "round",
-                    "stroke-linecap": "round" });
-
-  // koncový bod s ringem + přímý popisek poslední hodnoty
+  const pts = data.map((d, i) => `${xs(i)},${ys(d.lp)}`).join(" ");
+  add({ points: pts, fill: "none", stroke: "#3987e5", "stroke-width": 2,
+        "stroke-linejoin": "round", "stroke-linecap": "round" });
   const last = data[data.length - 1];
-  add("circle", { cx: xs(data.length - 1), cy: ys(last.wr), r: 5,
-                  fill: "#3987e5", stroke: "#1a1a19", "stroke-width": 2 });
-  add("text", { x: xs(data.length - 1) - 6, y: ys(last.wr) - 10,
-                "text-anchor": "end", fill: "#ffffff", "font-size": 12,
-                "font-weight": 600 }).textContent = last.wr.toFixed(0) + " %";
+  const dot = document.createElementNS(NS, "circle");
+  dot.setAttribute("cx", xs(data.length - 1));
+  dot.setAttribute("cy", ys(last.lp));
+  dot.setAttribute("r", 3.5);
+  dot.setAttribute("fill", "#3987e5");
+  dot.setAttribute("stroke", "#1a1a19");
+  dot.setAttribute("stroke-width", 1.5);
+  svg.appendChild(dot);
+  el.appendChild(svg);
+  el.title = `${last.tier} ${last.division} · ${last.lp} LP`;
+}
+for (const el of document.querySelectorAll(".rank-chart")) renderRankSpark(el);
 
-  // crosshair + hover
-  const cross = add("line", { y1: M.t, y2: H - M.b, stroke: "#898781",
-                              "stroke-width": 1, visibility: "hidden" });
-  const dot = add("circle", { r: 5, fill: "#3987e5", stroke: "#1a1a19",
-                              "stroke-width": 2, visibility: "hidden" });
-  svg.addEventListener("mousemove", e => {
-    const rect = svg.getBoundingClientRect();
-    const px = ((e.clientX - rect.left) / rect.width) * W;
-    const i = Math.max(0, Math.min(data.length - 1,
-        Math.round(((px - M.l) / (W - M.l - M.r)) * (data.length - 1))));
-    const d = data[i];
-    cross.setAttribute("x1", xs(i)); cross.setAttribute("x2", xs(i));
-    cross.setAttribute("visibility", "visible");
-    dot.setAttribute("cx", xs(i)); dot.setAttribute("cy", ys(d.wr));
-    dot.setAttribute("visibility", "visible");
-    showTip(`<b>${d.wr.toFixed(0)} % WR</b><br>okno 10 her · ${d.when}`,
-            e.clientX, e.clientY);
+/**
+ * @brief Wire up click-to-sort headers on a `table.sortable`.
+ *
+ * Reads `data-<key>` on each row for the sort key's value; numeric columns
+ * compare as numbers, everything else falls back to locale string compare.
+ *
+ * @param table The `<table class="sortable">` element to make sortable.
+ */
+function makeSortable(table) {
+  const tbody = table.querySelector("tbody");
+  for (const th of table.querySelectorAll("th[data-sort]")) {
+    let asc = false;
+    th.addEventListener("click", () => {
+      const key = th.dataset.sort;
+      asc = !asc;
+      const rows = [...tbody.querySelectorAll("tr")];
+      rows.sort((a, b) => {
+        const av = a.dataset[key], bv = b.dataset[key];
+        const an = parseFloat(av), bn = parseFloat(bv);
+        const cmp = Number.isNaN(an) || Number.isNaN(bn)
+          ? av.localeCompare(bv) : an - bn;
+        return asc ? cmp : -cmp;
+      });
+      for (const r of rows) tbody.appendChild(r);
+      for (const h of table.querySelectorAll("th[data-sort]"))
+        h.classList.remove("sort-asc", "sort-desc");
+      th.classList.add(asc ? "sort-asc" : "sort-desc");
+    });
+  }
+}
+for (const table of document.querySelectorAll("table.sortable")) makeSortable(table);
+
+/* ---------- whole-row click on `.row-click` rows (uses the row's own <a>) ---------- */
+for (const tr of document.querySelectorAll("tr.row-click")) {
+  tr.addEventListener("click", e => {
+    if (e.target.closest("a")) return;  // real links keep their own behavior
+    const link = tr.querySelector("a");
+    if (link) location.href = link.href;
   });
-  svg.addEventListener("mouseleave", () => {
-    cross.setAttribute("visibility", "hidden");
-    dot.setAttribute("visibility", "hidden");
-    hideTip();
-  });
-  chartEl.appendChild(svg);
 }
 
 /* ---------- live badge refresh (à 60 s) ---------- */

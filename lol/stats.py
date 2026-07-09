@@ -20,6 +20,7 @@ QUEUE_GROUPS = {
     "Flex": (440,),
     "Normal": (400, 430, 490),
     "ARAM": (450,),
+    "Arena": (1700, 1750),
 }
 
 RECORDS = [
@@ -82,13 +83,23 @@ def seasons(con: sqlite3.Connection) -> list[str]:
 
 
 def records(con: sqlite3.Connection, riot_id: str, queues=None, season=None) -> list[dict]:
+    """
+    @brief Find this player's single-game standout stats (best-of-N per RECORDS entry,
+           plus longest game and worst KDA), each linking back to the source match.
+
+    @param riot_id Player's current riot id.
+    @param queues Queue-id tuple to filter by (see QUEUE_GROUPS), or None for all.
+    @param season Optional year filter.
+    @return List of record dicts: label, val, match_id, champion, game_creation,
+            duration, win, kills, deaths, assists.
+    """
     qf = _filters(queues, season)
     puuid = _puuid(con, riot_id)
     out = []
     for label, col, agg in RECORDS:
         row = con.execute(
             f"SELECT p.{col} AS val, p.match_id, p.champion, m.game_creation,"
-            f" m.duration, p.win"
+            f" m.duration, p.win, p.kills, p.deaths, p.assists"
             f" FROM match_participants p JOIN matches m USING (match_id)"
             f" WHERE p.puuid = ?{qf} ORDER BY p.{col} DESC LIMIT 1",
             (puuid,),
@@ -97,13 +108,46 @@ def records(con: sqlite3.Connection, riot_id: str, queues=None, season=None) -> 
             out.append({"label": label, **dict(row)})
     row = con.execute(
         "SELECT m.duration AS val, p.match_id, p.champion, m.game_creation,"
-        " m.duration, p.win"
+        " m.duration, p.win, p.kills, p.deaths, p.assists"
         " FROM match_participants p JOIN matches m USING (match_id)"
         f" WHERE p.puuid = ?{qf} ORDER BY m.duration DESC LIMIT 1",
         (puuid,),
     ).fetchone()
     if row:
         out.append({"label": "Nejdelší hra", **dict(row)})
+    # nejhorší KDA, min. 5 smrtí ať to není náhoda z jedné hry s jednou smrtí
+    row = con.execute(
+        "SELECT p.match_id, p.champion, m.game_creation, m.duration, p.win,"
+        " p.kills, p.deaths, p.assists,"
+        " 1.0 * (p.kills + p.assists) / p.deaths AS val"
+        " FROM match_participants p JOIN matches m USING (match_id)"
+        f" WHERE p.puuid = ? AND p.deaths >= 5{qf} ORDER BY val ASC LIMIT 1",
+        (puuid,),
+    ).fetchone()
+    if row:
+        out.append({"label": "Nejhorší KDA", **dict(row)})
+    return out
+
+
+def queue_counts(con: sqlite3.Connection, riot_id: str, season=None) -> list[dict]:
+    """
+    @brief Count games per queue-mode group (SoloQ/Flex/Normal/ARAM/Arena) for a player.
+
+    @param riot_id Player's current riot id.
+    @param season Optional year filter.
+    @return List of {mode, games} in QUEUE_GROUPS order (excluding "All"), zero-count
+            modes included so the caller can render a stable breakdown.
+    """
+    puuid = _puuid(con, riot_id)
+    out = []
+    for name, queues in QUEUE_GROUPS.items():
+        if name == "All":
+            continue
+        qf = _filters(queues, season)
+        n = con.execute(
+            "SELECT COUNT(*) FROM match_participants p JOIN matches m USING (match_id)"
+            f" WHERE p.puuid = ?{qf}", (puuid,)).fetchone()[0]
+        out.append({"mode": name, "games": n})
     return out
 
 

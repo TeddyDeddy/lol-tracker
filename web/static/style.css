@@ -184,8 +184,21 @@ a.bar-row:hover .bar-name { color: var(--accent); }
 .build-order:last-child { border-bottom: 0; }
 .build-item { width: 30px; height: 30px; }
 
-/* ---------- line chart + tooltip ---------- */
-#wr-chart svg { display: block; width: 100%; height: 220px; }
+/* ---------- herní aktivita: mód rozpad + rank sparkline ---------- */
+.mode-counts { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.mc-row { display: grid; grid-template-columns: 70px 1fr 34px; gap: 10px; align-items: center; }
+.mc-name { font-size: 13px; color: var(--ink-2); }
+.rank-sparks { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+.rank-chart { height: 60px; }
+.rank-chart svg { display: block; width: 100%; height: 100%; }
+
+/* ---------- sortovatelné tabulky (champion pool) ---------- */
+table.sortable th[data-sort] { cursor: pointer; user-select: none; }
+table.sortable th[data-sort]:hover { color: var(--ink); }
+table.sortable th.sort-asc::after { content: " \25B2"; font-size: 9px; }
+table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
+
+/* ---------- tooltip ---------- */
 .tooltip {
   position: fixed; z-index: 10; pointer-events: none;
   background: #0d0d0d; border: 1px solid var(--border); border-radius: 8px;

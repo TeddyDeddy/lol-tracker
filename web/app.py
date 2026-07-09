@@ -101,15 +101,20 @@ def latest_ranks(c: sqlite3.Connection, puuid: str) -> dict:
     return {r["queue"]: dict(r) for r in rows}
 
 
-def rolling_winrate(games: list[dict], window: int = 10) -> list[dict]:
-    """Klouzavý winrate přes `window` her, chronologicky."""
-    games = list(reversed(games))  # nejstarší první
-    out = []
-    for i in range(window, len(games) + 1):
-        chunk = games[i - window:i]
-        out.append({"i": i, "wr": 100 * sum(g["win"] for g in chunk) / window,
-                    "when": stats._when(chunk[-1]["game_creation"])})
-    return out
+def rank_history(c: sqlite3.Connection, puuid: str, queue: str) -> list[dict]:
+    """
+    @brief Fetch a player's LP history for one ranked queue, oldest first.
+
+    @param puuid Player's PUUID.
+    @param queue Riot queue type string, e.g. "RANKED_SOLO_5x5" or "RANKED_FLEX_SR".
+    @return List of {lp, tier, division, when} snapshots, chronological, for a sparkline.
+    """
+    rows = c.execute(
+        "SELECT tier, division, lp, taken_at FROM rank_snapshots"
+        " WHERE puuid = ? AND queue = ? ORDER BY taken_at",
+        (puuid, queue)).fetchall()
+    return [{"lp": r["lp"], "tier": r["tier"], "division": r["division"],
+             "when": r["taken_at"]} for r in rows]
 
 
 @app.get("/")
@@ -219,7 +224,6 @@ async def player(request: Request, riot_id: str, mode: str = "All", season: str 
     p = c.execute("SELECT * FROM players WHERE riot_id = ?", (riot_id,)).fetchone()
     ranks = latest_ranks(c, p["puuid"]) if p else {}
     games = stats.recent_games(c, riot_id, 20, queues, sez)
-    history = stats.recent_games(c, riot_id, 120, queues, sez)
     champs = c.execute(
         "SELECT champion, COUNT(*) games, SUM(win) wins,"
         " SUM(kills) k, SUM(deaths) d, SUM(assists) a"
@@ -231,12 +235,16 @@ async def player(request: Request, riot_id: str, mode: str = "All", season: str 
     recs = stats.records(c, riot_id, queues, sez)
     mups = stats.matchups(c, riot_id, 3, queues, sez)
     all_seasons = stats.seasons(c)
+    mode_counts = stats.queue_counts(c, riot_id, sez)
+    rank_series = ({"solo": rank_history(c, p["puuid"], "RANKED_SOLO_5x5"),
+                     "flex": rank_history(c, p["puuid"], "RANKED_FLEX_SR")}
+                   if p else {"solo": [], "flex": []})
     c.close()
     return templates.TemplateResponse(request, "player.html", {
         "riot_id": riot_id, "mode": mode, "modes": list(stats.QUEUE_GROUPS),
         "season": season, "seasons": all_seasons, "me_puuid": me_puuid,
         "summary": s, "ranks": ranks, "games": games,
-        "winrate_series": rolling_winrate(history),
+        "mode_counts": mode_counts, "rank_series": rank_series,
         "champs": [dict(x) for x in champs], "records": recs,
         "matchups_best": mups[:6], "matchups_worst": mups[-6:][::-1] if len(mups) > 6 else [],
         "champ_icon": champ_icon, "item_icon": item_icon, "rune_icons": RUNE_ICONS,
