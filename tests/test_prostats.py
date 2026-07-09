@@ -16,6 +16,26 @@ def _game(con, gid, mid, team1="G2", team2="FNC", winner="G2",
          team1, team2, winner, 32.5, picks1, picks2, bans1, bans2, "", OP, 20, 9))
 
 
+_MATCH_COLS = ("match_id", "overview_page", "round", "tab", "best_of", "team1",
+               "team2", "team1_score", "team2_score", "winner", "date",
+               "group_name", "n_tab_in_page", "n_match_in_tab", "n_page")
+
+
+def _match(con, op=OP, group_name=None, n_tab_in_page=None,
+          n_match_in_tab=None, n_page=None, **kwargs):
+    """Insert one pro_matches row. Bracket-ordinal fields default to None,
+    matching today's real (un-migrated) data unless a test opts in."""
+    row = {"overview_page": op, "round": "", "tab": "", "best_of": 5,
+           "team1_score": 0, "team2_score": 0, "winner": None, "date": "",
+           "group_name": group_name, "n_tab_in_page": n_tab_in_page,
+           "n_match_in_tab": n_match_in_tab, "n_page": n_page}
+    row.update(kwargs)
+    con.execute(
+        f"INSERT INTO pro_matches ({', '.join(_MATCH_COLS)}) VALUES"
+        f" ({', '.join('?' * len(_MATCH_COLS))})",
+        tuple(row[c] for c in _MATCH_COLS))
+
+
 def _setup():
     con = db.connect(":memory:")
     con.execute("INSERT INTO pro_tournaments VALUES (?,?,?,?,?,?,?)",
@@ -152,3 +172,66 @@ def test_event_meta_shift_uses_baseline_and_patch_changes():
     assert rows["Ambessa"]["delta"] == 100.0        # 0 % před, 100 % na eventu
     assert rows["Rumble"]["before"] == 100.0 and rows["Rumble"]["at"] == 50.0
     assert rows["Rumble"]["delta"] == -50.0
+
+
+OP_MIX = "LTA North/2025 Season/Split 3"
+
+
+def test_tournament_phases_splits_season_and_playoff_without_authoritative_fields():
+    """Type C shape (LTA-style): 3 round-robin weeks + a bracket in one
+    overview_page, with NO group_name/n_tab_in_page set — matching today's
+    real DB state (no live re-ingest has populated those fields yet). Must
+    still produce exactly two clean phases without Week/Round interleaving,
+    and the structural (matches-per-team) heuristic must tell them apart."""
+    con = db.connect(":memory:")
+    # Week 1-3: round-robin, each team plays a different opponent each week.
+    _match(con, op=OP_MIX, match_id="W1a", tab="Week 1", team1="A", team2="B",
+           winner="A", team1_score=2, team2_score=0, date="2025-01-01")
+    _match(con, op=OP_MIX, match_id="W1b", tab="Week 1", team1="C", team2="D",
+           winner="C", team1_score=2, team2_score=1, date="2025-01-01")
+    _match(con, op=OP_MIX, match_id="W2a", tab="Week 2", team1="A", team2="C",
+           winner="C", team1_score=0, team2_score=2, date="2025-01-08")
+    _match(con, op=OP_MIX, match_id="W2b", tab="Week 2", team1="B", team2="D",
+           winner="B", team1_score=2, team2_score=1, date="2025-01-08")
+    _match(con, op=OP_MIX, match_id="W3a", tab="Week 3", team1="A", team2="D",
+           winner="A", team1_score=2, team2_score=0, date="2025-01-15")
+    _match(con, op=OP_MIX, match_id="W3b", tab="Week 3", team1="B", team2="C",
+           winner="B", team1_score=2, team2_score=1, date="2025-01-15")
+    # Round 1 + Finals: elimination bracket, each team plays exactly one
+    # match per round — the signal that distinguishes it from the weeks above.
+    _match(con, op=OP_MIX, match_id="R1a", tab="Round 1", team1="A", team2="D",
+           winner="A", team1_score=3, team2_score=1, date="2025-02-01")
+    _match(con, op=OP_MIX, match_id="R1b", tab="Round 1", team1="B", team2="C",
+           winner="B", team1_score=3, team2_score=2, date="2025-02-01")
+    _match(con, op=OP_MIX, match_id="F1", tab="Finals", team1="A", team2="B",
+           winner="A", team1_score=3, team2_score=2, date="2025-02-08")
+    con.commit()
+
+    phases = prostats.tournament_phases(con, OP_MIX)
+    assert [p["kind"] for p in phases] == ["standings", "bracket"]
+    season, playoff = phases
+    assert season["label"] == "Základní část"
+    assert [r["round"] for r in season["rounds"]] == ["Week 1", "Week 2", "Week 3"]
+    assert playoff["label"] == "Play-off"
+    assert [r["round"] for r in playoff["rounds"]] == ["Round 1", "Finals"]
+
+    # A: won wk1 (vs B), lost wk2 (vs C), won wk3 (vs D) -> 2-1 in the season phase
+    standings = {s["team"]: s for s in season["standings"]}
+    assert standings["A"]["wins"] == 2 and standings["A"]["losses"] == 1
+    assert round(standings["A"]["winrate"], 1) == round(200 / 3, 1)
+    assert playoff["standings"] == []
+
+
+def test_tournament_phases_single_shape_is_one_phase():
+    """A plain playoff-only page (Type B) must stay a single bracket phase —
+    no spurious splitting when there's nothing to split."""
+    con = db.connect(":memory:")
+    _match(con, op=OP, match_id="M1", tab="Round 1", team1="G2", team2="FNC",
+           winner="G2", team1_score=3, team2_score=1, date="2025-02-15")
+    _match(con, op=OP, match_id="M2", tab="Finals", team1="G2", team2="KC",
+           winner="KC", team1_score=2, team2_score=3, date="2025-03-01")
+    con.commit()
+    phases = prostats.tournament_phases(con, OP)
+    assert len(phases) == 1
+    assert phases[0]["kind"] == "bracket"
+    assert phases[0]["label"] == "Play-off"

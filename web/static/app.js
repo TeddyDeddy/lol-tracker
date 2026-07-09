@@ -104,6 +104,33 @@ for (const tr of document.querySelectorAll("tr.row-click")) {
   });
 }
 
+/**
+ * @brief Wire up phase tab buttons (Základní část / Play-off / Play-In / ...)
+ *        on a tournament page to switch which `.phase-panel` is visible.
+ *
+ * Redraws the shown panel's bracket connectors on switch, if it has one —
+ * a bracket drawn while its panel was `hidden` gets zero-sized rects from
+ * `getBoundingClientRect`, so the initial draw() on page load is a no-op
+ * for any non-default tab and must be redone once the panel becomes visible.
+ */
+function initPhaseTabs() {
+  const tabs = document.querySelector(".phase-tabs");
+  if (!tabs) return;
+  const buttons = [...tabs.querySelectorAll(".phase-tab")];
+  const panels = [...document.querySelectorAll(".phase-panel")];
+  for (const btn of buttons) {
+    btn.addEventListener("click", () => {
+      for (const b of buttons) b.classList.remove("active");
+      btn.classList.add("active");
+      for (const p of panels) p.hidden = p.dataset.phase !== btn.dataset.phase;
+      const shown = panels.find(p => p.dataset.phase === btn.dataset.phase);
+      const bracket = shown && shown.querySelector(".bracket.playoffs");
+      if (bracket && bracket._redraw) bracket._redraw();
+    });
+  }
+}
+initPhaseTabs();
+
 /* ---------- live badge refresh (à 60 s) ---------- */
 async function refreshLive() {
   try {

@@ -78,27 +78,85 @@ def _round_key(name: str) -> tuple:
     return (2, 0)
 
 
-def _round_sort_key(rnd: str, matches: list[dict]) -> tuple:
+def _round_is_bracket(name: str, matches: list[dict], has_finals: bool) -> bool:
     """
-    @brief Ordering key for one bracket column (round/tab).
+    @brief Decide whether a round/tab is bracket-shaped (elimination) or
+           standings-shaped (round-robin/group).
+
+    Neither a per-round structural signal alone works here. "One match per
+    team this round" looks like a clean bracket tell, but real LPL playoff
+    brackets break it: their bracket format lets a team play TWO series
+    within one "Round N" tab (a lower-bracket drop replayed in the same
+    round label), so that check misclassifies genuine bracket rounds as
+    standings. Cross-round "do losers reappear?" tracking looked promising
+    too, but breaks at the season→playoffs seam — a team can lose one
+    regular-season match and still legitimately qualify for playoffs by
+    overall standings, so a "loser" from the last round-robin week
+    reappears in the first bracket round for reasons that have nothing to
+    do with round-robin vs. bracket shape.
+
+    What actually holds across every tournament shape found in this DB
+    (round-robin-only, bracket-only, season+playoffs combined, play-in+
+    bracket combined): round NAMING plus one page-level fact (whether a
+    Finals/Semifinal/Quarterfinal round exists anywhere on the page).
+      1. `group_name` set -> standings (authoritative, once a future ingest
+         populates it for tournaments ingested before it existed).
+      2. Round name says "week" -> standings; "bracket" -> bracket
+         (Leaguepedia literally names MSI-style rounds "Bracket Round N");
+         "final" (also matches semifinal/quarterfinal) -> bracket;
+         "play-in"/"group"/"swiss" -> standings.
+      3. Remaining ambiguous case ("Round N" with no other signal): bracket
+         only if this OverviewPage ALSO has a Finals/Semifinal/Quarterfinal
+         -named round somewhere — real playoff brackets end in one;
+         standalone round-robin splits that reuse "Round N" for match days
+         (e.g. PCS Split 3, LTA Split 1) never do.
+
+    @param name Round/tab display name.
+    @param matches Matches already grouped under this round.
+    @param has_finals Whether this OverviewPage has any Finals/Semifinal/
+           Quarterfinal-named round — used only for the ambiguous "Round N" case.
+    @return True if the round should render as a bracket column.
+    """
+    if any(m.get("group_name") for m in matches):
+        return False
+    lowered = name.lower()
+    if "week" in lowered:
+        return False
+    if "bracket" in lowered or any(kw in lowered for kw in ("final", "semifinal", "quarterfinal")):
+        return True
+    if any(kw in lowered for kw in ("play-in", "play in", "group", "swiss")):
+        return False
+    return has_finals
+
+
+def _round_sort_key(rnd: str, matches: list[dict], is_bracket: bool) -> tuple:
+    """
+    @brief Ordering key for one bracket/standings column (round/tab).
 
     Prefers Leaguepedia's own `N_TabInPage` ordinal (authoritative — it's the
     exact order their own page renders tabs in) when the round's matches were
-    ingested with it. Falls back to the old name-based `_round_key` heuristic
-    for matches ingested before that field existed.
+    ingested with it. Otherwise sorts ALL standings-kind rounds before ALL
+    bracket-kind rounds, then falls back to the name-based `_round_key`
+    heuristic within each group.
+
+    The standings-before-bracket bucketing (rather than relying purely on
+    `_round_key`) matters for tournaments that combine a regular season and
+    playoffs on one page (e.g. LTA splits): "Week 1" and "Round 1" both
+    extract the digit 1 under `_round_key` and would otherwise tie/interleave,
+    fragmenting what should be two clean phases. It also fixes play-in-style
+    events (e.g. LPL Grand Finals' "Play-In" tab), which used to sort dead
+    last after "Finals" under the old name-only heuristic.
 
     @param rnd Round/tab display name (the grouping key used by `bracket()`).
     @param matches Matches already grouped under this round name.
-    @return Sortable tuple; N_TabInPage-backed rounds always sort as a group
-            before name-heuristic rounds (fine in practice — ingestion runs
-            per tournament, so a given tournament's matches are consistently
-            either fully migrated or not).
+    @param is_bracket This round's `_round_is_bracket` result.
+    @return Sortable tuple.
     """
     n = next((m["n_tab_in_page"] for m in matches
               if m.get("n_tab_in_page") is not None), None)
     if n is not None:
         return (0, n)
-    return (1,) + _round_key(rnd)
+    return (1, int(is_bracket)) + _round_key(rnd)
 
 
 def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
@@ -108,9 +166,7 @@ def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
     Groups `pro_matches` by round (`round` column, falling back to `tab`, then
     a literal "Zápasy"), orders rounds by `_round_sort_key` and matches within
     a round by Leaguepedia's `N_MatchInTab` ordinal when available (else by
-    date). Each column is flagged `is_bracket` — False when its matches carry
-    a `group_name` (round-robin/group-stage rounds, e.g. MSI's Play-In, render
-    as a results list rather than a bracket tree; see `web/templates/pro_tournament.html`).
+    date). Each column is flagged `is_bracket` via `_round_is_bracket`.
 
     @param op Tournament's Leaguepedia OverviewPage.
     @return List of {round, matches, is_bracket}, in play order. Each match
@@ -127,11 +183,99 @@ def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
         matches.sort(key=lambda m: (
             m["n_match_in_tab"] if m.get("n_match_in_tab") is not None else 1 << 30,
             m["date"] or ""))
-    cols = [{"round": r, "matches": rounds[r],
-             "is_bracket": not any(m.get("group_name") for m in rounds[r])}
-            for r in sorted(rounds, key=lambda r: _round_sort_key(r, rounds[r]))]
+    has_finals = any(
+        kw in r.lower() for r in rounds for kw in ("final", "semifinal", "quarterfinal"))
+    shapes = {r: _round_is_bracket(r, rounds[r], has_finals) for r in rounds}
+    cols = [{"round": r, "matches": rounds[r], "is_bracket": shapes[r]}
+            for r in sorted(rounds,
+                            key=lambda r: _round_sort_key(r, rounds[r], shapes[r]))]
     _link_feeds(cols)
     return cols
+
+
+def _standings(matches: list[dict]) -> list[dict]:
+    """
+    @brief Compute a simple win/loss standings table for round-robin/group matches.
+
+    This is a display approximation, not an official ranking — real leagues
+    break ties with head-to-head results, game differential, etc., which
+    aren't replicated here. Sorts by win rate, then series wins.
+
+    @param matches `pro_matches` rows already filtered to one standings-kind phase.
+    @return List of {team, wins, losses, games, game_wins, game_losses, winrate}.
+    """
+    teams: dict[str, dict] = {}
+    for m in matches:
+        if not m.get("winner"):
+            continue
+        for side, opp in ((1, 2), (2, 1)):
+            team = m.get(f"team{side}")
+            if not team:
+                continue
+            t = teams.setdefault(team, {"team": team, "wins": 0, "losses": 0,
+                                        "game_wins": 0, "game_losses": 0})
+            t["wins" if m["winner"] == team else "losses"] += 1
+            t["game_wins"] += m.get(f"team{side}_score") or 0
+            t["game_losses"] += m.get(f"team{opp}_score") or 0
+    out = []
+    for t in teams.values():
+        games = t["wins"] + t["losses"]
+        t["games"] = games
+        t["winrate"] = 100 * t["wins"] / games if games else 0.0
+        out.append(t)
+    return sorted(out, key=lambda t: (-t["winrate"], -t["wins"]))
+
+
+def _phase_label(kind: str, round_names: list[str]) -> str:
+    """
+    @brief Human display label for a phase tab, guessed from its round names.
+
+    @param kind "bracket" or "standings" (see `tournament_phases`).
+    @param round_names Round/tab names making up this phase.
+    @return Czech display label for the phase tab button.
+    """
+    if kind == "bracket":
+        return "Play-off"
+    text = " ".join(round_names).lower()
+    if "play-in" in text or "play in" in text:
+        return "Play-In"
+    if "swiss" in text:
+        return "Swiss stage"
+    if "group" in text:
+        return "Skupinová fáze"
+    return "Základní část"
+
+
+def tournament_phases(con: sqlite3.Connection, op: str) -> list[dict]:
+    """
+    @brief Group a tournament's `bracket()` rounds into UI-navigable phases.
+
+    A phase is a maximal run of consecutive same-kind rounds (all bracket, or
+    all standings) — e.g. a season+playoffs page combined into one
+    OverviewPage becomes two phases: "Základní část" then "Play-off". A plain
+    single-shape tournament (most playoff-only or season-only pages) yields
+    exactly one phase; the web layer skips the tab UI entirely in that case.
+
+    Standings-kind phases get a computed win/loss table (`phase["standings"]`,
+    see `_standings`) alongside their round match lists; bracket-kind phases
+    get `[]` there since they're read as a tree, not a ranking.
+
+    @param op Tournament's Leaguepedia OverviewPage.
+    @return List of {label, kind, rounds, standings}, in play order.
+    """
+    rounds = bracket(con, op)
+    phases: list[dict] = []
+    for r in rounds:
+        kind = "bracket" if r["is_bracket"] else "standings"
+        if phases and phases[-1]["kind"] == kind:
+            phases[-1]["rounds"].append(r)
+        else:
+            phases.append({"kind": kind, "rounds": [r]})
+    for p in phases:
+        p["label"] = _phase_label(p["kind"], [r["round"] for r in p["rounds"]])
+        all_matches = [m for r in p["rounds"] for m in r["matches"]]
+        p["standings"] = _standings(all_matches) if p["kind"] == "standings" else []
+    return phases
 
 
 def _link_feeds(cols: list[dict]) -> None:

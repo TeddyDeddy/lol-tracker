@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% block title %}{{ t.name }} — Pro scéna{% endblock %}
 {% block content %}
-{% set list_rounds = rounds|selectattr('is_bracket', 'equalto', false)|list %}
-{% set bracket_rounds = rounds|selectattr('is_bracket', 'equalto', true)|list %}
 <div class="player-head">
   <div>
     <h1>{{ t.name }}</h1>
     <a class="muted" href="/pro?year={{ t.year }}">← Pro scéna</a>
     <span class="muted">· {{ t.date_start }} → {{ t.date_end }}</span>
-    {% if bracket_rounds %}<span class="muted">· play-off</span>{% endif %}
+    {% if sibling %}
+    <a class="pill sibling-link" href="/pro/t/{{ sibling.overview_page|urlencode }}">
+      {{ '← Základní část' if t.overview_page.endswith(' Playoffs') else 'Play-off →' }}
+    </a>
+    {% endif %}
   </div>
 </div>
 
@@ -31,83 +33,113 @@
 </div>
 {% endmacro %}
 
-{% if list_rounds %}
-<section class="panel">
-  <h2>Základní část</h2>
-  {% for r in list_rounds %}
-  <details class="week-block" {{ 'open' if loop.last }}>
-    <summary>{{ r.round }} <span class="muted">· {{ r.matches|length }} sérií</span></summary>
-    <ul class="results-list">
-      {% for m in r.matches %}
-      <li>
-        <a href="/pro/m/{{ m.match_id|urlencode }}">
-          <span class="rl-date">{{ (m.date or '')[:10]|cz_date }}</span>
-          <span class="rl-team {{ 'rl-win' if m.winner == m.team1 }}">{{ m.team1 or 'TBD' }}</span>
-          <span class="rl-score">{{ m.team1_score }} : {{ m.team2_score }}</span>
-          <span class="rl-team rl-team2 {{ 'rl-win' if m.winner == m.team2 }}">{{ m.team2 or 'TBD' }}</span>
-          <span class="muted rl-bo">BO{{ m.best_of }}</span>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </details>
+{% if phases|length > 1 %}
+<div class="phase-tabs">
+  {% for p in phases %}
+  <button class="phase-tab {{ 'active' if loop.first }}" data-phase="{{ loop.index0 }}">{{ p.label }}</button>
   {% endfor %}
-</section>
+</div>
 {% endif %}
 
-{% if bracket_rounds %}
-<section class="panel panel-fullbleed">
-  <h2>Pavouk</h2>
-  <div class="bracket playoffs" id="bracket">
-    {% for r in bracket_rounds %}
-    <div class="bracket-round">
-      <div class="round-chip">{{ r.round }}</div>
-      <div class="bracket-round-body">
-        {% for m in r.matches %}{{ match_card(m, r.round == bracket_rounds[-1].round) }}{% endfor %}
-      </div>
-    </div>
+{% for p in phases %}
+<div class="phase-panel" data-phase="{{ loop.index0 }}" {{ '' if loop.first else 'hidden' }}>
+  {% if p.kind == 'standings' %}
+  <section class="panel">
+    <h2>{{ p.label }}</h2>
+    {% if p.standings %}
+    <table class="games standings-table">
+      <thead><tr><th>#</th><th>Tým</th><th>V</th><th>P</th><th>Her</th><th>WR</th></tr></thead>
+      <tbody>
+      {% for s in p.standings %}
+      <tr>
+        <td class="num">{{ loop.index }}</td>
+        <td>{{ s.team }}</td>
+        <td class="num">{{ s.wins }}</td>
+        <td class="num">{{ s.losses }}</td>
+        <td class="num">{{ s.game_wins }}-{{ s.game_losses }}</td>
+        <td class="num {{ 'good' if s.winrate >= 50 else 'bad' }}">{{ s.winrate|round|int }}%</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    {% for r in p.rounds %}
+    <details class="week-block" {{ 'open' if loop.last }}>
+      <summary>{{ r.round }} <span class="muted">· {{ r.matches|length }} sérií</span></summary>
+      <ul class="results-list">
+        {% for m in r.matches %}
+        <li>
+          <a href="/pro/m/{{ m.match_id|urlencode }}">
+            <span class="rl-date">{{ (m.date or '')[:10]|cz_date }}</span>
+            <span class="rl-team {{ 'rl-win' if m.winner == m.team1 }}">{{ m.team1 or 'TBD' }}</span>
+            <span class="rl-score">{{ m.team1_score }} : {{ m.team2_score }}</span>
+            <span class="rl-team rl-team2 {{ 'rl-win' if m.winner == m.team2 }}">{{ m.team2 or 'TBD' }}</span>
+            <span class="muted rl-bo">BO{{ m.best_of }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </details>
     {% endfor %}
-  </div>
-</section>
+  </section>
+  {% else %}
+  <section class="panel panel-fullbleed">
+    <h2>{{ p.label }}</h2>
+    <div class="bracket playoffs">
+      {% for r in p.rounds %}
+      <div class="bracket-round">
+        <div class="round-chip">{{ r.round }}</div>
+        <div class="bracket-round-body">
+          {% for m in r.matches %}{{ match_card(m, r.round == p.rounds[-1].round) }}{% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endfor %}
+
 <script>
 (function () {
-  var root = document.getElementById("bracket");
-  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("class", "bracket-svg");
-  root.appendChild(svg);
-  function draw() {
-    svg.innerHTML = "";
-    var rr = root.getBoundingClientRect();
-    svg.setAttribute("width", root.scrollWidth);
-    svg.setAttribute("height", root.scrollHeight);
-    var cells = {};
-    root.querySelectorAll(".bracket-cell[data-mid]").forEach(function (c) {
-      cells[c.dataset.mid] = c;
-    });
-    Object.values(cells).forEach(function (c) {
-      if (!c.dataset.feeds) return;
-      var to = c.querySelector(".bracket-match").getBoundingClientRect();
-      c.dataset.feeds.split("|").forEach(function (fid) {
-        var f = cells[fid];
-        if (!f) return;
-        var from = f.querySelector(".bracket-match").getBoundingClientRect();
-        var x1 = from.right - rr.left, y1 = from.top + from.height / 2 - rr.top;
-        var x2 = to.left - rr.left, y2 = to.top + to.height / 2 - rr.top;
-        var mx = x1 + (x2 - x1) / 2;
-        var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        p.setAttribute("d", "M" + x1 + " " + y1 + " H" + mx + " V" + y2 + " H" + x2);
-        p.setAttribute("fill", "none");
-        p.setAttribute("stroke", "rgba(255,255,255,0.35)");
-        p.setAttribute("stroke-width", "1.5");
-        svg.appendChild(p);
+  document.querySelectorAll(".bracket.playoffs").forEach(function (root) {
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "bracket-svg");
+    root.appendChild(svg);
+    function draw() {
+      svg.innerHTML = "";
+      var rr = root.getBoundingClientRect();
+      svg.setAttribute("width", root.scrollWidth);
+      svg.setAttribute("height", root.scrollHeight);
+      var cells = {};
+      root.querySelectorAll(".bracket-cell[data-mid]").forEach(function (c) {
+        cells[c.dataset.mid] = c;
       });
-    });
-  }
-  draw();
-  addEventListener("resize", draw);
+      Object.values(cells).forEach(function (c) {
+        if (!c.dataset.feeds) return;
+        var to = c.querySelector(".bracket-match").getBoundingClientRect();
+        c.dataset.feeds.split("|").forEach(function (fid) {
+          var f = cells[fid];
+          if (!f) return;
+          var from = f.querySelector(".bracket-match").getBoundingClientRect();
+          var x1 = from.right - rr.left, y1 = from.top + from.height / 2 - rr.top;
+          var x2 = to.left - rr.left, y2 = to.top + to.height / 2 - rr.top;
+          var mx = x1 + (x2 - x1) / 2;
+          var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          p.setAttribute("d", "M" + x1 + " " + y1 + " H" + mx + " V" + y2 + " H" + x2);
+          p.setAttribute("fill", "none");
+          p.setAttribute("stroke", "rgba(255,255,255,0.35)");
+          p.setAttribute("stroke-width", "1.5");
+          svg.appendChild(p);
+        });
+      });
+    }
+    draw();
+    addEventListener("resize", draw);
+    root._redraw = draw;
+  });
 })();
 </script>
-{% endif %}
 
 <div class="two-col">
   <section class="panel">

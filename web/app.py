@@ -534,8 +534,27 @@ async def pro_match(request: Request, match_id: str):
         "split": prostats._split, **_pro_common()})
 
 
+def _sibling_tournament(c: sqlite3.Connection, op: str) -> dict | None:
+    """
+    @brief Best-effort lookup of a tournament's season/playoffs sibling page,
+           using Leaguepedia's dominant "X" / "X Playoffs" OverviewPage naming
+           convention (season and playoffs are usually two separate pages).
+
+    @param op This tournament's OverviewPage.
+    @return {overview_page, name} of the sibling page if found, else None.
+    """
+    sibling_op = op[: -len(" Playoffs")] if op.endswith(" Playoffs") else op + " Playoffs"
+    row = c.execute("SELECT overview_page, name FROM pro_tournaments"
+                    " WHERE overview_page = ?", (sibling_op,)).fetchone()
+    return dict(row) if row else None
+
+
 @app.get("/pro/t/{op:path}")
 async def pro_tournament(request: Request, op: str):
+    """
+    @brief Render one tournament's page: pick/ban meta, teams, and its
+           bracket/standings phases (see `prostats.tournament_phases`).
+    """
     c = con()
     t = c.execute("SELECT * FROM pro_tournaments WHERE overview_page = ?",
                   (op,)).fetchone()
@@ -544,15 +563,16 @@ async def pro_tournament(request: Request, op: str):
         raise HTTPException(404, f"Turnaj {op} není v DB")
     champs = prostats.tournament_champs(c, op)
     teams = prostats.tournament_teams(c, op)
-    rounds = prostats.bracket(c, op)
+    phases = prostats.tournament_phases(c, op)
+    sibling = _sibling_tournament(c, op)
     forms = {}
     if t["is_playoffs"]:
         for team in {x["team"] for x in teams}:
             forms[team] = prostats.team_form(c, team, before=t["date_start"])
     c.close()
     return templates.TemplateResponse(request, "pro_tournament.html", {
-        "t": dict(t), "champs": champs, "teams": teams, "rounds": rounds,
-        "forms": forms, **_pro_common()})
+        "t": dict(t), "champs": champs, "teams": teams, "phases": phases,
+        "sibling": sibling, "forms": forms, **_pro_common()})
 
 
 @app.get("/pro/player/{player}")
