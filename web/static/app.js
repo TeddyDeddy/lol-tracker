@@ -124,10 +124,13 @@ for (const card of document.querySelectorAll(".card-click")) {
  * @brief Wire up phase tab buttons (Základní část / Play-off / Play-In / ...)
  *        on a tournament page to switch which `.phase-panel` is visible.
  *
- * Redraws the shown panel's bracket connectors on switch, if it has one —
- * a bracket drawn while its panel was `hidden` gets zero-sized rects from
- * `getBoundingClientRect`, so the initial draw() on page load is a no-op
- * for any non-default tab and must be redone once the panel becomes visible.
+ * Redraws every bracket in the shown panel's connectors on switch — a
+ * double-elimination phase renders THREE separate `.bracket.playoffs` roots
+ * (upper/lower/grand-final), not one, so this must redraw all of them, not
+ * just the first. A bracket drawn while its panel was `hidden` gets
+ * zero-sized rects from `getBoundingClientRect`, so the initial draw() on
+ * page load is a no-op for any non-default tab and must be redone once the
+ * panel becomes visible.
  */
 function initPhaseTabs() {
   const tabs = document.querySelector(".phase-tabs");
@@ -140,8 +143,8 @@ function initPhaseTabs() {
       btn.classList.add("active");
       for (const p of panels) p.hidden = p.dataset.phase !== btn.dataset.phase;
       const shown = panels.find(p => p.dataset.phase === btn.dataset.phase);
-      const bracket = shown && shown.querySelector(".bracket.playoffs");
-      if (bracket && bracket._redraw) bracket._redraw();
+      for (const bracket of shown ? shown.querySelectorAll(".bracket.playoffs") : [])
+        if (bracket._redraw) bracket._redraw();
     });
   }
 }

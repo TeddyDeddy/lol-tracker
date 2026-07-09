@@ -33,6 +33,19 @@
 </div>
 {% endmacro %}
 
+{% macro bracket_tree(rounds, mark_final) %}
+<div class="bracket playoffs">
+  {% for r in rounds %}
+  <div class="bracket-round">
+    <div class="round-chip">{{ r.round }}</div>
+    <div class="bracket-round-body">
+      {% for m in r.matches %}{{ match_card(m, mark_final and r.round == rounds[-1].round) }}{% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+
 {% if phases|length > 1 %}
 <div class="phase-tabs">
   {% for p in phases %}
@@ -85,16 +98,22 @@
   {% else %}
   <section class="panel panel-fullbleed">
     <h2>{{ p.label }}</h2>
-    <div class="bracket playoffs">
-      {% for r in p.rounds %}
-      <div class="bracket-round">
-        <div class="round-chip">{{ r.round }}</div>
-        <div class="bracket-round-body">
-          {% for m in r.matches %}{{ match_card(m, r.round == p.rounds[-1].round) }}{% endfor %}
-        </div>
-      </div>
-      {% endfor %}
+    {% if p.sections.double %}
+    <div class="bracket-section">
+      <h3 class="bracket-section-title">Horní pavouk</h3>
+      {{ bracket_tree(p.sections.upper, false) }}
     </div>
+    <div class="bracket-section">
+      <h3 class="bracket-section-title">Dolní pavouk</h3>
+      {{ bracket_tree(p.sections.lower, false) }}
+    </div>
+    <div class="bracket-section">
+      <h3 class="bracket-section-title">Grand finále</h3>
+      {{ bracket_tree(p.sections.final, true) }}
+    </div>
+    {% else %}
+    {{ bracket_tree(p.sections.rounds, true) }}
+    {% endif %}
   </section>
   {% endif %}
 </div>

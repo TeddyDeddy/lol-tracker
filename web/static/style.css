@@ -282,6 +282,14 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .bracket-svg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .bracket .bracket-cell, .bracket .round-chip { position: relative; z-index: 1; }
 
+/* double-elim: Horní pavouk / Dolní pavouk / Grand finále jako 3 oddělené sekce */
+.bracket-section + .bracket-section { margin-top: 28px; }
+.bracket-section-title {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--muted); margin: 0 0 12px; padding-left: 10px;
+  border-left: 3px solid var(--accent);
+}
+
 /* panel roztažený přes celou šířku okna (uniká z max-width: 1080px u main) */
 .panel-fullbleed {
   width: 100vw; position: relative; left: 50%; right: 50%;
