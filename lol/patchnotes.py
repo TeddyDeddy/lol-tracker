@@ -50,6 +50,10 @@ _UL_RE = re.compile(r"<ul>(.*?)</ul>", re.S)
 _LI_RE = re.compile(r'<li[^>]*>(.*?)</li>', re.S)
 _IMG_SRC_RE = re.compile(r'<img[^>]*src="([^"]*)"')
 _TAG_RE = re.compile(r"<[^>]+>")
+# Strips every tag EXCEPT <strong>/</strong> — Riot bolds the stat name and
+# the new value in each bullet ("**Stat**: old ⇒ **new**"), and keeping that
+# emphasis is the whole point of rendering the note as HTML instead of text.
+_STRIP_NON_STRONG_RE = re.compile(r"</?(?!strong\b)[a-zA-Z][^>]*>")
 
 
 def _classify(text: str) -> str:
@@ -75,8 +79,15 @@ def _strip_tags(html: str) -> str:
 
 
 def _stat_lines(ul_html: str) -> list[str]:
-    lines = [_strip_tags(li.replace("⇒", "→")) for li in _LI_RE.findall(ul_html)]
-    return [line for line in lines if line]
+    """@brief Per-bullet HTML, keeping Riot's own <strong> emphasis on the
+           stat name and new value, stripped of every other tag."""
+    lines = []
+    for li in _LI_RE.findall(ul_html):
+        s = _STRIP_NON_STRONG_RE.sub("", li.replace("⇒", "→"))
+        s = re.sub(r"\s+", " ", s).strip()
+        if s:
+            lines.append(s)
+    return lines
 
 
 def _note_html(block: str) -> str:
@@ -106,7 +117,10 @@ def _note_html(block: str) -> str:
             name = _strip_tags(header_html)
             icon_tag = (f'<img class="pn-icon" src="{html_lib.escape(icon.group(1))}" alt="">'
                        if icon else "")
-            items = "".join(f"<li>{html_lib.escape(s)}</li>" for s in stats)
+            # `s` already went through `_stat_lines`, which strips every tag
+            # except Riot's own trusted <strong> emphasis — do NOT re-escape
+            # it here, that would turn the kept <strong> tags into literal text.
+            items = "".join(f"<li>{s}</li>" for s in stats)
             parts.append(f'<div class="pn-ability">{icon_tag}<b>{html_lib.escape(name)}</b></div>'
                          f'<ul class="pn-stats">{items}</ul>')
     else:
@@ -115,7 +129,7 @@ def _note_html(block: str) -> str:
         m = _UL_RE.search(block)
         stats = _stat_lines(m.group(1)) if m else []
         if stats:
-            items = "".join(f"<li>{html_lib.escape(s)}</li>" for s in stats)
+            items = "".join(f"<li>{s}</li>" for s in stats)
             parts.append(f'<ul class="pn-stats">{items}</ul>')
 
     return "".join(parts)

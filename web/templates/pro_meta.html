@@ -23,11 +23,13 @@
       <td class="champ-cell"><img class="avatar sm" src="{{ champ_icon(r.champion) }}" alt=""></td>
       <td>{{ r.champion }}</td>
       <td>
-        {% if r.kind == 'buff' %}<span class="good">🟢 buff</span>
-        {% elif r.kind == 'nerf' %}<span class="bad">🔴 nerf</span>
-        {% elif r.kind %}<span>🔵 {{ r.kind }}</span>
-        {% else %}<span class="muted">—</span>{% endif %}
-        {% if r.note %}<span class="muted" data-tip="{{ r.note }}"> ⓘ</span>{% endif %}
+        <span class="kind-badge"{% if r.note %} data-tip="{{ r.note }}"{% endif %}>
+          {% if r.kind == 'buff' %}<span class="good">🟢 buff</span>
+          {% elif r.kind == 'nerf' %}<span class="bad">🔴 nerf</span>
+          {% elif r.kind %}<span>🔵 {{ r.kind }}</span>
+          {% else %}<span class="muted">—</span>{% endif %}
+          {% if r.note %}<span class="muted"> ⓘ</span>{% endif %}
+        </span>
       </td>
       <td class="num">{{ '%.0f'|format(r.before) }}%</td>
       <td class="num"><b>{{ '%.0f'|format(r.at) }}%</b></td>

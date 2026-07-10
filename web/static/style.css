@@ -203,22 +203,33 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .tooltip {
   position: fixed; z-index: 10; pointer-events: none;
   background: #0d0d0d; border: 1px solid var(--border); border-radius: 8px;
-  padding: 6px 10px; font-size: 13px; color: var(--ink);
+  padding: 10px 12px; font-size: 13px; color: var(--ink);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-  max-width: 340px;
+  max-width: 360px;
 }
 
-/* patch-note tooltip (buff/nerf ⓘ) — mirrors Riot's own patch notes layout:
-   dev commentary, then one skill icon + stat list per ability. */
-.pn-commentary { margin: 0 0 8px; color: var(--muted); font-size: 12px; line-height: 1.4; }
-.pn-ability {
-  display: flex; align-items: center; gap: 6px; margin-top: 8px;
-  font-size: 12px; font-weight: 700; color: var(--ink);
+/* buff/nerf/adjust štítek v tabulce — celý (ne jen ⓘ) spouští tooltip */
+.kind-badge { display: inline-flex; align-items: center; cursor: help; }
+
+/* patch-note tooltip (buff/nerf) — mirrors Riot's own patch notes layout:
+   italic dev commentary, then one skill icon + name + stat list per ability,
+   each ability separated by a thin divider (see leagueoflegends.com/.../patch-notes). */
+.pn-commentary {
+  margin: 0 0 10px; padding: 0 0 10px; border-bottom: 1px solid var(--border);
+  color: var(--muted); font-size: 12px; font-style: italic; line-height: 1.45;
 }
-.pn-ability:first-child { margin-top: 0; }
-.pn-icon { width: 20px; height: 20px; border-radius: 4px; flex: none; }
-.pn-stats { margin: 3px 0 0; padding-left: 16px; font-size: 12px; color: var(--ink); }
-.pn-stats li { margin: 2px 0; }
+.pn-ability {
+  display: flex; align-items: center; gap: 10px; margin-top: 10px;
+  padding-top: 10px; border-top: 1px solid var(--border);
+}
+.pn-ability:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.pn-icon { width: 32px; height: 32px; border-radius: 6px; flex: none; border: 1px solid var(--border); }
+.pn-ability b { font-size: 13px; font-weight: 700; color: var(--ink); }
+.pn-stats { list-style: none; margin: 6px 0 0; padding: 0; font-size: 12px; color: var(--muted); }
+.pn-stats:first-child { margin-top: 6px; }
+.pn-stats li { margin: 3px 0; padding-left: 12px; position: relative; }
+.pn-stats li::before { content: "•"; position: absolute; left: 0; color: var(--accent); }
+.pn-stats strong { color: var(--ink); }
 
 /* ---------- seznam her (rewind styl) ---------- */
 .all-games-link { float: right; font-size: 14px; font-weight: 400; }

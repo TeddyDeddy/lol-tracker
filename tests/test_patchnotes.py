@@ -61,8 +61,11 @@ def test_parse_champion_changes_joins_stat_bullets_with_arrow():
     changes = dict((c, n) for c, _, n in patchnotes.parse_champion_changes(_FIXTURE_HTML))
     note = changes["Aphelios"]
     assert "pulling back on some of those earlier nerfs" in note
-    assert "Passive Mark Damage: 15 (10% bonus AD) → 15 (15% bonus AD)" in note
-    assert "Q Damage: 19 → 20" in note
+    # <strong> emphasis on the stat name and new value is kept (Riot's own
+    # bolding) — everything else got stripped.
+    assert ("<strong>Passive Mark Damage</strong>: 15 (10% bonus AD) → "
+            "<strong>15 (15% bonus AD)</strong>") in note
+    assert "<strong>Q Damage</strong>: 19 → <strong>20</strong>" in note
 
 
 def test_parse_champion_changes_note_is_html_with_per_ability_icons():
@@ -78,7 +81,7 @@ def test_parse_champion_changes_note_is_html_with_per_ability_icons():
     # Brand's ability block has no <h4> icon grouping -> stats still shown, unlabeled.
     brand_note = changes["Brand"]
     assert "pn-ability" not in brand_note
-    assert "Passive Damage: 100 → 80" in brand_note
+    assert "<strong>Passive Damage</strong>: 100 → <strong>80</strong>" in brand_note
 
 
 def test_parse_champion_changes_classifies_from_commentary():

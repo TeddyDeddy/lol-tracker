@@ -10,9 +10,11 @@ function showTip(html, x, y) {
 }
 function hideTip() { tooltip.hidden = true; }
 
-/* tooltipy pro elementy s data-tip (champion pool) */
+/* tooltipy pro elementy s data-tip (champion pool) — pozice se počítá jen
+   jednou při vstupu myši (ne na mousemove), aby se okno při najíždění
+   po prvku netřáslo/neposouvalo. */
 for (const el of document.querySelectorAll("[data-tip]")) {
-  el.addEventListener("mousemove", e => showTip(el.dataset.tip, e.clientX, e.clientY));
+  el.addEventListener("mouseenter", e => showTip(el.dataset.tip, e.clientX, e.clientY));
   el.addEventListener("mouseleave", hideTip);
 }
 
