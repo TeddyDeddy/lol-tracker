@@ -19,7 +19,7 @@ import tomllib
 
 import httpx
 
-from lol import db
+from lol import db, patchnotes
 
 ROOT = pathlib.Path(__file__).parent.parent
 API = "https://lol.fandom.com/api.php"
@@ -193,32 +193,6 @@ MATCH_FIELDS = ("MatchId,Team1,Team2,Winner,Team1Score,Team2Score,"
                 "DateTime_UTC,Round,Tab,BestOf,"
                 "Phase,GroupName,N_TabInPage,N_MatchInTab,N_Page")
 
-PATCH_NOTE_FIELDS = "EntityType,Entity,Changes,Patch"
-
-# Slova indikující směr balance změny (angličtina — Leaguepedia patch notes jsou EN).
-# Best-effort: bez lepšího zdroje nejde spolehlivě rozlišit "adjust" (smíšená změna)
-# od jednoznačného buff/nerf jinak než klíčovými slovy v popisu.
-_BUFF_WORDS = ("increased", "buffed", "reduced cooldown", "lowered cost", "faster")
-_NERF_WORDS = ("decreased", "nerfed", "increased cooldown", "increased cost", "reduced", "slower")
-
-
-def _classify_change(text: str) -> str:
-    """
-    @brief Best-effort buff/nerf/adjust classification from a patch-note description.
-
-    @param text Free-text "Changes" field from Leaguepedia's PatchNotes Cargo table.
-    @return "buff" or "nerf" if the text unambiguously leans one way, else "adjust"
-            (mixed or neither keyword set matched).
-    """
-    t = (text or "").lower()
-    buffed = any(w in t for w in _BUFF_WORDS)
-    nerfed = any(w in t for w in _NERF_WORDS)
-    if buffed and not nerfed:
-        return "buff"
-    if nerfed and not buffed:
-        return "nerf"
-    return "adjust"
-
 
 def ingest_tournament(con, t: dict) -> int:
     """Hry + hráči + série jednoho turnaje (klíč OverviewPage)."""
@@ -283,36 +257,6 @@ def ingest_tournament(con, t: dict) -> int:
     return n
 
 
-def ingest_patch_notes(con, patches: list[str]) -> int:
-    """
-    @brief Pull champion balance changes from Leaguepedia's PatchNotes Cargo table
-           for the given patches and upsert them into patch_changes.
-
-    Only covers patches that actually appear in `pro_games.patch` — there is no
-    point pulling the whole balance-change history when we only need context for
-    events we've actually ingested.
-
-    @param patches Patch version strings as Leaguepedia/pro_games reports them,
-                    e.g. ["25.05", "25.06"].
-    @return Number of (patch, champion) rows upserted.
-    """
-    n = 0
-    for patch in patches:
-        if not patch:
-            continue
-        where = f"EntityType='Champion' AND Patch='{_esc(patch)}'"
-        for row in cargo_query_all("PatchNotes", PATCH_NOTE_FIELDS, where):
-            champion, changes = row.get("Entity"), row.get("Changes")
-            if not champion or not changes:
-                continue
-            con.execute(
-                "INSERT OR REPLACE INTO patch_changes VALUES (?,?,?,?)",
-                (patch, champion, _classify_change(changes), changes))
-            n += 1
-    con.commit()
-    return n
-
-
 def load_patch_changes(con):
     """Ručně kurátorovaný data/patch_changes.toml → tabulka patch_changes."""
     path = ROOT / "data" / "patch_changes.toml"
@@ -371,8 +315,8 @@ def ingest(since_year: int = 2023, only: str | None = None):
     patches = [r[0] for r in con.execute(
         "SELECT DISTINCT patch FROM pro_games WHERE patch IS NOT NULL AND patch != ''")]
     try:
-        pn = ingest_patch_notes(con, patches)
-        print(f"patch_changes (Leaguepedia, {len(patches)} patchů): {pn} záznamů", flush=True)
+        pn = patchnotes.ingest_patch_notes(con, patches)
+        print(f"patch_changes (Riot patch notes, {len(patches)} patchů): {pn} záznamů", flush=True)
     except Exception as e:
         print(f"patch notes CHYBA: {e}", flush=True)
     # ruční data/patch_changes.toml se aplikuje AŽ PO auto-ingestu — funguje jako
