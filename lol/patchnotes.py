@@ -15,6 +15,7 @@ context">` (vývojářský komentář, skoro vždy explicitně říká "buff"/"n
 CLI: python -m lol.patchnotes <patch>    # test parsování jednoho patche
 """
 
+import html as html_lib
 import re
 import sys
 
@@ -43,7 +44,11 @@ _NERF_WORDS = ("decreased", "nerfed", "nerf", "increased cooldown", "increased c
 _BLOCK_SPLIT = '<div class="content-border">'
 _TITLE_RE = re.compile(r'<h3 class="change-title"[^>]*>\s*<a[^>]*href="([^"]*)"[^>]*>(.*?)</a>', re.S)
 _QUOTE_RE = re.compile(r'<blockquote class="blockquote context">(.*?)</blockquote>', re.S)
+_ABILITY_RE = re.compile(
+    r'<h4[^>]*class="change-detail-title[^"]*"[^>]*>(.*?)</h4>\s*<ul>(.*?)</ul>', re.S)
+_UL_RE = re.compile(r"<ul>(.*?)</ul>", re.S)
 _LI_RE = re.compile(r'<li[^>]*>(.*?)</li>', re.S)
+_IMG_SRC_RE = re.compile(r'<img[^>]*src="([^"]*)"')
 _TAG_RE = re.compile(r"<[^>]+>")
 
 
@@ -67,6 +72,53 @@ def _classify(text: str) -> str:
 
 def _strip_tags(html: str) -> str:
     return re.sub(r"\s+", " ", _TAG_RE.sub("", html)).strip()
+
+
+def _stat_lines(ul_html: str) -> list[str]:
+    lines = [_strip_tags(li.replace("⇒", "→")) for li in _LI_RE.findall(ul_html)]
+    return [line for line in lines if line]
+
+
+def _note_html(block: str) -> str:
+    """
+    @brief Build the tooltip HTML for one champion's changes: the dev
+           commentary (if any) followed by one ability icon + stat list per
+           `<h4 ability-title><img>...</h4><ul>...</ul>` group — the same
+           visual pairing Riot's own patch notes page uses.
+
+    @param block One champion's `content-border` block HTML (see
+           `parse_champion_changes`).
+    @return HTML fragment (escaped text inside safe wrapper tags) to store in
+            `patch_changes.note` and render via the `.tooltip` div's
+            `innerHTML` on the web side (see `web/static/app.js:showTip`).
+    """
+    quote = _QUOTE_RE.search(block)
+    commentary = _strip_tags(quote.group(1)) if quote else ""
+    parts = [f'<p class="pn-commentary">{html_lib.escape(commentary)}</p>'] if commentary else []
+
+    groups = _ABILITY_RE.findall(block)
+    if groups:
+        for header_html, ul_html in groups:
+            stats = _stat_lines(ul_html)
+            if not stats:
+                continue
+            icon = _IMG_SRC_RE.search(header_html)
+            name = _strip_tags(header_html)
+            icon_tag = (f'<img class="pn-icon" src="{html_lib.escape(icon.group(1))}" alt="">'
+                       if icon else "")
+            items = "".join(f"<li>{html_lib.escape(s)}</li>" for s in stats)
+            parts.append(f'<div class="pn-ability">{icon_tag}<b>{html_lib.escape(name)}</b></div>'
+                         f'<ul class="pn-stats">{items}</ul>')
+    else:
+        # Older/simpler pages sometimes list stats with no per-ability <h4>
+        # grouping (no icon available) — still show them, just unlabeled.
+        m = _UL_RE.search(block)
+        stats = _stat_lines(m.group(1)) if m else []
+        if stats:
+            items = "".join(f"<li>{html_lib.escape(s)}</li>" for s in stats)
+            parts.append(f'<ul class="pn-stats">{items}</ul>')
+
+    return "".join(parts)
 
 
 def _patch_urls(patch: str) -> list[str]:
@@ -117,9 +169,9 @@ def parse_champion_changes(html: str) -> list[tuple[str, str, str]]:
     unrelated fetches of the same URL via other tooling).
 
     @param html Raw HTML of one patch notes page (see `fetch_patch_html`).
-    @return List of (champion, kind, note) — kind is buff/nerf/adjust, note
-            is the dev commentary (if any) plus a joined "Stat: old → new"
-            summary of every bullet found in the block.
+    @return List of (champion, kind, note) — kind is buff/nerf/adjust; note is
+            an HTML fragment (dev commentary + per-ability icon/stat-list
+            groups, see `_note_html`) meant for the web tooltip, not plain text.
     """
     out = []
     for block in html.split(_BLOCK_SPLIT)[1:]:
@@ -131,12 +183,8 @@ def parse_champion_changes(html: str) -> list[tuple[str, str, str]]:
             continue
         quote = _QUOTE_RE.search(block)
         commentary = _strip_tags(quote.group(1)) if quote else ""
-        stats = [_strip_tags(li.replace("⇒", "→")) for li in _LI_RE.findall(block)]
-        stats = [s for s in stats if s]
-        note = commentary
-        if stats:
-            note = f"{commentary} ({'; '.join(stats)})" if commentary else "; ".join(stats)
-        kind = _classify(commentary or note)
+        note = _note_html(block)
+        kind = _classify(commentary or _strip_tags(note))
         out.append((champion, kind, note))
     return out
 
@@ -177,4 +225,4 @@ if __name__ == "__main__":
     changes = parse_champion_changes(html)
     print(f"patch {patch}: {len(changes)} championů")
     for champion, kind, note in changes:
-        print(f"  {champion:20s} {kind:7s} {note[:100]}")
+        print(f"  {champion:20s} {kind:7s} {_strip_tags(note)[:100]}")

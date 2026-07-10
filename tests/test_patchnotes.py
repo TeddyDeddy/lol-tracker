@@ -17,7 +17,7 @@ _FIXTURE_HTML = """
         <p>We're pulling back on some of those earlier nerfs.</p>
       </blockquote>
       <hr class="divider">
-      <h4 class="change-detail-title ability-title">Calibrum</h4>
+      <h4 class="change-detail-title ability-title"><img src="https://example/calibrum.png">Calibrum</h4>
       <ul>
         <li><strong>Passive Mark Damage</strong>: 15 (10% bonus AD) &#8658; <strong>15 (15% bonus AD)</strong></li>
       </ul>
@@ -63,6 +63,22 @@ def test_parse_champion_changes_joins_stat_bullets_with_arrow():
     assert "pulling back on some of those earlier nerfs" in note
     assert "Passive Mark Damage: 15 (10% bonus AD) → 15 (15% bonus AD)" in note
     assert "Q Damage: 19 → 20" in note
+
+
+def test_parse_champion_changes_note_is_html_with_per_ability_icons():
+    """The note is rendered via `tooltip.innerHTML` on the web side (see
+    app.js showTip) — it must carry a real <img> per ability group, matching
+    the visual layout of Riot's own patch notes page (icon next to each
+    ability's changes), not just a flat text summary."""
+    changes = dict((c, n) for c, _, n in patchnotes.parse_champion_changes(_FIXTURE_HTML))
+    note = changes["Aphelios"]
+    assert '<img class="pn-icon" src="https://example/calibrum.png"' in note
+    assert "<b>Calibrum</b>" in note
+    assert note.count('<div class="pn-ability">') == 2   # Calibrum + Severum
+    # Brand's ability block has no <h4> icon grouping -> stats still shown, unlabeled.
+    brand_note = changes["Brand"]
+    assert "pn-ability" not in brand_note
+    assert "Passive Damage: 100 → 80" in brand_note
 
 
 def test_parse_champion_changes_classifies_from_commentary():
