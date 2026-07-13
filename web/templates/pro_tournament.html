@@ -5,7 +5,7 @@
   <div>
     <h1>{{ t.name }}</h1>
     <a class="muted" href="/pro?year={{ t.year }}">← Pro scéna</a>
-    <span class="muted">· {{ t.date_start }} → {{ t.date_end }}</span>
+    <span class="muted">· {{ t.date_start|cz_date }} → {{ t.date_end|cz_date }}</span>
     {% if sibling %}
     <a class="pill sibling-link" href="/pro/t/{{ sibling.overview_page|urlencode }}">
       {{ '← Základní část' if t.overview_page.endswith(' Playoffs') else 'Play-off →' }}
@@ -16,7 +16,7 @@
 
 {% macro match_card(m, is_final) %}
 <div class="bracket-cell" data-mid="{{ m.match_id }}" data-feeds="{{ m.feeds_from|join('|') }}">
-  <div class="bm-when"><span class="bo-badge">BO{{ m.best_of }}</span> {{ (m.date or '')[:10] }}
+  <div class="bm-when"><span class="bo-badge">BO{{ m.best_of }}</span> {{ (m.date or '')[:10]|cz_date }}
     {%- if is_final and m.winner %} · 🏆 {{ m.winner }}{% endif %}</div>
   <a class="bracket-match" href="/pro/m/{{ m.match_id|urlencode }}">
     <div class="bm-row {{ 'bm-win' if m.winner == m.team1 }}">
@@ -60,11 +60,13 @@
   <section class="panel">
     <h2>{{ p.label }}</h2>
     {% if p.standings %}
-    <table class="games standings-table">
-      <thead><tr><th>#</th><th>Tým</th><th>V</th><th>P</th><th>Her</th><th>WR</th></tr></thead>
+    <table class="games standings-table sortable">
+      <thead><tr><th>#</th><th data-sort="name">Tým</th><th data-sort="wins" class="num">V</th>
+        <th data-sort="losses" class="num">P</th><th>Her</th><th data-sort="wr" class="num">WR</th></tr></thead>
       <tbody>
       {% for s in p.standings %}
-      <tr>
+      <tr data-name="{{ s.team }}" data-wins="{{ s.wins }}" data-losses="{{ s.losses }}"
+          data-wr="{{ s.winrate }}">
         <td class="num">{{ loop.index }}</td>
         <td>{{ s.team }}</td>
         <td class="num">{{ s.wins }}</td>
@@ -163,12 +165,15 @@
 <div class="two-col">
   <section class="panel">
     <h2>Pick / ban <span class="muted">{{ champs[0].games if champs else 0 }} her</span></h2>
-    <table class="games">
-      <thead><tr><th></th><th>Champion</th><th>Picky</th><th>Bany</th>
-        <th>Presence</th><th>WR</th></tr></thead>
+    <table class="games sortable">
+      <thead><tr><th></th><th data-sort="name">Champion</th><th data-sort="picks" class="num">Picky</th>
+        <th data-sort="bans" class="num">Bany</th>
+        <th data-sort="presence" class="num">Presence</th><th data-sort="wr" class="num">WR</th></tr></thead>
       <tbody>
       {% for ch in champs[:30] %}
-      <tr class="{{ 'top-champ' if loop.index <= 3 }}">
+      <tr class="{{ 'top-champ' if loop.index <= 3 }}" data-name="{{ ch.champion }}"
+          data-picks="{{ ch.picks }}" data-bans="{{ ch.bans }}" data-presence="{{ ch.presence }}"
+          data-wr="{{ ch.winrate if ch.winrate is not none else -1 }}">
         <td class="champ-cell"><img class="avatar sm" src="{{ champ_icon(ch.champion) }}" alt=""></td>
         <td>{{ ch.champion }}</td>
         <td class="num">{{ ch.picks }}</td>
@@ -186,11 +191,13 @@
 
   <section class="panel">
     <h2>Týmy</h2>
-    <table class="games">
-      <thead><tr><th>Tým</th><th>Hry</th><th>W/L</th><th>WR</th></tr></thead>
+    <table class="games sortable">
+      <thead><tr><th data-sort="name">Tým</th><th data-sort="games" class="num">Hry</th>
+        <th data-sort="wins" class="num">W/L</th><th data-sort="wr" class="num">WR</th></tr></thead>
       <tbody>
       {% for tm in teams %}
-      <tr>
+      <tr data-name="{{ tm.team }}" data-games="{{ tm.games }}" data-wins="{{ tm.wins }}"
+          data-wr="{{ 100 * tm.wins / tm.games }}">
         <td>{{ tm.team }}</td>
         <td class="num">{{ tm.games }}</td>
         <td class="num">{{ tm.wins }}/{{ tm.games - tm.wins }}</td>

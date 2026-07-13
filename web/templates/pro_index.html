@@ -31,7 +31,7 @@
     <div class="card pro-card has-data card-click" data-href="/pro/t/{{ t.overview_page|urlencode }}">
       <div class="card-body">
         <div class="card-title"><a class="tracked-link" href="/pro/t/{{ t.overview_page|urlencode }}">{{ t.name }}</a></div>
-        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub">{{ t.date_start|cz_date }} → {{ t.date_end|cz_date }}</div>
         <div class="card-sub"><span class="good">{{ t.games }} her</span>
           · <a class="tracked-link" href="/pro/meta/{{ t.overview_page|urlencode }}">meta →</a></div>
       </div>
@@ -40,7 +40,7 @@
     <div class="card pro-card no-data">
       <div class="card-body">
         <div class="card-title">{{ t.name }}</div>
-        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub">{{ t.date_start|cz_date }} → {{ t.date_end|cz_date }}</div>
         <div class="card-sub"><span class="badge-soon">zatím nestaženo</span></div>
       </div>
     </div>
@@ -59,7 +59,7 @@
     <a class="card pro-card has-data" href="/pro/t/{{ t.overview_page|urlencode }}">
       <div class="card-body">
         <div class="card-title">{{ t.name }}{% if t.is_playoffs %} 🏆{% endif %}</div>
-        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub">{{ t.date_start|cz_date }} → {{ t.date_end|cz_date }}</div>
         <div class="card-sub"><span class="good">{{ t.games }} her</span></div>
       </div>
     </a>
@@ -67,7 +67,7 @@
     <div class="card pro-card no-data">
       <div class="card-body">
         <div class="card-title">{{ t.name }}{% if t.is_playoffs %} 🏆{% endif %}</div>
-        <div class="card-sub">{{ t.date_start }} → {{ t.date_end }}</div>
+        <div class="card-sub">{{ t.date_start|cz_date }} → {{ t.date_end|cz_date }}</div>
         <div class="card-sub"><span class="badge-soon">zatím nestaženo</span></div>
       </div>
     </div>

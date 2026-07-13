@@ -14,12 +14,14 @@
 <section class="panel">
   <h2>Presence: před eventem vs. na eventu
     <span class="muted">🟢 buff · 🔴 nerf · 🔵 adjust na patchi eventu</span></h2>
-  <table class="games">
-    <thead><tr><th></th><th>Champion</th><th>Změna v patchi</th>
-      <th>Před</th><th>Na eventu</th><th>Δ</th><th>P/B na eventu</th></tr></thead>
+  <table class="games sortable">
+    <thead><tr><th></th><th data-sort="name">Champion</th><th>Změna v patchi</th>
+      <th data-sort="before" class="num">Před</th><th data-sort="at" class="num">Na eventu</th>
+      <th data-sort="delta" class="num">Δ</th><th data-sort="picks" class="num">P/B na eventu</th></tr></thead>
     <tbody>
     {% for r in rows[:40] %}
-    <tr>
+    <tr data-name="{{ r.champion }}" data-before="{{ r.before }}" data-at="{{ r.at }}"
+        data-delta="{{ r.delta }}" data-picks="{{ r.picks }}" data-bans="{{ r.bans }}">
       <td class="champ-cell"><img class="avatar sm" src="{{ champ_icon(r.champion) }}" alt=""></td>
       <td>{{ r.champion }}</td>
       <td>
