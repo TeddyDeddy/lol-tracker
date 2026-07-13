@@ -161,13 +161,25 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .dmg-bar { display: inline-block; width: 60px; height: 8px; margin-right: 6px; vertical-align: middle; background: var(--grid); border-radius: 4px; overflow: hidden; }
 .dmg-bar .bar-fill { border-radius: 0; }
 .dmg-bar.taken .bar-fill { background: var(--bad); }
-.obj-icon { width: 15px; height: 15px; vertical-align: middle; margin: 0 2px 0 8px; opacity: 0.85; }
-.team-dmg-share { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin: 8px 0 4px; background: var(--grid); }
-.tds-seg { display: block; height: 100%; background: var(--series); border-right: 1px solid var(--page); }
-.tds-seg:nth-child(odd) { filter: brightness(1.25); }
-.tds-seg:last-child { border-right: 0; }
 
-/* ---------- aréna (Cherry): subteam žebříček ---------- */
+/** @brief Match table: loadout (spells+runes), badges, best-in-game highlighting. */
+.match-table .champ-cell { display: flex; align-items: center; gap: 4px; }
+.loadout { display: flex; gap: 2px; }
+.loadout-col { display: flex; flex-direction: column; gap: 2px; }
+.loadout-icon { width: 16px; height: 16px; border-radius: 4px; background: #0d0d0d; border: 1px solid var(--border); }
+.loadout-icon.round { border-radius: 50%; }
+.badge-row { margin-top: 2px; }
+.badge-tag {
+  display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px;
+  border-radius: 4px; margin-right: 3px; text-transform: uppercase;
+}
+.badge-tag.fb { background: rgba(200, 170, 110, 0.18); color: var(--accent); }
+.badge-tag.mk { background: rgba(12, 163, 12, 0.18); color: var(--good); }
+.stat-sub { font-size: 11px; color: var(--muted); }
+.stat-best { color: var(--accent); font-weight: 700; }
+.obj-icon { width: 15px; height: 15px; vertical-align: middle; margin: 0 2px 0 8px; opacity: 0.85; }
+
+/** @brief Arena (Cherry): subteam leaderboard. */
 .arena-place { font-size: 15px; font-weight: 600; color: var(--ink); }
 .team-panel.team-win .arena-place { color: var(--accent); }
 .augment { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); margin-right: 2px; vertical-align: middle; background: #0d0d0d; }

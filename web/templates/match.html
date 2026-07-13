@@ -19,11 +19,6 @@
       {% endfor %}
     </span>
   </h2>
-  <div class="team-dmg-share">
-    {% for p in players %}
-    <span class="tds-seg" style="width: {{ p.dmg_share }}%" title="{{ p.champion }} · {{ fmt_int(p.damage) }} dmg ({{ p.dmg_share }}%)"></span>
-    {% endfor %}
-  </div>
   <table class="games match-table">
     <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>KP</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Dmg utrženo</th><th>Itemy</th></tr></thead>
     <tbody>
@@ -31,19 +26,39 @@
       <tr class="{{ 'focus-row' if p.focus }}">
         <td class="champ-cell">
           <img class="avatar sm" src="{{ champ_icon(p.champion) }}" alt="{{ p.champion }}" data-tip="{{ p.champion }} · level {{ p.level }}">
-          {%- if p.keystone and p.keystone in rune_icons -%}
-          <img class="rune" src="{{ rune_icons[p.keystone] }}" alt="">
-          {%- endif -%}
+          <div class="loadout">
+            <div class="loadout-col">
+              {% if p.summoner1 %}<img class="loadout-icon" src="{{ p.summoner1 }}" alt="">{% endif %}
+              {% if p.summoner2 %}<img class="loadout-icon" src="{{ p.summoner2 }}" alt="">{% endif %}
+            </div>
+            <div class="loadout-col">
+              {% if p.keystone and p.keystone in rune_icons %}<img class="loadout-icon round" src="{{ rune_icons[p.keystone] }}" alt="">{% endif %}
+              {% if p.sub_style and p.sub_style in style_icons %}<img class="loadout-icon round" src="{{ style_icons[p.sub_style] }}" alt="">{% endif %}
+            </div>
+          </div>
         </td>
         <td>
           {% if p.tracked %}<a class="tracked-link" href="/player/{{ p.riot_id|urlencode }}">{{ p.riot_id }}</a>
           {% else %}{{ p.riot_id }}{% endif %}
+          <div class="badge-row">
+            {% if p.first_blood %}<span class="badge-tag fb">First blood</span>{% endif %}
+            {% if p.multikill %}<span class="badge-tag mk">{{ p.multikill }}</span>{% endif %}
+          </div>
         </td>
-        <td class="num">{{ p.kills }}/{{ p.deaths }}/{{ p.assists }}</td>
+        <td class="num">
+          <div><span class="{{ 'stat-best' if p.kills == best.kills and p.kills > 0 }}">{{ p.kills }}</span>/{{ p.deaths }}/{{ p.assists }}</div>
+          <div class="stat-sub {{ 'stat-best' if p.kda == best.kda }}">{{ '%.2f'|format(p.kda) }} KDA</div>
+        </td>
         <td class="num">{{ p.kp }}%</td>
-        <td class="num">{{ p.cs }}</td>
-        <td class="num">{{ fmt_int(p.gold) }}</td>
-        <td class="num">{{ p.vision }}</td>
+        <td class="num">
+          <div class="{{ 'stat-best' if p.cs == best.cs and p.cs > 0 }}">{{ p.cs }}</div>
+          <div class="stat-sub">{{ p.cs_per_min }}/min</div>
+        </td>
+        <td class="num">
+          <div class="{{ 'stat-best' if p.gold == best.gold }}">{{ fmt_int(p.gold) }}</div>
+          <div class="stat-sub">{{ p.gold_per_min }}/min</div>
+        </td>
+        <td class="num {{ 'stat-best' if p.vision == best.vision and p.vision > 0 }}">{{ p.vision }}</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: {{ 100 * p.damage / max_damage }}%"></span></span>
           <span class="num">{{ fmt_int(p.damage) }}</span>

@@ -45,10 +45,17 @@ STYLE_NAMES: dict[int, str] = {}
 ITEM_NAMES: dict[int, str] = {}
 COMPLETED_ITEMS: set[int] = set()  # dokončené itemy (pro build order)
 CHAMP_KEYS: dict[str, str] = {}   # display jméno ("Miss Fortune") -> ddragon klíč
+SUMMONER_ICONS: dict[int, str] = {}  # summoner spell id -> ikona URL
+
+MULTIKILL_LABELS = {2: "Double kill", 3: "Triple kill", 4: "Quadra kill", 5: "Penta kill"}
 
 
 @app.on_event("startup")
 async def load_ddragon():
+    """
+    @brief Fetch the latest Data Dragon version and pre-load icon/name lookup
+           tables (champions, items, runes, summoner spells) into module globals.
+    """
     global DDRAGON_VERSION
     cdn = "https://ddragon.leagueoflegends.com/cdn"
     async with httpx.AsyncClient(timeout=15) as http:
@@ -60,8 +67,12 @@ async def load_ddragon():
             f"{cdn}/{DDRAGON_VERSION}/data/en_US/item.json")).json()["data"]
         champs = (await http.get(
             f"{cdn}/{DDRAGON_VERSION}/data/en_US/champion.json")).json()["data"]
+        summoners = (await http.get(
+            f"{cdn}/{DDRAGON_VERSION}/data/en_US/summoner.json")).json()["data"]
     for key, c in champs.items():
         CHAMP_KEYS[c["name"]] = key  # "Wukong" -> "MonkeyKing", "Bel'Veth" -> "Belveth"
+    for spell in summoners.values():
+        SUMMONER_ICONS[int(spell["key"])] = f"{cdn}/{DDRAGON_VERSION}/img/spell/" + spell["image"]["full"]
     for tree in runes:
         STYLE_ICONS[tree["id"]] = f"{cdn}/img/" + tree["icon"]
         STYLE_NAMES[tree["id"]] = tree["name"]
@@ -76,15 +87,29 @@ async def load_ddragon():
 
 
 def item_icon(item_id: str) -> str:
+    """@brief Data Dragon icon URL for an item ID."""
     return (f"https://ddragon.leagueoflegends.com/cdn/{DDRAGON_VERSION}"
             f"/img/item/{item_id}.png")
 
 
+def summoner_icon(spell_id: int) -> str | None:
+    """@brief Icon URL for a summoner spell ID, or None if unknown."""
+    return SUMMONER_ICONS.get(spell_id)
+
+
 def con() -> sqlite3.Connection:
+    """@brief Open a connection to the project's `lol.db`."""
     return db.connect(str(ROOT / "lol.db"))
 
 
 def champ_icon(champion: str) -> str:
+    """
+    @brief Data Dragon icon URL for a champion display name.
+
+    @param champion Champion display name (e.g. "Miss Fortune", "Bel'Veth").
+    @return Icon URL, using `CHAMP_KEYS` for names that don't match their
+            ddragon key directly, else a punctuation-stripped fallback.
+    """
     key = CHAMP_KEYS.get(
         champion, champion.replace(" ", "").replace("'", "").replace(".", ""))
     return (f"https://ddragon.leagueoflegends.com/cdn/{DDRAGON_VERSION}"
@@ -374,6 +399,7 @@ async def match_detail(request: Request, match_id: str, focus: str = ""):
     """
     @brief Render the full per-player stat breakdown for one Summoner's Rift/ARAM/etc. game.
 
+    @param request  Current FastAPI request.
     @param match_id Riot match id, e.g. "EUN1_3626538195".
     @param focus riot_id or puuid to highlight in the player table (threaded through from
                  profile/game-list links so the viewer's own row stands out).
@@ -404,47 +430,56 @@ async def match_detail(request: Request, match_id: str, focus: str = ""):
             "inhibitors": o.get("inhibitor", {}).get("kills", 0),
         }
 
+    duration_min = max(info.get("gameDuration", 0) / 60, 1)
     teams: dict[int, list] = {100: [], 200: []}
     for p in info["participants"]:
         rid = f"{p.get('riotIdGameName', '?')}#{p.get('riotIdTagline', '')}"
         try:
-            keystone = p["perks"]["styles"][0]["selections"][0]["perk"]
+            styles = p["perks"]["styles"]
+            sub_style = styles[1]["style"]
+            keystone = styles[0]["selections"][0]["perk"]
         except (KeyError, IndexError):
-            keystone = None
+            sub_style = keystone = None
         team_kills = objectives.get(p["teamId"], {}).get("kills", 0)
-        kills, assists = p["kills"], p["assists"]
+        kills, deaths, assists = p["kills"], p["deaths"], p["assists"]
+        cs = p.get("totalMinionsKilled", 0) + p.get("neutralMinionsKilled", 0)
+        gold = p.get("goldEarned", 0)
         teams.setdefault(p["teamId"], []).append({
             "riot_id": rid, "tracked": rid in tracked,
             "focus": focus in (rid, p.get("puuid")),
             "champion": p["championName"], "level": p.get("champLevel", 0),
-            "kills": kills, "deaths": p["deaths"], "assists": assists,
+            "kills": kills, "deaths": deaths, "assists": assists,
+            "kda": round((kills + assists) / max(deaths, 1), 2),
             "kp": round(100 * (kills + assists) / team_kills) if team_kills else 0,
-            "cs": p.get("totalMinionsKilled", 0) + p.get("neutralMinionsKilled", 0),
-            "gold": p.get("goldEarned", 0),
+            "cs": cs, "cs_per_min": round(cs / duration_min, 1),
+            "gold": gold, "gold_per_min": round(gold / duration_min),
             "damage": p.get("totalDamageDealtToChampions", 0),
             "damage_taken": p.get("totalDamageTaken", 0),
             "vision": p.get("visionScore", 0),
             "items": [p.get(f"item{i}", 0) for i in range(6) if p.get(f"item{i}")],
-            "keystone": keystone,
+            "keystone": keystone, "sub_style": sub_style,
+            "summoner1": summoner_icon(p.get("summoner1Id")),
+            "summoner2": summoner_icon(p.get("summoner2Id")),
+            "multikill": MULTIKILL_LABELS.get(p.get("largestMultiKill", 0)),
+            "first_blood": bool(p.get("firstBloodKill") or p.get("firstBloodAssist")),
         })
 
-    for tm in teams.values():
-        team_damage = sum(pl["damage"] for pl in tm) or 1
-        for pl in tm:
-            pl["dmg_share"] = round(100 * pl["damage"] / team_damage)
-
-    max_damage = max((pl["damage"] for tm in teams.values() for pl in tm), default=1) or 1
-    max_damage_taken = max(
-        (pl["damage_taken"] for tm in teams.values() for pl in tm), default=1) or 1
+    all_players = [pl for tm in teams.values() for pl in tm]
+    max_damage = max((pl["damage"] for pl in all_players), default=1) or 1
+    max_damage_taken = max((pl["damage_taken"] for pl in all_players), default=1) or 1
+    best = {stat: max((pl[stat] for pl in all_players), default=0)
+           for stat in ("kills", "kda", "cs", "gold", "vision")}
     return templates.TemplateResponse(request, "match.html", {
         "match_id": match_id, "teams": teams, "objectives": objectives,
         "queue": QUEUE_NAMES.get(info.get("queueId"), f"queue {info.get('queueId')}"),
         "duration": stats.fmt_duration(info.get("gameDuration", 0)),
         "when": stats._when(info.get("gameCreation", 0)),
         "patch": ".".join(str(info.get("gameVersion", "")).split(".")[:2]),
-        "max_damage": max_damage, "max_damage_taken": max_damage_taken, "focus": focus,
+        "max_damage": max_damage, "max_damage_taken": max_damage_taken,
+        "best": best, "focus": focus,
         "champ_icon": champ_icon, "item_icon": item_icon, "obj_icon": obj_icon,
-        "rune_icons": RUNE_ICONS, "fmt_int": stats.fmt_int,
+        "rune_icons": RUNE_ICONS, "style_icons": STYLE_ICONS,
+        "fmt_int": stats.fmt_int,
     })
 
 
