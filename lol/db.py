@@ -1,4 +1,11 @@
-"""SQLite schéma a přístup (část 1 — sledovaní hráči)."""
+"""
+@brief SQLite schema and access layer for both the personal tracker and the
+       Leaguepedia pro-scene pipeline.
+
+`connect()` creates all tables idempotently and applies additive column
+migrations on every startup, so the schema below is always the current
+source of truth — there are no separate migration files.
+"""
 
 import json
 import sqlite3
@@ -117,6 +124,16 @@ CREATE TABLE IF NOT EXISTS rank_snapshots (
 
 
 def connect(path: str = "lol.db") -> sqlite3.Connection:
+    """
+    @brief Open the SQLite DB, creating/migrating the schema as needed.
+
+    Runs `SCHEMA` (idempotent `CREATE TABLE IF NOT EXISTS`), then applies
+    additive `ALTER TABLE ADD COLUMN` migrations for columns introduced
+    after a table's original creation, skipping any already present.
+
+    @param path Filesystem path to the SQLite database file.
+    @return Open connection with `row_factory = sqlite3.Row`.
+    """
     con = sqlite3.connect(path)
     con.row_factory = sqlite3.Row
     con.executescript(SCHEMA)
@@ -144,6 +161,14 @@ def connect(path: str = "lol.db") -> sqlite3.Connection:
 
 
 def _participant_extras(p: dict) -> tuple:
+    """
+    @brief Derive the trailing `match_participants` columns from raw match JSON.
+
+    @param p One participant dict from `match["info"]["participants"]`.
+    @return `(team_id, items, keystone, perks, primary_style, sub_style)`,
+            in `match_participants` column order. Rune fields are None if
+            `p["perks"]` is missing or malformed.
+    """
     items = " ".join(str(p.get(f"item{i}", 0)) for i in range(6) if p.get(f"item{i}"))
     keystone = perks = primary = sub = None
     try:
@@ -157,7 +182,16 @@ def _participant_extras(p: dict) -> tuple:
 
 
 def insert_item_events(con: sqlite3.Connection, match_id: str, timeline: dict):
-    """Uloží nákupy itemů z timeline (ITEM_PURCHASED eventy)."""
+    """
+    @brief Store item purchases from a match timeline (ITEM_PURCHASED events).
+
+    Deletes any existing rows for this match first, so it's safe to call
+    again (e.g. on a re-sync) without creating duplicates.
+
+    @param con       Open sqlite3 connection.
+    @param match_id  Match this timeline belongs to.
+    @param timeline  Raw timeline JSON from `RiotClient.get_timeline`.
+    """
     id_to_puuid = {pt["participantId"]: pt["puuid"]
                    for pt in timeline["info"]["participants"]}
     con.execute("DELETE FROM item_events WHERE match_id = ?", (match_id,))
@@ -173,6 +207,18 @@ def insert_item_events(con: sqlite3.Connection, match_id: str, timeline: dict):
 
 
 def insert_match(con: sqlite3.Connection, match: dict, region: str = "europe"):
+    """
+    @brief Store a full match (and its participants) from raw match-v5 JSON.
+
+    Idempotent via `INSERT OR IGNORE` on `match_id` — safe to call for a
+    match already stored. The full match JSON is kept verbatim in
+    `matches.raw_json` so richer per-player fields (challenges, perks, …)
+    can be mined later without another API call.
+
+    @param con    Open sqlite3 connection.
+    @param match  Raw match JSON from `RiotClient.get_match`.
+    @param region Regional routing host the match was fetched from.
+    """
     info = match["info"]
     con.execute(
         "INSERT OR IGNORE INTO matches VALUES (?,?,?,?,?,?,?)",
@@ -196,6 +242,13 @@ def insert_match(con: sqlite3.Connection, match: dict, region: str = "europe"):
 
 
 def insert_rank_snapshot(con: sqlite3.Connection, puuid: str, entry: dict):
+    """
+    @brief Record a point-in-time rank snapshot for a player.
+
+    @param con   Open sqlite3 connection.
+    @param puuid Player's PUUID.
+    @param entry One league-entry dict from `RiotClient.get_league_entries`.
+    """
     con.execute(
         "INSERT INTO rank_snapshots (puuid, queue, tier, division, lp, wins, losses)"
         " VALUES (?,?,?,?,?,?,?)",

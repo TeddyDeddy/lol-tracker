@@ -1,4 +1,11 @@
-"""Ověření Riot API klíče: python -m lol.verify "GameName#TAG" eun1"""
+"""
+@brief Manual smoke test for a Riot API key.
+
+Usage: `python -m lol.verify "GameName#TAG" eun1`. Exercises account,
+league-entry, match-history, and live-game lookups end to end and prints
+each result, so a fresh/rotated dev key can be confirmed working without
+starting the full tracker.
+"""
 
 import asyncio
 import pathlib
@@ -8,6 +15,13 @@ from lol.riot import RiotClient
 
 
 def load_env():
+    """
+    @brief Load `.env` key=value pairs into the process environment.
+
+    Only sets variables not already present (`setdefault`), so real
+    environment variables always win over the file. No-op if `.env` is
+    missing.
+    """
     env = pathlib.Path(__file__).parent.parent / ".env"
     if env.exists():
         import os
@@ -18,6 +32,12 @@ def load_env():
 
 
 async def main(riot_id: str, platform: str):
+    """
+    @brief Run the full key-verification sequence and print each result.
+
+    @param riot_id  "GameName#TAG" to look up.
+    @param platform Platform routing value for league/live lookups (e.g. "eun1").
+    """
     game_name, _, tag = riot_id.partition("#")
     client = RiotClient()
     try:

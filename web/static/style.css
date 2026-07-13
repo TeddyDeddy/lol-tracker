@@ -1,4 +1,7 @@
-/* Dark-only téma — tokeny z validované dataviz palety + zlatý brand akcent. */
+/**
+ * @file Dark-only theme: tokens from the validated dataviz palette plus a
+ *       gold brand accent.
+ */
 :root {
   --page: #0d0d0d;
   --surface: #1a1a19;
@@ -42,7 +45,7 @@ a { color: inherit; text-decoration: none; }
 .nav-link.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
 .live-summary { font-size: 13px; color: var(--muted); }
 
-/* ---------- karty hráčů ---------- */
+/** @brief Player cards (home page). */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
 .card {
   background: linear-gradient(180deg, #1d1d1b, #171716);
@@ -72,7 +75,7 @@ a.card:hover, .card-click:hover {
 .tick.l { background: var(--bad); opacity: 0.55; height: 10px; align-self: flex-end; }
 .form-label { margin-left: 8px; font-size: 12px; color: var(--muted); }
 
-/* ---------- profil ---------- */
+/** @brief Player profile page. */
 .player-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 18px 0; }
 .player-head h1 { margin: 0; }
 .modes { margin-left: auto; display: flex; gap: 6px; }
@@ -100,7 +103,7 @@ a.card:hover, .card-click:hover {
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 820px) { .two-col { grid-template-columns: 1fr; } }
 
-/* ---------- bar chart (champion pool) ---------- */
+/** @brief Bar chart (champion pool). */
 .bars { display: flex; flex-direction: column; gap: 8px; }
 .bar-row { display: grid; grid-template-columns: 26px 92px 1fr 34px 44px; gap: 10px; align-items: center; }
 .bar-name { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -137,7 +140,7 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .games tr.row-w td:first-child { box-shadow: inset 3px 0 0 var(--good); }
 .games tr.row-l td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
 
-/* ---------- matchupy + itemy/runy ---------- */
+/** @brief Matchups + items/runes. */
 .matchup { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--grid); }
 .matchup:last-child { border-bottom: 0; }
 .mu-name { flex: 1; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -147,7 +150,7 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .champ-cell { white-space: nowrap; position: relative; }
 .rune { width: 16px; height: 16px; border-radius: 50%; background: #0d0d0d; vertical-align: bottom; margin-left: -10px; border: 1px solid var(--border); }
 
-/* ---------- sezóny, prokliky, detail zápasu ---------- */
+/** @brief Seasons, click-throughs, match detail. */
 .pill-sep { width: 1px; height: 20px; background: var(--grid); margin: 0 4px; align-self: center; }
 .record-link { display: block; }
 .record-link:hover .record-value { color: var(--accent); }
@@ -188,7 +191,7 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
   font-size: 11px; color: var(--muted);
 }
 
-/* ---------- detail championa: runy + build order ---------- */
+/** @brief Champion detail: runes + build order. */
 a.bar-row:hover .bar-name { color: var(--accent); }
 .fill-good { background: var(--good) !important; }
 .fill-bad { background: var(--bad) !important; }
@@ -267,7 +270,7 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .pn-stats li::before { content: "•"; position: absolute; left: 0; color: var(--accent); }
 .pn-stats strong { color: var(--ink); }
 
-/* ---------- seznam her (rewind styl) ---------- */
+/** @brief Game list (rewind.lol-inspired layout). */
 .all-games-link { float: right; font-size: 14px; font-weight: 400; }
 .all-games-link:hover { color: var(--accent); }
 .game-list { display: flex; flex-direction: column; gap: 8px; }
@@ -296,7 +299,7 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .pager { display: flex; align-items: center; gap: 14px; justify-content: center; margin: 18px 0; }
 @media (max-width: 900px) { .gc-roster { display: none; } }
 
-/* ---------- pro scéna ---------- */
+/** @brief Pro scene (Leaguepedia-sourced pages). */
 .nav-link { color: var(--ink-2); text-decoration: none; margin-left: 18px; }
 .nav-link:hover { color: var(--accent); }
 .footer { padding: 24px 32px; font-size: 12px; border-top: 1px solid var(--grid); margin-top: 32px; }
@@ -384,7 +387,7 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .rl-score { flex: 0 0 52px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
 .rl-bo { flex: 0 0 44px; text-align: right; font-size: 12px; }
 
-/* ---------- turnaj: fázové záložky (Základní část / Play-off / Play-In / ...) ---------- */
+/** @brief Tournament: phase tabs (group stage / playoffs / play-in / ...). */
 .phase-tabs { display: flex; gap: 8px; margin: 4px 0 18px; }
 .phase-tab {
   padding: 7px 16px; border-radius: 20px; font-size: 13px; cursor: pointer;
@@ -403,7 +406,7 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 .draft-row { display: flex; align-items: center; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
 .avatar.banned { filter: grayscale(1) brightness(0.6); position: relative; }
 
-/* ---------- vizuální upgrade (empty stavy, pro polish, rank tinty) ---------- */
+/** @brief Visual polish (empty states, pro-scene refinements, rank tints). */
 .empty { text-align: center; padding: 48px 20px; color: var(--muted); }
 .empty-icon { font-size: 40px; margin-bottom: 8px; }
 .empty code { background: var(--surface); border: 1px solid var(--border);

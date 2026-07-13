@@ -1,6 +1,16 @@
-/* Sdílený tooltip + line chart (rolling winrate) + live badge refresh. */
+/**
+ * @file Shared page behavior: tooltips, sortable/searchable tables, whole-row/card
+ *       clicks, bracket phase tabs, and the live-badge polling refresh.
+ */
 const tooltip = document.getElementById("tooltip");
 
+/**
+ * @brief Show the shared tooltip at a position near the cursor, clamped to viewport.
+ *
+ * @param {string} html Tooltip inner HTML.
+ * @param {number} x    Cursor X (client coordinates).
+ * @param {number} y    Cursor Y (client coordinates).
+ */
 function showTip(html, x, y) {
   tooltip.innerHTML = html;
   tooltip.hidden = false;
@@ -182,7 +192,12 @@ function initPhaseTabs() {
 }
 initPhaseTabs();
 
-/* ---------- live badge refresh (à 60 s) ---------- */
+/**
+ * @brief Poll `/api/live` every 60s and update live-game badges/summary in place.
+ *
+ * Silently swallows fetch errors — a transient failure just leaves the
+ * previous badge state until the next successful poll.
+ */
 async function refreshLive() {
   try {
     const rows = await (await fetch("/api/live")).json();

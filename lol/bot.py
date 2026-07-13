@@ -1,7 +1,8 @@
-"""Discord bot: slash příkazy + notifikace o live games.
+"""
+@brief Discord bot: slash commands + live-game notifications.
 
-Spuštění: python -m lol.bot
-Nastavení kanálu pro notifikace: napiš /setchannel v cílovém kanálu.
+Run: `python -m lol.bot`. To set the notification channel, run /setchannel
+in the target channel.
 """
 
 import asyncio
@@ -25,7 +26,13 @@ QUEUES = {420: "Ranked Solo", 440: "Ranked Flex", 400: "Normal Draft",
 
 
 async def load_champion_names() -> dict[int, str]:
-    """championId -> jméno z Data Dragonu (statická CDN data, bez API klíče)."""
+    """
+    @brief Build a championId -> name lookup from Data Dragon.
+
+    Static CDN data, no API key required.
+
+    @return Dict mapping numeric champion ID to display name.
+    """
     async with httpx.AsyncClient(timeout=10) as http:
         version = (await http.get(
             "https://ddragon.leagueoflegends.com/api/versions.json")).json()[0]
@@ -36,6 +43,14 @@ async def load_champion_names() -> dict[int, str]:
 
 
 class TrackerBot(discord.Client):
+    """
+    @brief Discord client for the tracker bot: slash commands + background loops.
+
+    Owns the shared DB connection and RiotClient used by both the slash
+    commands (`register_commands`) and the two `tasks.loop` background jobs
+    below (`poll_live`, `sync_matches`).
+    """
+
     def __init__(self):
         super().__init__(intents=discord.Intents.default())
         self.tree = app_commands.CommandTree(self)
@@ -45,26 +60,34 @@ class TrackerBot(discord.Client):
         self.champions: dict[int, str] = {}
 
     async def setup_hook(self):
+        """
+        @brief discord.py startup hook: load champion data, register
+               commands, and start the background loops.
+        """
         self.champions = await load_champion_names()
-        await resolve_players(self.con, self.riot, self.cfg)  # seed z config.toml
+        await resolve_players(self.con, self.riot, self.cfg)  # seed from config.toml
         register_commands(self)
         await self.tree.sync()
         self.poll_live.start()
         self.sync_matches.start()
 
     def db_players(self) -> list[dict]:
+        """@brief All currently tracked players, as row dicts."""
         return [dict(r) for r in self.con.execute("SELECT * FROM players")]
 
     def notify_channel(self):
+        """@brief The Discord channel configured via /setchannel, or None if unset."""
         row = self.con.execute(
             "SELECT value FROM settings WHERE key = 'notify_channel'").fetchone()
         return self.get_channel(int(row["value"])) if row else None
 
     def champ(self, champion_id: int) -> str:
+        """@brief Display name for a champion ID, via the cached `self.champions` map."""
         return self.champions.get(champion_id, f"champion {champion_id}")
 
     @tasks.loop(seconds=120)
     async def poll_live(self):
+        """@brief Background loop: check every tracked player's live-game status."""
         for player in self.db_players():
             try:
                 live = await self.riot.get_live_game(player["puuid"], player["platform"])
@@ -77,6 +100,7 @@ class TrackerBot(discord.Client):
 
     @tasks.loop(hours=6)
     async def sync_matches(self):
+        """@brief Background loop: periodically sync new matches for every tracked player."""
         for player in self.db_players():
             try:
                 await sync_player(self.con, self.riot, player)
@@ -86,9 +110,17 @@ class TrackerBot(discord.Client):
     @poll_live.before_loop
     @sync_matches.before_loop
     async def _wait_ready(self):
+        """@brief Delay both background loops until the Discord client is ready."""
         await self.wait_until_ready()
 
     def live_embed(self, player: dict, live: dict) -> discord.Embed:
+        """
+        @brief Build the "started a game" notification embed.
+
+        @param player Tracked player's DB row dict.
+        @param live   Live-game dict from `RiotClient.get_live_game`.
+        @return Discord embed with the player's champion, queue, and both teams' rosters.
+        """
         me = next(p for p in live["participants"] if p["puuid"] == player["puuid"])
         queue = QUEUES.get(live.get("gameQueueConfigId"), "Neznámý mód")
         embed = discord.Embed(
@@ -108,7 +140,12 @@ RANK_QUEUES = {"RANKED_SOLO_5x5": "SoloQ", "RANKED_FLEX_SR": "Flex"}
 
 
 class StatsView(discord.ui.View):
-    """Přepínatelný /stats embed: Přehled | Posledních 20 | Rekordy + filtr módu."""
+    """
+    @brief Tabbed /stats embed: Overview | Last 20 | Records, plus a mode filter.
+
+    Stateful view attached to one interaction response; button/select
+    callbacks mutate `self.page`/`self.mode` and re-render via `refresh()`.
+    """
 
     def __init__(self, bot: "TrackerBot", riot_id: str):
         super().__init__(timeout=600)
@@ -118,9 +155,11 @@ class StatsView(discord.ui.View):
         self.mode = "All"
 
     def queues(self):
+        """@brief Queue IDs for the currently selected mode filter."""
         return stats.QUEUE_GROUPS[self.mode]
 
     async def build_embed(self) -> discord.Embed:
+        """@brief Render the embed for the currently selected page and mode."""
         title = f"📊 {self.riot_id}" + (f" — {self.mode}" if self.mode != "All" else "")
         embed = discord.Embed(title=title, color=0x3498DB)
         s = stats.summary(self.bot.con, self.riot_id, self.queues())
@@ -179,34 +218,45 @@ class StatsView(discord.ui.View):
         return embed
 
     async def refresh(self, interaction: discord.Interaction):
+        """@brief Re-render the embed in place after a button/select interaction."""
         await interaction.response.edit_message(embed=await self.build_embed(), view=self)
 
     @discord.ui.button(label="Přehled", style=discord.ButtonStyle.primary)
     async def overview_btn(self, interaction, _):
+        """@brief Switch to the Overview page."""
         self.page = "overview"; await self.refresh(interaction)
 
     @discord.ui.button(label="Posledních 20", style=discord.ButtonStyle.secondary)
     async def games_btn(self, interaction, _):
+        """@brief Switch to the Last 20 games page."""
         self.page = "games"; await self.refresh(interaction)
 
     @discord.ui.button(label="Rekordy", style=discord.ButtonStyle.secondary)
     async def records_btn(self, interaction, _):
+        """@brief Switch to the Records page."""
         self.page = "records"; await self.refresh(interaction)
 
     @discord.ui.select(placeholder="Mód: All", options=[
         discord.SelectOption(label=m) for m in stats.QUEUE_GROUPS])
     async def mode_select(self, interaction, select):
+        """@brief Apply the selected game-mode filter and re-render."""
         self.mode = select.values[0]
         select.placeholder = f"Mód: {self.mode}"
         await self.refresh(interaction)
 
 
 def register_commands(bot: TrackerBot):
+    """
+    @brief Register all /stats, /live, /track, /untrack, /setchannel slash commands.
+
+    @param bot TrackerBot instance whose command tree the commands are added to.
+    """
     tree = bot.tree
 
     @tree.command(name="stats", description="Statistiky a rekordy hráče")
     @app_commands.describe(riot_id="GameName#TAG")
     async def stats_cmd(interaction: discord.Interaction, riot_id: str):
+        """@brief /stats — open the tabbed stats view for a tracked player."""
         if not stats.summary(bot.con, riot_id):
             await interaction.response.send_message(
                 f"Žádná data pro `{riot_id}` — sleduje se? (/track)", ephemeral=True)
@@ -217,6 +267,7 @@ def register_commands(bot: TrackerBot):
 
     @tree.command(name="live", description="Kdo ze sledovaných právě hraje")
     async def live_cmd(interaction: discord.Interaction):
+        """@brief /live — list currently in-game tracked players."""
         rows = bot.con.execute(
             "SELECT l.*, p.riot_id FROM live_games l JOIN players p USING (puuid)"
         ).fetchall()
@@ -230,6 +281,7 @@ def register_commands(bot: TrackerBot):
     @tree.command(name="track", description="Přidat hráče ke sledování")
     @app_commands.describe(riot_id="GameName#TAG", platform="eun1 nebo euw1")
     async def track_cmd(interaction: discord.Interaction, riot_id: str, platform: str = "eun1"):
+        """@brief /track — start tracking a player and kick off a full history sync."""
         await interaction.response.defer()
         name, _, tag = riot_id.partition("#")
         try:
@@ -248,6 +300,7 @@ def register_commands(bot: TrackerBot):
             "dám vědět, až bude hotová (~10 min kvůli rate limitu).")
 
         async def full_sync():
+            """@brief Background task: full match-history sync, with progress announcements."""
             player = {"puuid": account["puuid"], "riot_id": canonical,
                       "platform": platform}
 
@@ -268,12 +321,14 @@ def register_commands(bot: TrackerBot):
 
     @tree.command(name="untrack", description="Přestat sledovat hráče")
     async def untrack_cmd(interaction: discord.Interaction, riot_id: str):
+        """@brief /untrack — stop tracking a player."""
         bot.con.execute("DELETE FROM players WHERE riot_id = ?", (riot_id,))
         bot.con.commit()
         await interaction.response.send_message(f"✔ `{riot_id}` už nesleduji.")
 
     @tree.command(name="setchannel", description="Posílat notifikace do tohoto kanálu")
     async def setchannel_cmd(interaction: discord.Interaction):
+        """@brief /setchannel — set the current channel as the live-game notification target."""
         bot.con.execute(
             "INSERT OR REPLACE INTO settings VALUES ('notify_channel', ?)",
             (str(interaction.channel_id),))
@@ -282,6 +337,7 @@ def register_commands(bot: TrackerBot):
 
 
 def main():
+    """@brief Entry point: load `.env` and run the bot with `DISCORD_TOKEN`."""
     from lol.verify import load_env
     load_env()
     TrackerBot().run(os.environ["DISCORD_TOKEN"])

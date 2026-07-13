@@ -1,13 +1,14 @@
-"""Leaguepedia (Cargo API) — ingest historie pro-zápasů.
+"""
+@brief Leaguepedia (Cargo API) — ingest pro-match history into the `pro_*` tables.
 
 CLI:
-    python -m lol.leaguepedia leagues [rok]    # průzkum názvů lig
-    python -m lol.leaguepedia ingest [2023]    # turnaje + hry od daného roku
-    python -m lol.leaguepedia update           # dotáhne běžící/nové turnaje
+    python -m lol.leaguepedia leagues [year]    # explore league names for a year
+    python -m lol.leaguepedia ingest [2023]     # tournaments + games from that year on
+    python -m lol.leaguepedia update            # catch up ongoing/new tournaments
 
-Data: CC BY-SA, zdroj lol.fandom.com — atribuce na webu.
-S FANDOM_USER/FANDOM_BOT_PASSWORD v .env se klient přihlásí (vyšší rate
-limity, throttle 1 s); anonymně platí 3 s + backoff.
+Data license: CC BY-SA, source lol.fandom.com — attribution shown on the site.
+With `FANDOM_USER`/`FANDOM_BOT_PASSWORD` in `.env` the client logs in for
+higher rate limits (1 s throttle); anonymous access uses 3 s + backoff.
 """
 
 import datetime
@@ -66,7 +67,15 @@ _last_request = 0.0
 
 
 def login():
-    """Přihlášení bot passwordem (Special:BotPasswords) — vyšší limity."""
+    """
+    @brief Log in with a bot password (Special:BotPasswords) for higher rate limits.
+
+    No-op (returns False) if `FANDOM_USER`/`FANDOM_BOT_PASSWORD` aren't set,
+    or if the login attempt fails — falls back to slower anonymous access
+    either way rather than raising.
+
+    @return True if logged in successfully, else False.
+    """
     global _logged_in, _throttle
     user = os.environ.get("FANDOM_USER")
     password = os.environ.get("FANDOM_BOT_PASSWORD")
@@ -92,7 +101,20 @@ def login():
 
 def cargo_query(tables: str, fields: str, where: str, join_on: str = "",
                 order_by: str = "", limit: int = 500, offset: int = 0) -> list[dict]:
-    """Jeden cargoquery request s throttlingem a backoffem na rate limit."""
+    """
+    @brief One `cargoquery` request, throttled and retried on rate-limit errors.
+
+    @param tables   Cargo table name(s), comma-separated for a join.
+    @param fields   Comma-separated fields to select.
+    @param where    Cargo `where` clause.
+    @param join_on  Cargo `join_on` clause, if `tables` names more than one table.
+    @param order_by Cargo `order_by` clause.
+    @param limit    Max rows per page (Cargo's own cap is 500).
+    @param offset   Row offset for pagination.
+    @return List of result row dicts.
+    @throws RuntimeError If the API returns a non-rate-limit error, or if the
+            rate limit still isn't cleared after 6 attempts with escalating backoff.
+    """
     global _last_request
     params = {"action": "cargoquery", "format": "json", "tables": tables,
               "fields": fields, "where": where, "limit": limit, "offset": offset}
@@ -121,7 +143,15 @@ def cargo_query(tables: str, fields: str, where: str, join_on: str = "",
 
 
 def cargo_query_all(tables: str, fields: str, where: str, **kw) -> list[dict]:
-    """Stránkuje po 500 dokud chodí plné stránky."""
+    """
+    @brief Page through `cargo_query` 500 rows at a time until a short page ends it.
+
+    @param tables Cargo table name(s), forwarded to `cargo_query`.
+    @param fields Comma-separated fields to select.
+    @param where  Cargo `where` clause.
+    @param kw     Extra kwargs forwarded to `cargo_query` (e.g. `order_by`).
+    @return All matching rows across every page.
+    """
     out, offset = [], 0
     while True:
         page = cargo_query(tables, fields, where, offset=offset, **kw)
@@ -133,11 +163,16 @@ def cargo_query_all(tables: str, fields: str, where: str, **kw) -> list[dict]:
 
 
 def _esc(s: str) -> str:
+    """@brief Escape a single-quoted string literal for a Cargo `where` clause."""
     return s.replace("'", "''")
 
 
 def list_leagues(year: int = 2025):
-    """Průzkum: vypíše Primary ligy pro daný rok."""
+    """
+    @brief Exploration helper: print every Primary-level league for a year.
+
+    @param year Year to query.
+    """
     rows = cargo_query("Tournaments", "League,TournamentLevel",
                        f"Year={year}", order_by="League")
     for league in sorted({r["League"] for r in rows
@@ -153,6 +188,7 @@ def ingest_tournaments(con, since_year: int) -> list[dict]:
     @brief Fetch major-league tournaments from `since_year` onward and upsert
            them into `pro_tournaments`.
 
+    @param con        Open sqlite3 connection.
     @param since_year Only tournaments with Year >= this are fetched AND
                        returned — a caller doing `ingest(2026)` must not get
                        back 2023-2025 rows that happen to already sit in the
@@ -195,7 +231,16 @@ MATCH_FIELDS = ("MatchId,Team1,Team2,Winner,Team1Score,Team2Score,"
 
 
 def ingest_tournament(con, t: dict) -> int:
-    """Hry + hráči + série jednoho turnaje (klíč OverviewPage)."""
+    """
+    @brief Ingest games, players, and series (matches) for one tournament.
+
+    Upserts into `pro_games`, `pro_player_games`, and `pro_matches`, all
+    keyed by the tournament's `OverviewPage`.
+
+    @param con Open sqlite3 connection.
+    @param t   A `pro_tournaments` row dict (as returned by `ingest_tournaments`).
+    @return Number of games ingested into `pro_games`.
+    """
     op = t["overview_page"]
     where = f"OverviewPage='{_esc(op)}'"
 
@@ -258,7 +303,15 @@ def ingest_tournament(con, t: dict) -> int:
 
 
 def load_patch_changes(con):
-    """Ručně kurátorovaný data/patch_changes.toml → tabulka patch_changes."""
+    """
+    @brief Apply the hand-curated `data/patch_changes.toml` overrides to `patch_changes`.
+
+    Meant to run AFTER the automatic patch-notes ingest, so these entries
+    override anything auto-classified for the same (patch, champion) pair.
+
+    @param con Open sqlite3 connection.
+    @return Number of override rows applied, or 0 if the TOML file doesn't exist.
+    """
     path = ROOT / "data" / "patch_changes.toml"
     if not path.exists():
         return 0
@@ -283,7 +336,8 @@ def _is_done(con, t: dict) -> bool:
     left the bracket permanently empty. Checking both closes that gap on the next
     `ingest`/`update` run.
 
-    @param t A `pro_tournaments` row dict.
+    @param con Open sqlite3 connection.
+    @param t   A `pro_tournaments` row dict.
     @return True if the tournament is past its end date and has both games and matches.
     """
     today = datetime.date.today().isoformat()
@@ -298,6 +352,16 @@ def _is_done(con, t: dict) -> bool:
 
 
 def ingest(since_year: int = 2023, only: str | None = None):
+    """
+    @brief Full pro-scene ingest: tournaments, games/players/matches, and patch notes.
+
+    Skips tournaments `_is_done()` already considers complete, so this is
+    safe to re-run (e.g. from `update()`) without re-downloading everything.
+
+    @param since_year Only tournaments from this year onward are ingested.
+    @param only        If set, only tournaments whose `overview_page` contains
+           this substring are processed (manual retry/debug filter).
+    """
     con = db.connect(str(ROOT / "lol.db"))
     login()
     tournaments = ingest_tournaments(con, since_year)
@@ -328,7 +392,12 @@ def ingest(since_year: int = 2023, only: str | None = None):
 
 
 def update():
-    """Dotáhne jen neukončené/nové turnaje (od loňska, kvůli přelomu roku)."""
+    """
+    @brief Catch up ongoing/new tournaments only, without re-walking full history.
+
+    Starts from last year (not just the current year) to handle the
+    year-boundary case where a tournament spans New Year's.
+    """
     ingest(datetime.date.today().year - 1)
 
 

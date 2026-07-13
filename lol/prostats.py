@@ -1,7 +1,8 @@
-"""Statistiky pro-scény nad tabulkami pro_* (zdroj: Leaguepedia).
+"""
+@brief Pro-scene statistics over the `pro_*` tables (source: Leaguepedia).
 
-Čisté funkce nad sqlite — používá web (web/app.py). Picky/bany jsou
-v pro_games jako CSV v pořadí draftu.
+Pure functions over sqlite, consumed by `web/app.py`. Picks/bans are stored
+in `pro_games` as CSV in draft order.
 """
 
 import re
@@ -11,20 +12,36 @@ from lol.leaguepedia import LEAGUE_SHORT
 
 
 def short(league: str | None) -> str:
+    """@brief Short display abbreviation for a league name (e.g. "LEC"), via LEAGUE_SHORT."""
     return LEAGUE_SHORT.get(league or "", league or "?")
 
 
 def _split(csv: str | None) -> list[str]:
+    """@brief Split a comma-separated pick/ban field into a trimmed list of champion names."""
     return [c.strip() for c in (csv or "").split(",") if c.strip()]
 
 
 def tournament_games(con: sqlite3.Connection, op: str) -> list[dict]:
+    """
+    @brief All games for one tournament, in date order.
+
+    @param con Open sqlite3 connection.
+    @param op  Tournament's Leaguepedia OverviewPage.
+    @return List of `pro_games` row dicts.
+    """
     return [dict(r) for r in con.execute(
         "SELECT * FROM pro_games WHERE overview_page = ? ORDER BY date", (op,))]
 
 
 def tournament_champs(con: sqlite3.Connection, op: str) -> list[dict]:
-    """Per champion: picks, bans, presence %, winrate (z picků)."""
+    """
+    @brief Per-champion pick/ban stats for a tournament: picks, bans, presence %, winrate.
+
+    @param con Open sqlite3 connection.
+    @param op  Tournament's Leaguepedia OverviewPage.
+    @return List of {champion, games, picks, bans, wins, presence, winrate},
+            sorted by presence desc. `winrate` is None if never picked.
+    """
     games = tournament_games(con, op)
     stats: dict[str, dict] = {}
 
@@ -53,7 +70,13 @@ def tournament_champs(con: sqlite3.Connection, op: str) -> list[dict]:
 
 
 def tournament_teams(con: sqlite3.Connection, op: str) -> list[dict]:
-    """Týmy turnaje s bilancí her."""
+    """
+    @brief Teams in a tournament with their win/loss record.
+
+    @param con Open sqlite3 connection.
+    @param op  Tournament's Leaguepedia OverviewPage.
+    @return List of {team, games, wins}, sorted by wins desc then team name.
+    """
     teams: dict[str, dict] = {}
     for g in tournament_games(con, op):
         for name in (g["team1"], g["team2"]):
@@ -66,8 +89,15 @@ def tournament_teams(con: sqlite3.Connection, op: str) -> list[dict]:
 
 
 def _round_key(name: str) -> tuple:
-    """Přirozené pořadí kol podle NÁZVU — fallback pro staré řádky bez
-    N_TabInPage (viz `_round_sort_key`). Round 1 < Round 2 … < Semifinals < Finals."""
+    """
+    @brief Natural round ordering derived from the round NAME.
+
+    Fallback for old rows without `N_TabInPage` (see `_round_sort_key`).
+    Round 1 < Round 2 < … < Semifinals < Finals.
+
+    @param name Round/tab display name.
+    @return Sortable tuple.
+    """
     m = re.search(r"(\d+)", name)
     if m:
         return (0, int(m.group(1)))
@@ -181,7 +211,8 @@ def bracket(con: sqlite3.Connection, op: str) -> list[dict]:
     a round by Leaguepedia's `N_MatchInTab` ordinal when available (else by
     date). Each column is flagged `is_bracket` via `_round_is_bracket`.
 
-    @param op Tournament's Leaguepedia OverviewPage.
+    @param con Open sqlite3 connection.
+    @param op  Tournament's Leaguepedia OverviewPage.
     @return List of {round, matches, is_bracket}, in play order. Each match
             dict additionally carries `feeds_from` (see `_link_feeds`).
     """
@@ -357,7 +388,8 @@ def tournament_phases(con: sqlite3.Connection, op: str) -> list[dict]:
     `_bracket_sections`) instead — either a single tree or an upper/lower/
     grand-final split.
 
-    @param op Tournament's Leaguepedia OverviewPage.
+    @param con Open sqlite3 connection.
+    @param op  Tournament's Leaguepedia OverviewPage.
     @return List of {label, kind, rounds, standings, sections}, in play order.
     """
     rounds = bracket(con, op)
@@ -419,7 +451,14 @@ def _link_feeds(cols: list[dict]) -> None:
 
 
 def series_games(con: sqlite3.Connection, match_id: str) -> list[dict]:
-    """Hry jedné série vč. soupisek per hra."""
+    """
+    @brief Games of one series (BO3/BO5), each with its per-game roster.
+
+    @param con      Open sqlite3 connection.
+    @param match_id Series match ID.
+    @return List of `pro_games` row dicts, each with a `players` list
+            (role-ordered `pro_player_games` rows) attached.
+    """
     games = [dict(r) for r in con.execute(
         "SELECT * FROM pro_games WHERE match_id = ? ORDER BY date", (match_id,))]
     for g in games:
@@ -433,7 +472,15 @@ def series_games(con: sqlite3.Connection, match_id: str) -> list[dict]:
 
 def team_form(con: sqlite3.Connection, team: str, before: str | None = None,
               n: int = 5) -> list[int]:
-    """Posledních n sérií týmu (1=výhra), nejnovější první."""
+    """
+    @brief A team's last `n` series results, newest first.
+
+    @param con    Open sqlite3 connection.
+    @param team   Team name.
+    @param before Optional date; only series before this date are considered.
+    @param n      Max number of series to return.
+    @return List of 1 (win) / 0 (loss), newest first.
+    """
     where, params = "", [team, team]
     if before:
         where, params = " AND date < ?", [team, team, before]
@@ -444,7 +491,14 @@ def team_form(con: sqlite3.Connection, team: str, before: str | None = None,
 
 
 def player_summary(con: sqlite3.Connection, player: str) -> list[dict]:
-    """Per turnaj: hry, WR, KDA + champion breakdown (pool po splitech)."""
+    """
+    @brief Per-tournament games/WR/KDA plus champion breakdown for a pro player.
+
+    @param con    Open sqlite3 connection.
+    @param player Leaguepedia player Link (disambiguated name).
+    @return List of per-tournament dicts (games, wins, winrate, kda, champs),
+            newest tournament first.
+    """
     rows = [dict(r) for r in con.execute(
         "SELECT pg.overview_page, t.name, t.date_start, p.champion,"
         " COUNT(*) games, SUM(p.win) wins,"
@@ -472,6 +526,14 @@ def player_summary(con: sqlite3.Connection, player: str) -> list[dict]:
 
 
 def search_players(con: sqlite3.Connection, needle: str, limit=20) -> list[str]:
+    """
+    @brief Search pro player names by substring, most-played first.
+
+    @param con    Open sqlite3 connection.
+    @param needle Substring to search for (case-insensitive `LIKE`).
+    @param limit  Max results to return.
+    @return List of matching player names.
+    """
     return [r["player"] for r in con.execute(
         "SELECT player, COUNT(*) n FROM pro_player_games"
         " WHERE player LIKE ? GROUP BY player ORDER BY n DESC LIMIT ?",
@@ -479,7 +541,12 @@ def search_players(con: sqlite3.Connection, needle: str, limit=20) -> list[str]:
 
 
 def _presence(games: list[dict]) -> dict[str, dict]:
-    """champ -> {picks, bans, presence} nad množinou her."""
+    """
+    @brief Pick/ban presence per champion over a set of games.
+
+    @param games `pro_games` row dicts.
+    @return Dict of champion -> {picks, bans, presence}.
+    """
     stats: dict[str, dict] = {}
     for g in games:
         for c in _split(g["team1_picks"]) + _split(g["team2_picks"]):
@@ -494,10 +561,16 @@ def _presence(games: list[dict]) -> dict[str, dict]:
 
 def event_meta_shift(con: sqlite3.Connection, event_op: str,
                      baseline_days: int = 60) -> dict:
-    """Presence na eventu vs. hlavní ligy ~2 měsíce před ním + buff/nerf labely.
+    """
+    @brief Champion presence at an event vs. the main leagues ~2 months before
+           it, plus buff/nerf labels for the delta.
 
-    Vrací {"event": turnaj, "patches": [...], "rows": [champ, before, at,
-    delta, kind, note], "baseline_games": n}.
+    @param con           Open sqlite3 connection.
+    @param event_op      Event tournament's Leaguepedia OverviewPage.
+    @param baseline_days How far back the baseline window extends.
+    @return Dict with `event` (tournament row), `patches`, `rows` (list of
+            champion/before/at/delta/kind/note), and `baseline_games`. Empty
+            dict if the tournament or its games aren't found.
     """
     t = con.execute("SELECT * FROM pro_tournaments WHERE overview_page = ?",
                     (event_op,)).fetchone()

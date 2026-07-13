@@ -1,18 +1,19 @@
-"""Oficiální Riot patch notes (leagueoflegends.com) — zdroj buff/nerf dat pro
-/pro/meta stránku.
+"""
+@brief Scrape official Riot patch notes as the buff/nerf data source for the
+       /pro/meta page.
 
-Leaguepedia's `PatchNotes` Cargo table je v praxi nedostupná — anonymní
-přístup se přes rate limit nedostal ani jednou za celou session (6 pokusů,
-escalující backoff, pořád `RuntimeError`). Riot's vlastní patch notes stránka
-je naopak čistý statický HTML bez rate limitu, se stabilní strukturou:
-per-champion `<div class="patch-change-block">` obsahující `<h3
-class="change-title">` (jméno), volitelný `<blockquote class="blockquote
-context">` (vývojářský komentář, skoro vždy explicitně říká "buff"/"nerf"/
-"pulling back on nerfs" apod.) a `<ul><li><strong>Stat</strong>: staré ⇒
-<strong>nové</strong></li></ul>` bloky per ability. Ověřeno živě na patch
-26.13 (17 championů, 100% shoda formátu) a 25.13 (starší URL styl).
+Leaguepedia's `PatchNotes` Cargo table is unusable in practice — anonymous
+access never got past the rate limit in an entire session (6 attempts,
+escalating backoff, still `RuntimeError` every time). Riot's own patch-notes
+page is static HTML with no rate limit and a stable structure instead:
+each champion is a `<div class="patch-change-block">` containing an `<h3
+class="change-title">` (name), an optional `<blockquote class="blockquote
+context">` (dev commentary, almost always explicitly says "buff"/"nerf"/
+"pulling back on nerfs" etc.), and per-ability `<ul><li><strong>Stat</strong>:
+old ⇒ <strong>new</strong></li></ul>` blocks. Verified live against patch
+26.13 (17 champions, 100% format match) and 25.13 (older URL style).
 
-CLI: python -m lol.patchnotes <patch>    # test parsování jednoho patche
+CLI: `python -m lol.patchnotes <patch>`    # test-parse a single patch
 """
 
 import html as html_lib
@@ -75,11 +76,12 @@ def _classify(text: str) -> str:
 
 
 def _strip_tags(html: str) -> str:
+    """@brief Strip all HTML tags and collapse whitespace down to single spaces."""
     return re.sub(r"\s+", " ", _TAG_RE.sub("", html)).strip()
 
 
 def _stat_lines(ul_html: str) -> list[str]:
-    """@brief Per-bullet HTML, keeping Riot's own <strong> emphasis on the
+    """@brief Per-bullet HTML, keeping Riot's own `<strong>` emphasis on the
            stat name and new value, stripped of every other tag."""
     lines = []
     for li in _LI_RE.findall(ul_html):
@@ -212,6 +214,7 @@ def ingest_patch_notes(con, patches: list[str]) -> int:
     fetching the whole balance-change history when we only need context for
     events we've actually ingested.
 
+    @param con     Open sqlite3 connection.
     @param patches Patch version strings as `pro_games.patch` reports them.
     @return Number of (patch, champion) rows upserted.
     """

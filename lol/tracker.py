@@ -1,8 +1,10 @@
-"""Tracker: sync match history + polling live games.
+"""
+@brief Tracker: sync match history and poll for live games.
 
 CLI:
-    python -m lol.tracker sync    # jednorázový sync historie + ranků
-    python -m lol.tracker watch   # smyčka: hlásí, když někdo začne hrát
+    python -m lol.tracker sync    # one-shot sync of recent matches + ranks
+    python -m lol.tracker fullsync # one-shot sync of the entire match history
+    python -m lol.tracker watch   # loop: reports when a tracked player starts a game
 """
 
 import asyncio
@@ -17,11 +19,22 @@ ROOT = pathlib.Path(__file__).parent.parent
 
 
 def load_config():
+    """@brief Load and parse `config.toml` from the project root."""
     return tomllib.loads((ROOT / "config.toml").read_text())
 
 
 async def resolve_players(con, client, cfg) -> list[dict]:
-    """Zajistí, že každý hráč z configu má v DB řádek s PUUID."""
+    """
+    @brief Ensure every player from the config has a DB row with a PUUID.
+
+    Looks up each configured player by `riot_id`; any not yet in the DB are
+    resolved via the Riot API and inserted.
+
+    @param con    Open sqlite3 connection.
+    @param client RiotClient used to resolve missing PUUIDs.
+    @param cfg    Parsed `config.toml` (must contain a `players` list).
+    @return List of player row dicts, one per configured player.
+    """
     players = []
     for p in cfg["players"]:
         row = con.execute(
@@ -43,7 +56,16 @@ async def resolve_players(con, client, cfg) -> list[dict]:
 
 
 async def all_match_ids(client, puuid: str) -> list[str]:
-    """Celá dostupná historie (API drží ~2 roky), stránkování po 100."""
+    """
+    @brief Fetch a player's entire available match history, paginated.
+
+    The Riot API retains roughly 2 years of history; this pages through it
+    100 IDs at a time until a short page signals the end.
+
+    @param client RiotClient to query.
+    @param puuid  Player's PUUID.
+    @return All match IDs found, oldest-page-last order as returned by the API.
+    """
     ids, start = [], 0
     while True:
         batch = await client.get_match_ids(puuid, count=100, start=start)
@@ -54,11 +76,23 @@ async def all_match_ids(client, puuid: str) -> list[str]:
 
 
 async def sync_player(con, client, player, count=20, full=False, on_matches_done=None):
-    """Stáhne nové zápasy hráče a aktuální rank. full=True: celá historie.
+    """
+    @brief Download a player's new matches and current rank.
 
-    Dvě fáze kvůli rate limitu (100 req/2 min): nejdřív zápasy (staty
-    použitelné v polovině času), pak timelines (build ordery). Chyba u
-    jednoho zápasu nezabije zbytek — dedup dovolí navázat dalším syncem.
+    Runs in two phases to work within the 100-req/2-min rate limit: matches
+    first (so stats are usable halfway through), then timelines (build
+    orders) for whatever was newly stored. A failure on one match/timeline
+    doesn't kill the rest of the sync — dedup on `match_id` lets the next
+    sync pick up anything missed.
+
+    @param con             Open sqlite3 connection.
+    @param client          RiotClient to query.
+    @param player          Player row dict (needs `puuid`, `platform`).
+    @param count           Max recent matches to check when not doing a full sync.
+    @param full            If True, sync the player's entire match history instead of `count`.
+    @param on_matches_done Optional async callback `(n_new_matches)` fired after the
+           match phase, before timelines are fetched.
+    @return Number of new matches stored.
     """
     if full:
         match_ids = await all_match_ids(client, player["puuid"])
@@ -86,7 +120,19 @@ async def sync_player(con, client, player, count=20, full=False, on_matches_done
 
 
 def live_game_event(con, puuid: str, live: dict | None) -> dict | None:
-    """Porovná live stav s DB. Vrátí event dict, když hráč PRÁVĚ začal hrát."""
+    """
+    @brief Diff a live-game lookup against the DB's last-known state.
+
+    Clears the `live_games` row when the player is no longer in a game,
+    upserts it when a new game is detected, and is a no-op (returns None)
+    when the same game was already reported.
+
+    @param con   Open sqlite3 connection.
+    @param puuid Player's PUUID.
+    @param live  Result of `RiotClient.get_live_game`, or None if not in a game.
+    @return Event dict (`puuid`, `game_id`, `champion_id`, `live`) only when
+            the player has JUST started a new game not seen before; else None.
+    """
     row = con.execute("SELECT * FROM live_games WHERE puuid = ?", (puuid,)).fetchone()
     if live is None:
         if row:
@@ -107,7 +153,15 @@ def live_game_event(con, puuid: str, live: dict | None) -> dict | None:
 
 
 async def watch(con, client, cfg, on_start=None):
-    """Nekonečná smyčka: každých N sekund zkontroluje live games."""
+    """
+    @brief Infinite loop: polls live-game status for every configured player.
+
+    @param con      Open sqlite3 connection.
+    @param client   RiotClient to query.
+    @param cfg      Parsed `config.toml` (reads `tracker.live_poll_seconds`, default 120).
+    @param on_start Optional async callback `(player, event)` fired when a
+           tracked player is detected starting a new game.
+    """
     interval = cfg["tracker"].get("live_poll_seconds", 120)
     players = await resolve_players(con, client, cfg)
     print(f"Sleduji {len(players)} hráčů, interval {interval} s. Ctrl+C = konec.")
@@ -124,6 +178,12 @@ async def watch(con, client, cfg, on_start=None):
 
 
 async def main(cmd: str):
+    """
+    @brief CLI entry point: dispatch `sync` / `fullsync` / `watch`.
+
+    @param cmd One of "sync", "fullsync", "watch". Any other value exits
+           with a usage message.
+    """
     cfg = load_config()
     con = db.connect(str(ROOT / "lol.db"))
     client = RiotClient()

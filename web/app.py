@@ -1,4 +1,9 @@
-"""Lokální web: python -m uvicorn web.app:app --port 8000 (z kořene projektu)."""
+"""
+@brief Local web UI (FastAPI/Jinja2): friend profiles, match detail, pro-scene brackets.
+
+Run: `python -m uvicorn web.app:app --port 8000` from the project root. Also
+statically exported to GitHub Pages via `scripts/export_static.sh`.
+"""
 
 import json
 import pathlib
@@ -117,7 +122,13 @@ def champ_icon(champion: str) -> str:
 
 
 def latest_ranks(c: sqlite3.Connection, puuid: str) -> dict:
-    """Poslední snapshot pro každou queue."""
+    """
+    @brief Most recent rank snapshot per queue for a player.
+
+    @param c     Open sqlite3 connection.
+    @param puuid Player's PUUID.
+    @return Dict of queue -> `rank_snapshots` row dict.
+    """
     rows = c.execute(
         "SELECT * FROM rank_snapshots WHERE puuid = ? AND taken_at ="
         " (SELECT MAX(taken_at) FROM rank_snapshots r2"
@@ -205,12 +216,25 @@ def augment_name(aug_id: int) -> str:
 
 
 def _season(season: str):
+    """@brief Parse a season query-string value to an int year, or None if not numeric."""
     return int(season) if season.isdigit() else None
 
 
 def _empty_or_404(request, c, riot_id, message):
-    """Hráč existuje, jen filtr nemá hry -> 200 s prázdnou stránkou (statický export
-    potřebuje 200, jinak wget odkaz nestáhne). Neznámý hráč -> 404."""
+    """
+    @brief Render an empty-state page, or 404 if the player isn't tracked at all.
+
+    A known player with no games matching the current filter gets 200 + an
+    empty page — the static export needs 200 or `wget` won't mirror the
+    link. An unknown player gets a real 404.
+
+    @param request Current FastAPI request.
+    @param c       Open sqlite3 connection (closed by this function).
+    @param riot_id Player being looked up.
+    @param message Empty-state message to show.
+    @return Rendered `empty.html` template response.
+    @throws HTTPException 404 if the player has no `players` row at all.
+    """
     known = stats._puuid(c, riot_id)
     c.close()
     if not known:
@@ -221,6 +245,15 @@ def _empty_or_404(request, c, riot_id, message):
 
 @app.get("/player/{riot_id}")
 async def player(request: Request, riot_id: str, mode: str = "All", season: str = ""):
+    """
+    @brief Player profile page: summary, rank, recent games, champion pool, top records.
+
+    @param request  Current FastAPI request.
+    @param riot_id "GameName#TAG" identifier.
+    @param mode     QUEUE_GROUPS filter key, falls back to "All" if unrecognized.
+    @param season   Optional year filter (query string, may be empty).
+    @return Rendered `player.html`, or the empty/404 fallback via `_empty_or_404`.
+    """
     if mode not in stats.QUEUE_GROUPS:
         mode = "All"
     queues, sez = stats.QUEUE_GROUPS[mode], _season(season)
@@ -492,6 +525,7 @@ def _arena_match_detail(request: Request, match_id: str, info: dict,
     18 players into 6 trios (`playerSubteamId`). Every player on a subteam already
     carries the team's final standing in `placement`, so no extra ranking pass is needed.
 
+    @param request  Current FastAPI request.
     @param match_id Riot match id.
     @param info Riot API match `info` object (already confirmed `gameMode == "CHERRY"`).
     @param tracked Set of tracked riot_ids, for linking to friend profiles.
@@ -538,12 +572,22 @@ def _arena_match_detail(request: Request, match_id: str, info: dict,
 # ---------- pro scéna (Leaguepedia, CC BY-SA) ----------
 
 def _pro_common():
+    """@brief Template context shared by every pro-scene page (short names, icons, formatting)."""
     return {"short": prostats.short, "champ_icon": champ_icon,
             "fmt_int": stats.fmt_int}
 
 
 @app.get("/pro")
 async def pro_index(request: Request, year: int = 0):
+    """
+    @brief Pro-scene landing page: tournaments for one year, grouped into
+           international events vs. regional leagues.
+
+    @param request Current FastAPI request.
+    @param year Year to show; defaults to the latest year with any ingested
+           games, falling back to the newest known year if none has data yet.
+    @return Rendered `pro_index.html`.
+    """
     c = con()
     years = [r[0] for r in c.execute(
         "SELECT DISTINCT year FROM pro_tournaments ORDER BY year DESC")]
@@ -582,6 +626,15 @@ async def pro_index(request: Request, year: int = 0):
 
 @app.get("/pro/m/{match_id:path}")
 async def pro_match(request: Request, match_id: str):
+    """
+    @brief One pro series (BO3/BO5): per-game results and rosters.
+
+    @param request  Current FastAPI request.
+    @param match_id Leaguepedia series match ID.
+    @return Rendered `pro_match.html`, or an empty-state page if the series
+            exists in the bracket but its games aren't ingested yet.
+    @throws HTTPException 404 if the series isn't in the DB at all.
+    """
     c = con()
     m = c.execute("SELECT * FROM pro_matches WHERE match_id = ?",
                   (match_id,)).fetchone()
@@ -613,6 +666,7 @@ def _sibling_tournament(c: sqlite3.Connection, op: str) -> dict | None:
            using Leaguepedia's dominant "X" / "X Playoffs" OverviewPage naming
            convention (season and playoffs are usually two separate pages).
 
+    @param c  Open sqlite3 connection.
     @param op This tournament's OverviewPage.
     @return {overview_page, name} of the sibling page if found, else None.
     """
@@ -650,6 +704,14 @@ async def pro_tournament(request: Request, op: str):
 
 @app.get("/pro/player/{player}")
 async def pro_player(request: Request, player: str):
+    """
+    @brief Pro player page: per-tournament games/WR/KDA and champion pool.
+
+    @param request Current FastAPI request.
+    @param player Leaguepedia player Link (disambiguated name).
+    @return Rendered `pro_player.html`. If no exact match, shows name
+            suggestions instead of a 404 (Leaguepedia names are easy to typo).
+    """
     c = con()
     tournaments = prostats.player_summary(c, player)
     if not tournaments:
@@ -666,6 +728,15 @@ async def pro_player(request: Request, player: str):
 
 @app.get("/pro/meta/{op:path}")
 async def pro_meta(request: Request, op: str):
+    """
+    @brief Buff/nerf meta shift page for an event: champion presence vs. the
+           baseline main-league period before it.
+
+    @param request Current FastAPI request.
+    @param op Event tournament's Leaguepedia OverviewPage.
+    @return Rendered `pro_meta.html`.
+    @throws HTTPException 404 if the event isn't in the DB or has no games.
+    """
     c = con()
     shift = prostats.event_meta_shift(c, op)
     c.close()
@@ -677,6 +748,7 @@ async def pro_meta(request: Request, op: str):
 
 @app.get("/api/live")
 async def api_live():
+    """@brief JSON API: every currently in-progress live game among tracked players."""
     c = con()
     rows = [dict(r) for r in c.execute(
         "SELECT l.puuid, l.champion_id, l.started_at, p.riot_id"
