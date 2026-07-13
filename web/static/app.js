@@ -8,62 +8,24 @@ function showTip(html, x, y) {
   tooltip.style.left = Math.min(x + pad, window.innerWidth - tooltip.offsetWidth - 8) + "px";
   tooltip.style.top = (y - tooltip.offsetHeight - pad < 0 ? y + pad : y - tooltip.offsetHeight - pad) + "px";
 }
+/** @brief Hide the shared tooltip. */
 function hideTip() { tooltip.hidden = true; }
 
-/* tooltipy pro elementy s data-tip (champion pool) — pozice se počítá jen
-   jednou při vstupu myši (ne na mousemove), aby se okno při najíždění
-   po prvku netřáslo/neposouvalo. */
+/**
+ * @brief Wire up tooltips for every `[data-tip]` element (e.g. champion pool rows).
+ *
+ * Position is computed once on `mouseenter`, not on `mousemove` — recomputing
+ * continuously made the tooltip jitter/drift while hovering over a wide element.
+ */
 for (const el of document.querySelectorAll("[data-tip]")) {
   el.addEventListener("mouseenter", e => showTip(el.dataset.tip, e.clientX, e.clientY));
   el.addEventListener("mouseleave", hideTip);
 }
 
-/**
- * @brief Draw a minimal LP sparkline into a `.rank-chart` element.
- *
- * Autoscales to the series' own min/max (with a small padding) rather than a
- * fixed 0-100 range, since LP has no universal ceiling. Series are usually
- * short/flat right now (rank history only just started being recorded) —
- * this still renders correctly and will show real trends as history grows.
- *
- * @param el Container element with a `data-series` JSON attribute:
- *           [{lp, tier, division, when}, ...], chronological.
- */
-function renderRankSpark(el) {
-  const data = JSON.parse(el.dataset.series);
-  const W = el.clientWidth || 260, H = 60;
-  const M = { l: 4, r: 4, t: 8, b: 8 };
-  const lps = data.map(d => d.lp);
-  const lo = Math.min(...lps), hi = Math.max(...lps);
-  const pad = Math.max(5, (hi - lo) * 0.15);
-  const yMin = lo - pad, yMax = hi + pad;
-  const xs = i => M.l + (i / (data.length - 1)) * (W - M.l - M.r);
-  const ys = v => M.t + (1 - (v - yMin) / (yMax - yMin || 1)) * (H - M.t - M.b);
-  const NS = "http://www.w3.org/2000/svg";
-  const svg = document.createElementNS(NS, "svg");
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  const add = attrs => {
-    const line = document.createElementNS(NS, "polyline");
-    for (const [k, v] of Object.entries(attrs)) line.setAttribute(k, v);
-    svg.appendChild(line);
-    return line;
-  };
-  const pts = data.map((d, i) => `${xs(i)},${ys(d.lp)}`).join(" ");
-  add({ points: pts, fill: "none", stroke: "#3987e5", "stroke-width": 2,
-        "stroke-linejoin": "round", "stroke-linecap": "round" });
-  const last = data[data.length - 1];
-  const dot = document.createElementNS(NS, "circle");
-  dot.setAttribute("cx", xs(data.length - 1));
-  dot.setAttribute("cy", ys(last.lp));
-  dot.setAttribute("r", 3.5);
-  dot.setAttribute("fill", "#3987e5");
-  dot.setAttribute("stroke", "#1a1a19");
-  dot.setAttribute("stroke-width", 1.5);
-  svg.appendChild(dot);
-  el.appendChild(svg);
-  el.title = `${last.tier} ${last.division} · ${last.lp} LP`;
-}
-for (const el of document.querySelectorAll(".rank-chart")) renderRankSpark(el);
+/* refresher callbacks for each champ-search box, keyed by target container id — makeSortable
+   calls these after re-ordering rows so a search+collapse cap re-applies against the new
+   (sorted) row order instead of the original page-load order. */
+const champSearchRefreshers = {};
 
 /**
  * @brief Wire up click-to-sort headers on a `table.sortable`.
@@ -92,12 +54,80 @@ function makeSortable(table) {
       for (const h of table.querySelectorAll("th[data-sort]"))
         h.classList.remove("sort-asc", "sort-desc");
       th.classList.add(asc ? "sort-asc" : "sort-desc");
+      if (champSearchRefreshers[table.id]) champSearchRefreshers[table.id]();
     });
   }
 }
 for (const table of document.querySelectorAll("table.sortable")) makeSortable(table);
 
-/* ---------- whole-row click on `.row-click` rows (uses the row's own <a>) ---------- */
+/**
+ * @brief Wire up a champion search box: filters `[data-name]` rows/cards in the target
+ *        container by substring match, and — if the input carries `data-collapse="N"` — caps
+ *        the match list to the first N (in current DOM order) with a paired `.show-more`
+ *        button to reveal the rest. Typing a query always searches the full set, ignoring
+ *        the cap, and auto-hides the button while a query is active.
+ *
+ * Registers its refresh function in `champSearchRefreshers` keyed by container id, so
+ * `makeSortable` can re-run it after a sort — otherwise the cap would keep showing the
+ * pre-sort top N instead of the top N in the newly sorted order.
+ *
+ * @param input `<input class="champ-search" data-target="...">` element.
+ */
+function initChampSearch(input) {
+  const container = document.getElementById(input.dataset.target);
+  if (!container) return;
+  const cap = parseInt(input.dataset.collapse, 10) || 0;
+  const moreBtn = document.querySelector(`.show-more[data-target="${input.dataset.target}"]`);
+  let showAll = false;
+
+  function apply() {
+    const q = input.value.trim().toLowerCase();
+    const capped = cap && !showAll && !q;
+    let shown = 0;
+    for (const el of container.querySelectorAll("[data-name]")) {
+      const matches = el.dataset.name.toLowerCase().includes(q);
+      const visible = matches && !(capped && shown >= cap);
+      el.hidden = !visible;
+      if (visible) shown++;
+    }
+    if (moreBtn && cap) {
+      const total = container.querySelectorAll("[data-name]").length;
+      moreBtn.hidden = !!q || total <= cap;
+      moreBtn.textContent = showAll ? "▲ méně" : `▼ zobrazit všechny (${total})`;
+    }
+  }
+
+  input.addEventListener("input", apply);
+  if (moreBtn) moreBtn.addEventListener("click", () => { showAll = !showAll; apply(); });
+  if (input.dataset.target) champSearchRefreshers[input.dataset.target] = apply;
+  apply();
+}
+for (const input of document.querySelectorAll(".champ-search")) initChampSearch(input);
+
+/**
+ * @brief Flag `input[list]` text that can't possibly complete to a known option (e.g. a
+ *        typo'd champion name) by toggling `.invalid` on every keystroke.
+ *
+ * Checks as soon as no `<datalist>` option starts with what's typed so far,
+ * rather than waiting for an exact-match check on submit.
+ */
+for (const input of document.querySelectorAll("input[list]")) {
+  const datalist = input.list;
+  if (!datalist) continue;
+  const names = [...datalist.options].map(o => o.value.toLowerCase());
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    input.classList.toggle("invalid", !!q && !names.some(n => n.startsWith(q)));
+  });
+}
+
+/**
+ * @brief Whole-row click on `.row-click` rows, delegating to the row's own `<a>`.
+ *
+ * Lets a table row act as a single clickable link without wrapping every
+ * cell in an anchor; clicks on a real `<a>` inside the row keep their own
+ * target instead of being overridden.
+ */
 for (const tr of document.querySelectorAll("tr.row-click")) {
   tr.addEventListener("click", e => {
     if (e.target.closest("a")) return;  // real links keep their own behavior

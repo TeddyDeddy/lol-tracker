@@ -101,24 +101,9 @@ def latest_ranks(c: sqlite3.Connection, puuid: str) -> dict:
     return {r["queue"]: dict(r) for r in rows}
 
 
-def rank_history(c: sqlite3.Connection, puuid: str, queue: str) -> list[dict]:
-    """
-    @brief Fetch a player's LP history for one ranked queue, oldest first.
-
-    @param puuid Player's PUUID.
-    @param queue Riot queue type string, e.g. "RANKED_SOLO_5x5" or "RANKED_FLEX_SR".
-    @return List of {lp, tier, division, when} snapshots, chronological, for a sparkline.
-    """
-    rows = c.execute(
-        "SELECT tier, division, lp, taken_at FROM rank_snapshots"
-        " WHERE puuid = ? AND queue = ? ORDER BY taken_at",
-        (puuid, queue)).fetchall()
-    return [{"lp": r["lp"], "tier": r["tier"], "division": r["division"],
-             "when": r["taken_at"]} for r in rows]
-
-
 @app.get("/")
 async def index(request: Request):
+    """@brief Home page: every tracked player with their recent form, rank, and live status."""
     c = con()
     players = []
     for p in c.execute("SELECT * FROM players"):
@@ -140,9 +125,7 @@ async def index(request: Request):
         "players": players, "champ_icon": champ_icon})
 
 
-QUEUE_NAMES = {420: "Ranked Solo", 440: "Ranked Flex", 400: "Draft",
-               430: "Blind", 450: "ARAM", 490: "Quickplay",
-               900: "URF", 1700: "Arena", 1750: "Arena", 1820: "Swarm", 1830: "Swarm"}
+QUEUE_NAMES = stats.QUEUE_NAMES
 
 # HUD/minimap objective icons (CommunityDragon, updates with each patch via "latest").
 CDRAGON_MINIMAP_ICONS = "https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons"
@@ -229,24 +212,20 @@ async def player(request: Request, riot_id: str, mode: str = "All", season: str 
         " SUM(kills) k, SUM(deaths) d, SUM(assists) a"
         " FROM match_participants p JOIN matches m USING (match_id)"
         f" WHERE p.puuid = ?{stats._filters(queues, sez)}"
-        " GROUP BY champion ORDER BY games DESC LIMIT 10",
+        " GROUP BY champion ORDER BY games DESC",
         (stats._puuid(c, riot_id),)).fetchall()
     me_puuid = stats._puuid(c, riot_id)
-    recs = stats.records(c, riot_id, queues, sez)
-    mups = stats.matchups(c, riot_id, 3, queues, sez)
+    recs = stats.records(c, riot_id, queues or stats.STANDARD_QUEUES, sez, limit=1)
     all_seasons = stats.seasons(c)
     mode_counts = stats.queue_counts(c, riot_id, sez)
-    rank_series = ({"solo": rank_history(c, p["puuid"], "RANKED_SOLO_5x5"),
-                     "flex": rank_history(c, p["puuid"], "RANKED_FLEX_SR")}
-                   if p else {"solo": [], "flex": []})
+    modes = stats.mode_pills(c, riot_id, sez)
     c.close()
     return templates.TemplateResponse(request, "player.html", {
-        "riot_id": riot_id, "mode": mode, "modes": list(stats.QUEUE_GROUPS),
+        "riot_id": riot_id, "mode": mode, "modes": modes,
         "season": season, "seasons": all_seasons, "me_puuid": me_puuid,
         "summary": s, "ranks": ranks, "games": games,
-        "mode_counts": mode_counts, "rank_series": rank_series,
+        "mode_counts": mode_counts,
         "champs": [dict(x) for x in champs], "records": recs,
-        "matchups_best": mups[:6], "matchups_worst": mups[-6:][::-1] if len(mups) > 6 else [],
         "champ_icon": champ_icon, "item_icon": item_icon, "rune_icons": RUNE_ICONS,
         "fmt_duration": stats.fmt_duration,
         "fmt_int": stats.fmt_int, "when": stats._when,
@@ -259,29 +238,48 @@ GAMES_PER_PAGE = 25
 
 @app.get("/player/{riot_id}/games")
 async def games_list(request: Request, riot_id: str, mode: str = "All",
-                     season: str = "", page: int = 1):
+                     season: str = "", page: int = 1, champion: str = ""):
+    """
+    @brief Paginated full match history for a player, with optional champion filter.
+
+    The champion filter is applied server-side against the player's whole
+    history, not just the current page.
+
+    @param request  Current FastAPI request.
+    @param riot_id  "GameName#TAG" identifier.
+    @param mode     QUEUE_GROUPS filter key, falls back to "All" if unrecognized.
+    @param season   Optional year filter.
+    @param page     1-based page number, clamped to the valid range.
+    @param champion Optional exact champion name filter.
+    @return Rendered `games.html`, or the empty/404 fallback via `_empty_or_404`.
+    """
     if mode not in stats.QUEUE_GROUPS:
         mode = "All"
     queues, sez = stats.QUEUE_GROUPS[mode], _season(season)
     c = con()
-    s = stats.summary(c, riot_id, queues, sez)
+    s = stats.summary(c, riot_id, queues, sez, champion or None)
     if not s:
-        return _empty_or_404(request, c, riot_id,
-                             f"Žádné hry pro filtr {mode} / {season or 'všechny roky'}.")
+        filt = f"{mode} / {season or 'všechny roky'}"
+        if champion:
+            filt += f" / {champion}"
+        return _empty_or_404(request, c, riot_id, f"Žádné hry pro filtr {filt}.")
     pages = max(1, -(-s["games"] // GAMES_PER_PAGE))
     page = max(1, min(page, pages))
     games = stats.recent_games(c, riot_id, GAMES_PER_PAGE, queues, sez,
-                               offset=(page - 1) * GAMES_PER_PAGE)
+                               offset=(page - 1) * GAMES_PER_PAGE,
+                               champion=champion or None)
     rosters = stats.match_rosters(c, [g["match_id"] for g in games])
     # puuid -> aktuální jméno (roster drží jména z doby zápasu)
     tracked = {r["puuid"]: r["riot_id"]
                for r in c.execute("SELECT puuid, riot_id FROM players")}
     me_puuid = stats._puuid(c, riot_id)
     all_seasons = stats.seasons(c)
+    champ_list = stats.champion_list(c, riot_id)
     c.close()
     return templates.TemplateResponse(request, "games.html", {
         "riot_id": riot_id, "mode": mode, "modes": list(stats.QUEUE_GROUPS),
-        "season": season, "seasons": all_seasons,
+        "season": season, "seasons": all_seasons, "champion": champion,
+        "champ_list": champ_list,
         "games": games, "rosters": rosters, "tracked": tracked,
         "me_puuid": me_puuid,
         "page": page, "pages": pages, "total": s["games"],
@@ -291,9 +289,49 @@ async def games_list(request: Request, riot_id: str, mode: str = "All",
     })
 
 
+@app.get("/player/{riot_id}/records")
+async def player_records(request: Request, riot_id: str, mode: str = "All", season: str = ""):
+    """
+    @brief Full records page for a player: top-10 per record category, in table form.
+
+    @param request Current FastAPI request.
+    @param riot_id "GameName#TAG" identifier.
+    @param mode     QUEUE_GROUPS filter key, falls back to "All" if unrecognized.
+    @param season   Optional year filter.
+    @return Rendered `records.html`, or the empty/404 fallback via `_empty_or_404`.
+    """
+    if mode not in stats.QUEUE_GROUPS:
+        mode = "All"
+    queues, sez = stats.QUEUE_GROUPS[mode], _season(season)
+    c = con()
+    recs = stats.records(c, riot_id, queues or stats.STANDARD_QUEUES, sez, limit=10)
+    if not recs:
+        return _empty_or_404(request, c, riot_id,
+                             f"Žádné rekordy pro filtr {mode} / {season or 'všechny roky'}.")
+    me_puuid = stats._puuid(c, riot_id)
+    all_seasons = stats.seasons(c)
+    c.close()
+    return templates.TemplateResponse(request, "records.html", {
+        "riot_id": riot_id, "mode": mode, "modes": list(stats.QUEUE_GROUPS),
+        "season": season, "seasons": all_seasons, "me_puuid": me_puuid,
+        "records": recs, "queue_names": QUEUE_NAMES,
+        "fmt_duration": stats.fmt_duration, "fmt_int": stats.fmt_int, "when": stats._when,
+    })
+
+
 @app.get("/player/{riot_id}/champ/{champion}")
 async def champion_detail(request: Request, riot_id: str, champion: str,
                           mode: str = "All", season: str = ""):
+    """
+    @brief Per-champion detail page: matchups, rune pages, item builds, build orders.
+
+    @param request  Current FastAPI request.
+    @param riot_id  "GameName#TAG" identifier.
+    @param champion Champion to show stats for.
+    @param mode     QUEUE_GROUPS filter key, falls back to "All" if unrecognized.
+    @param season   Optional year filter.
+    @return Rendered `champion.html`, or the empty/404 fallback via `_empty_or_404`.
+    """
     if mode not in stats.QUEUE_GROUPS:
         mode = "All"
     queues, sez = stats.QUEUE_GROUPS[mode], _season(season)

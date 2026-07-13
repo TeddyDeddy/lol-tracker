@@ -53,27 +53,13 @@
     </div>
     {% endfor %}
   </div>
-  {% if rank_series.solo|length > 1 or rank_series.flex|length > 1 %}
-  <div class="rank-sparks">
-    {% if rank_series.solo|length > 1 %}
-    <div>
-      <div class="tile-label">SoloQ LP</div>
-      <div class="rank-chart" data-series='{{ rank_series.solo|tojson }}'></div>
-    </div>
-    {% endif %}
-    {% if rank_series.flex|length > 1 %}
-    <div>
-      <div class="tile-label">Flex LP</div>
-      <div class="rank-chart" data-series='{{ rank_series.flex|tojson }}'></div>
-    </div>
-    {% endif %}
-  </div>
-  {% endif %}
 </section>
 
 <div class="two-col">
   <section class="panel">
     <h2>Champion pool <span class="muted">klikni na hlavičku pro řazení</span></h2>
+    <input type="text" class="champ-search" data-target="champ-table" data-collapse="10"
+           placeholder="Hledat championa…">
     <table class="games sortable" id="champ-table">
       <thead>
         <tr>
@@ -107,60 +93,29 @@
         {% endfor %}
       </tbody>
     </table>
+    <button type="button" class="show-more" data-target="champ-table" hidden></button>
   </section>
 
   <section class="panel">
-    <h2>Rekordy <span class="muted">{{ mode.lower() if mode != 'All' else 'všechny módy' }}</span></h2>
+    <h2>Rekordy <span class="muted">{{ mode.lower() if mode != 'All' else 'bez Arena/URF/Swarm' }}</span>
+      <a class="muted all-games-link" href="/player/{{ riot_id|urlencode }}/records?mode={{ mode }}&season={{ season }}">Všechny rekordy →</a></h2>
     <div class="records">
       {% for r in records %}
-      <a class="record record-link" href="/match/{{ r.match_id }}?focus={{ me_puuid }}">
+      {% set top = r.entries[0] %}
+      <a class="record record-link" href="/match/{{ top.match_id }}?focus={{ me_puuid }}">
         <div class="tile-label">{{ r.label }}</div>
         <div class="record-value">
-          {% if r.label == 'Nejdelší hra' %}{{ fmt_duration(r.val) }}
-          {% elif r.label == 'Nejhorší KDA' %}{{ '%.2f'|format(r.val) }}
-          {% else %}{{ fmt_int(r.val) }}{% endif %}
+          {% if r.label == 'Nejdelší hra' %}{{ fmt_duration(top.val) }}
+          {% elif r.label == 'Nejhorší KDA' %}{{ '%.2f'|format(top.val) }}
+          {% else %}{{ fmt_int(top.val) }}{% endif %}
         </div>
-        <div class="tile-sub">{{ r.champion }} · {{ r.kills }}/{{ r.deaths }}/{{ r.assists }} · {{ when(r.game_creation) }} ·
-          <span class="{{ 'good' if r.win else 'bad' }}">{{ 'W' if r.win else 'L' }}</span></div>
+        <div class="tile-sub">{{ top.champion }} · {{ top.kills }}/{{ top.deaths }}/{{ top.assists }} · {{ when(top.game_creation) }} ·
+          <span class="{{ 'good' if top.win else 'bad' }}">{{ 'W' if top.win else 'L' }}</span></div>
       </a>
       {% endfor %}
     </div>
   </section>
 </div>
-
-{% if matchups_best %}
-<section class="panel">
-  <h2>Lane matchupy <span class="muted">min. 3 střetnutí ve stejné roli</span></h2>
-  <div class="two-col">
-    <div>
-      <div class="tile-label">Nejlepší</div>
-      {% for mu in matchups_best %}
-      <div class="matchup">
-        <img class="avatar sm" src="{{ champ_icon(mu.my_champ) }}" alt="{{ mu.my_champ }}">
-        <span class="muted">vs</span>
-        <img class="avatar sm" src="{{ champ_icon(mu.enemy) }}" alt="">
-        <span class="mu-name">{{ mu.my_champ }} vs {{ mu.enemy }}</span>
-        <span class="bar-wr good">{{ (100 * mu.wins / mu.games)|round|int }}%</span>
-        <span class="muted mu-games">{{ mu.games }}×</span>
-      </div>
-      {% endfor %}
-    </div>
-    <div>
-      <div class="tile-label">Nejhorší</div>
-      {% for mu in matchups_worst %}
-      <div class="matchup">
-        <img class="avatar sm" src="{{ champ_icon(mu.my_champ) }}" alt="{{ mu.my_champ }}">
-        <span class="muted">vs</span>
-        <img class="avatar sm" src="{{ champ_icon(mu.enemy) }}" alt="">
-        <span class="mu-name">{{ mu.my_champ }} vs {{ mu.enemy }}</span>
-        <span class="bar-wr bad">{{ (100 * mu.wins / mu.games)|round|int }}%</span>
-        <span class="muted mu-games">{{ mu.games }}×</span>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
 
 <section class="panel">
   <h2>Posledních {{ games|length }} her

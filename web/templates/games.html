@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Hry — {{ riot_id }}{% endblock %}
 {% block content %}
+{% set champ_qs = '&champion=' ~ champion|urlencode if champion else '' %}
 <div class="player-head">
   <div>
     <h1>Seznam her</h1>
@@ -9,21 +10,34 @@
   <nav class="modes">
     {% for m in modes %}
     <a class="pill {{ 'active' if m == mode }}"
-       href="/player/{{ riot_id|urlencode }}/games?mode={{ m }}&season={{ season }}">{{ m }}</a>
+       href="/player/{{ riot_id|urlencode }}/games?mode={{ m }}&season={{ season }}{{ champ_qs }}">{{ m }}</a>
     {% endfor %}
     <span class="pill-sep"></span>
     <a class="pill {{ 'active' if not season }}"
-       href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}">Vše roky</a>
+       href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}{{ champ_qs }}">Vše roky</a>
     {% for y in seasons %}
     <a class="pill {{ 'active' if season == y }}"
-       href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}&season={{ y }}">{{ y }}</a>
+       href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}&season={{ y }}{{ champ_qs }}">{{ y }}</a>
     {% endfor %}
   </nav>
 </div>
 
 <p class="muted">{{ total }} her · strana {{ page }}/{{ pages }}</p>
 
-<div class="game-list">
+<form class="champ-search-form" method="get">
+  <input type="hidden" name="mode" value="{{ mode }}">
+  <input type="hidden" name="season" value="{{ season }}">
+  <input type="text" name="champion" value="{{ champion }}" class="champ-search" list="champ-datalist"
+         autocomplete="off" placeholder="Hledat championa… (Enter, prohledá celou historii)">
+  <datalist id="champ-datalist">
+    {% for c in champ_list %}<option value="{{ c }}">{% endfor %}
+  </datalist>
+  {% if champion %}
+  <a class="pill" href="/player/{{ riot_id|urlencode }}/games?mode={{ mode }}&season={{ season }}">× zrušit filtr</a>
+  {% endif %}
+</form>
+
+<div class="game-list" id="game-list">
   {% for g in games %}
   {% set kda = (g.kills + g.assists) / (g.deaths if g.deaths else 1) %}
   {% set mins = g.duration // 60 %}
@@ -73,7 +87,7 @@
 </div>
 
 <nav class="pager">
-  {% set qs = 'mode=' ~ mode ~ '&season=' ~ season %}
+  {% set qs = 'mode=' ~ mode ~ '&season=' ~ season ~ champ_qs %}
   {% if page > 1 %}
   <a class="pill" href="/player/{{ riot_id|urlencode }}/games?{{ qs }}&page={{ page - 1 }}">← Novější</a>
   {% endif %}

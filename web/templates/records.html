@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Rekordy — {{ riot_id }}{% endblock %}
+{% block content %}
+<div class="player-head">
+  <div>
+    <h1>Rekordy</h1>
+    <a class="muted" href="/player/{{ riot_id|urlencode }}?mode={{ mode }}&season={{ season }}">← {{ riot_id }}</a>
+  </div>
+  <nav class="modes">
+    {% for m in modes %}
+    <a class="pill {{ 'active' if m == mode }}"
+       href="/player/{{ riot_id|urlencode }}/records?mode={{ m }}&season={{ season }}">{{ m }}</a>
+    {% endfor %}
+    <span class="pill-sep"></span>
+    <a class="pill {{ 'active' if not season }}"
+       href="/player/{{ riot_id|urlencode }}/records?mode={{ mode }}">Vše roky</a>
+    {% for y in seasons %}
+    <a class="pill {{ 'active' if season == y }}"
+       href="/player/{{ riot_id|urlencode }}/records?mode={{ mode }}&season={{ y }}">{{ y }}</a>
+    {% endfor %}
+  </nav>
+</div>
+
+<p class="muted">{{ mode.lower() if mode != 'All' else 'všechny módy · bez Arena/URF/Swarm' }}</p>
+
+{% macro record_val(label, e) -%}
+  {%- if label == 'Nejdelší hra' %}{{ fmt_duration(e.val) }}
+  {%- elif label == 'Nejhorší KDA' %}{{ '%.2f'|format(e.val) }}
+  {%- else %}{{ fmt_int(e.val) }}{% endif -%}
+{%- endmacro %}
+<div class="records records-full">
+  {% for r in records %}
+  <div class="record-card">
+    <div class="tile-label">{{ r.label }}</div>
+    <table class="games">
+      <thead>
+        <tr><th>#</th><th class="num">Hodnota</th><th>Champion</th><th class="num">K/D/A</th>
+          <th>Mód</th><th class="num">Délka</th><th>Kdy</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for e in r.entries %}
+        <tr class="row-click {{ 'row-w' if e.win else 'row-l' }}">
+          <td class="num muted">{{ loop.index }}</td>
+          <td class="num record-table-val">
+            <a class="tracked-link" href="/match/{{ e.match_id }}?focus={{ me_puuid }}">{{ record_val(r.label, e) }}</a>
+          </td>
+          <td>{{ e.champion }}</td>
+          <td class="num">{{ e.kills }}/{{ e.deaths }}/{{ e.assists }}</td>
+          <td class="mode-cell">{{ queue_names.get(e.queue_id, e.queue_id) }}</td>
+          <td class="num">{{ fmt_duration(e.duration) }}</td>
+          <td class="muted">{{ when(e.game_creation) }}</td>
+          <td class="{{ 'good' if e.win else 'bad' }}">{{ 'W' if e.win else 'L' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

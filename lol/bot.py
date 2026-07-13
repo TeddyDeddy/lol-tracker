@@ -167,12 +167,14 @@ class StatsView(discord.ui.View):
 
         else:  # records
             lines = []
-            for r in stats.records(self.bot.con, self.riot_id, self.queues()):
-                val = (stats.fmt_duration(r["val"]) if r["label"] == "Nejdelší hra"
-                       else stats.fmt_int(r["val"]))
-                lines.append(f"{r['label']}: **{val}** — {r['champion']}, "
-                             f"{stats._when(r['game_creation'])}, "
-                             f"{'✅' if r['win'] else '❌'} {stats.fmt_duration(r['duration'])}")
+            queues = self.queues() or stats.STANDARD_QUEUES
+            for r in stats.records(self.bot.con, self.riot_id, queues):
+                top = r["entries"][0]
+                val = (stats.fmt_duration(top["val"]) if r["label"] == "Nejdelší hra"
+                       else stats.fmt_int(top["val"]))
+                lines.append(f"{r['label']}: **{val}** — {top['champion']}, "
+                             f"{stats._when(top['game_creation'])}, "
+                             f"{'✅' if top['win'] else '❌'} {stats.fmt_duration(top['duration'])}")
             embed.description = "\n".join(lines)
         return embed
 

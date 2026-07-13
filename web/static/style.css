@@ -112,11 +112,18 @@ a.card:hover, .card-click:hover {
 .bar-val { font-size: 13px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
 .bar-wr { font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
 
-/* ---------- rekordy ---------- */
+/** @brief Records section. */
 .records { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.records-full { grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.record-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
 .record-value { font-size: 20px; font-weight: 600; color: var(--ink); }
+.record-card .tile-label { margin-bottom: 8px; font-size: 16px; font-weight: 600; color: var(--ink); }
+.record-card table.games { font-size: 13px; }
+.record-card table.games thead th { position: static; }
+.record-table-val { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+.mode-cell { white-space: nowrap; }
 
-/* ---------- tabulka her ---------- */
+/** @brief Games table. */
 table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .games th {
   text-align: left; font-size: 12px; font-weight: 500; color: var(--muted);
@@ -185,21 +192,38 @@ a.bar-row:hover .bar-name { color: var(--accent); }
 .build-order:last-child { border-bottom: 0; }
 .build-item { width: 30px; height: 30px; }
 
-/* ---------- herní aktivita: mód rozpad + rank sparkline ---------- */
+/** @brief Game activity: mode breakdown (data-driven, see stats.queue_counts). */
 .mode-counts { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
-.mc-row { display: grid; grid-template-columns: 70px 1fr 34px; gap: 10px; align-items: center; }
-.mc-name { font-size: 13px; color: var(--ink-2); }
-.rank-sparks { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
-.rank-chart { height: 60px; }
-.rank-chart svg { display: block; width: 100%; height: 100%; }
+.mc-row { display: grid; grid-template-columns: 110px 1fr 34px; gap: 10px; align-items: center; }
+.mc-name { font-size: 13px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* ---------- sortovatelné tabulky (champion pool) ---------- */
+/** @brief Sortable tables (champion pool). */
 table.sortable th[data-sort] { cursor: pointer; user-select: none; }
 table.sortable th[data-sort]:hover { color: var(--ink); }
 table.sortable th.sort-asc::after { content: " \25B2"; font-size: 9px; }
 table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
 
-/* ---------- tooltip ---------- */
+/** @brief Search field (champion search). */
+.champ-search {
+  display: block; width: 100%; margin-bottom: 10px; padding: 8px 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--ink); font: inherit;
+}
+.champ-search::placeholder { color: var(--muted); }
+.champ-search:focus { outline: none; border-color: var(--accent); }
+.champ-search.invalid { border-color: var(--bad); }
+.champ-search-form { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.champ-search-form .champ-search { margin-bottom: 0; flex: 1; }
+
+/** @brief "Show all" toggle under a capped table (champion pool). */
+.show-more {
+  display: block; margin: 8px auto 0; padding: 6px 14px; font: inherit; font-size: 13px;
+  background: none; border: 1px solid var(--border); border-radius: 20px;
+  color: var(--muted); cursor: pointer;
+}
+.show-more:hover { color: var(--ink); border-color: var(--accent); }
+
+/** @brief Shared tooltip. */
 .tooltip {
   position: fixed; z-index: 10; pointer-events: none;
   background: #0d0d0d; border: 1px solid var(--border); border-radius: 8px;
@@ -241,6 +265,7 @@ table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
   border-radius: 10px; color: inherit; text-decoration: none;
 }
 .game-card:hover { border-color: var(--accent); }
+.game-card[hidden] { display: none; }
 .game-card.row-w { box-shadow: inset 4px 0 0 var(--good); }
 .game-card.row-l { box-shadow: inset 4px 0 0 var(--bad); }
 .gc-result { width: 120px; flex-shrink: 0; }
