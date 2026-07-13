@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LPL 2025 Split 2 Playoffs — Pro scéna</title>
+<link rel="stylesheet" href="../../../../static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../../../../index.html">⌬ LoL Tracker</a>
+  <a class="nav-link active" href="../../../../pro.html">Pro scéna</a>
+  <span class="live-summary" id="live-summary"></span>
+</header>
+<main>
+<div class="player-head">
+  <div>
+    <h1>LPL 2025 Split 2 Playoffs</h1>
+    <a class="muted" href="../../../../pro%253Fyear=2025.html">← Pro scéna</a>
+    <span class="muted">· 24.5.2025 → 14.6.2025</span>
+    
+    <a class="pill sibling-link" href="Split%202.html">
+      ← Základní část
+    </a>
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+(function () {
+  document.querySelectorAll(".bracket.playoffs").forEach(function (root) {
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "bracket-svg");
+    root.appendChild(svg);
+    function draw() {
+      svg.innerHTML = "";
+      var rr = root.getBoundingClientRect();
+      svg.setAttribute("width", root.scrollWidth);
+      svg.setAttribute("height", root.scrollHeight);
+      var cells = {};
+      root.querySelectorAll(".bracket-cell[data-mid]").forEach(function (c) {
+        cells[c.dataset.mid] = c;
+      });
+      Object.values(cells).forEach(function (c) {
+        if (!c.dataset.feeds) return;
+        var to = c.querySelector(".bracket-match").getBoundingClientRect();
+        c.dataset.feeds.split("|").forEach(function (fid) {
+          var f = cells[fid];
+          if (!f) return;
+          var from = f.querySelector(".bracket-match").getBoundingClientRect();
+          var x1 = from.right - rr.left, y1 = from.top + from.height / 2 - rr.top;
+          var x2 = to.left - rr.left, y2 = to.top + to.height / 2 - rr.top;
+          var mx = x1 + (x2 - x1) / 2;
+          var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          p.setAttribute("d", "M" + x1 + " " + y1 + " H" + mx + " V" + y2 + " H" + x2);
+          p.setAttribute("fill", "none");
+          p.setAttribute("stroke", "rgba(255,255,255,0.35)");
+          p.setAttribute("stroke-width", "1.5");
+          svg.appendChild(p);
+        });
+      });
+    }
+    draw();
+    addEventListener("resize", draw);
+    root._redraw = draw;
+  });
+})();
+</script>
+
+<div class="two-col">
+  <section class="panel">
+    <h2>Pick / ban <span class="muted">0 her</span></h2>
+    <table class="games sortable">
+      <thead><tr><th></th><th data-sort="name">Champion</th><th data-sort="picks" class="num">Picky</th>
+        <th data-sort="bans" class="num">Bany</th>
+        <th data-sort="presence" class="num">Presence</th><th data-sort="wr" class="num">WR</th></tr></thead>
+      <tbody>
+      
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Týmy</h2>
+    <table class="games sortable">
+      <thead><tr><th data-sort="name">Tým</th><th data-sort="games" class="num">Hry</th>
+        <th data-sort="wins" class="num">W/L</th><th data-sort="wr" class="num">WR</th></tr></thead>
+      <tbody>
+      
+      </tbody>
+    </table>
+    <p class="muted">Meta analýza eventu:
+      <a class="tracked-link" href="../../../meta/LPL/2025%20Season/Split%202%20Playoffs.html">buffy/nerfy a presence →</a></p>
+  </section>
+</div>
+</main>
+<footer class="footer muted">
+  Data: Riot Games API · pro scéna: <a href="../../../../index.html">Leaguepedia</a> (CC BY-SA)
+</footer>
+<div class="tooltip" id="tooltip" hidden></div>
+<script src="../../../../static/app.js"></script>
+</body>
+</html>

@@ -13,6 +13,7 @@
   <span class="live-summary" id="live-summary"></span>
 </header>
 <main>
+
 <div class="player-head">
   <div>
     <h1>Seznam her</h1>
@@ -35,6 +36,15 @@
     <a class="pill "
        href="games%253Fmode=ARAM&season=2024.html">ARAM</a>
     
+    <a class="pill "
+       href="games%253Fmode=URF&season=2024.html">URF</a>
+    
+    <a class="pill "
+       href="games%253Fmode=Swarm&season=2024.html">Swarm</a>
+    
+    <a class="pill "
+       href="games%253Fmode=Arena&season=2024.html">Arena</a>
+    
     <span class="pill-sep"></span>
     <a class="pill "
        href="games%253Fmode=Flex.html">Vše roky</a>
@@ -53,7 +63,18 @@
 
 <p class="muted">61 her · strana 1/3</p>
 
-<div class="game-list">
+<form class="champ-search-form" method="get">
+  <input type="hidden" name="mode" value="Flex">
+  <input type="hidden" name="season" value="2024">
+  <input type="text" name="champion" value="" class="champ-search" list="champ-datalist"
+         autocomplete="off" placeholder="Hledat championa… (Enter, prohledá celou historii)">
+  <datalist id="champ-datalist">
+    <option value="Aatrox"><option value="Ahri"><option value="Alistar"><option value="Ambessa"><option value="Amumu"><option value="Aphelios"><option value="Ashe"><option value="AurelionSol"><option value="Aurora"><option value="Azir"><option value="Bard"><option value="Belveth"><option value="Blitzcrank"><option value="Brand"><option value="Braum"><option value="Briar"><option value="Caitlyn"><option value="Camille"><option value="Cassiopeia"><option value="Chogath"><option value="Corki"><option value="Diana"><option value="Draven"><option value="Ekko"><option value="Elise"><option value="Evelynn"><option value="Ezreal"><option value="FiddleSticks"><option value="Fiora"><option value="Fizz"><option value="Galio"><option value="Gangplank"><option value="Garen"><option value="Gragas"><option value="Graves"><option value="Gwen"><option value="Hecarim"><option value="Hwei"><option value="Ivern"><option value="Janna"><option value="JarvanIV"><option value="Jax"><option value="Jayce"><option value="Jhin"><option value="Jinx"><option value="KSante"><option value="Kaisa"><option value="Kalista"><option value="Karma"><option value="Kayle"><option value="Kayn"><option value="Kennen"><option value="Khazix"><option value="Kindred"><option value="Kled"><option value="KogMaw"><option value="Leblanc"><option value="LeeSin"><option value="Lillia"><option value="Lucian"><option value="Lulu"><option value="Malphite"><option value="Maokai"><option value="Mel"><option value="Milio"><option value="MissFortune"><option value="MonkeyKing"><option value="Mordekaiser"><option value="Naafiri"><option value="Nami"><option value="Nasus"><option value="Nautilus"><option value="Neeko"><option value="Nidalee"><option value="Nunu"><option value="Orianna"><option value="Ornn"><option value="Pantheon"><option value="Poppy"><option value="Pyke"><option value="Qiyana"><option value="Quinn"><option value="Rakan"><option value="Rammus"><option value="RekSai"><option value="Rell"><option value="Renekton"><option value="Rengar"><option value="Rumble"><option value="Ryze"><option value="Samira"><option value="Senna"><option value="Seraphine"><option value="Sett"><option value="Shaco"><option value="Shyvana"><option value="Singed"><option value="Sion"><option value="Sivir"><option value="Smolder"><option value="Sona"><option value="Soraka"><option value="Strawberry_Briar"><option value="Strawberry_Illaoi"><option value="Strawberry_Jinx"><option value="Strawberry_Leona"><option value="Strawberry_Seraphine"><option value="Strawberry_Yasuo"><option value="Swain"><option value="Sylas"><option value="TahmKench"><option value="Taliyah"><option value="Talon"><option value="Taric"><option value="Thresh"><option value="TwistedFate"><option value="Twitch"><option value="Urgot"><option value="Varus"><option value="Veigar"><option value="Velkoz"><option value="Vex"><option value="Vi"><option value="Viego"><option value="Viktor"><option value="Vladimir"><option value="Volibear"><option value="Warwick"><option value="Xayah"><option value="Xerath"><option value="XinZhao"><option value="Yasuo"><option value="Yone"><option value="Yorick"><option value="Yuumi"><option value="Zaahen"><option value="Zac"><option value="Zed"><option value="Zeri"><option value="Ziggs"><option value="Zilean"><option value="Zoe">
+  </datalist>
+  
+</form>
+
+<div class="game-list" id="game-list">
   
   
   
@@ -61,7 +82,7 @@
      href="../../match/EUN1_3712829160%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">37:34 · 19.12.2024</div>
     </div>
     <div class="champ-cell">
@@ -167,7 +188,7 @@
      href="../../match/EUN1_3712474138%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">15:26 · 18.12.2024</div>
     </div>
     <div class="champ-cell">
@@ -275,7 +296,7 @@
      href="../../match/EUN1_3712442738%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">27:42 · 18.12.2024</div>
     </div>
     <div class="champ-cell">
@@ -383,7 +404,7 @@
      href="../../match/EUN1_3712412666%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">34:16 · 18.12.2024</div>
     </div>
     <div class="champ-cell">
@@ -493,7 +514,7 @@
      href="../../match/EUN1_3712394692%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">18:23 · 18.12.2024</div>
     </div>
     <div class="champ-cell">
@@ -603,7 +624,7 @@
      href="../../match/EUN1_3711720579%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">39:25 · 17.12.2024</div>
     </div>
     <div class="champ-cell">
@@ -713,7 +734,7 @@
      href="../../match/EUN1_3711374212%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">33:42 · 16.12.2024</div>
     </div>
     <div class="champ-cell">
@@ -821,7 +842,7 @@
      href="../../match/EUN1_3701147275%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">32:06 · 28.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -931,7 +952,7 @@
      href="../../match/EUN1_3701102475%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">34:21 · 28.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1041,7 +1062,7 @@
      href="../../match/EUN1_3696108487%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">32:37 · 20.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1147,7 +1168,7 @@
      href="../../match/EUN1_3695564935%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">21:46 · 19.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1255,7 +1276,7 @@
      href="../../match/EUN1_3695542258%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">37:42 · 19.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1363,7 +1384,7 @@
      href="../../match/EUN1_3695515701%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">29:12 · 19.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1471,7 +1492,7 @@
      href="../../match/EUN1_3693370288%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">33:01 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1577,7 +1598,7 @@
      href="../../match/EUN1_3693349155%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">35:41 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1683,7 +1704,7 @@
      href="../../match/EUN1_3693317002%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">34:40 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1789,7 +1810,7 @@
      href="../../match/EUN1_3691222544%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">33:55 · 10.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1895,8 +1916,8 @@
      href="../../match/EUN1_3690008349%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">51:34 · 07.11.2024</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">51:34 · 7.11.2024</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/LeeSin.png" alt="LeeSin"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt=""></div>
@@ -2005,8 +2026,8 @@
      href="../../match/EUN1_3689979573%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">31:44 · 07.11.2024</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">31:44 · 7.11.2024</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Varus.png" alt="Varus"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png" alt=""></div>
@@ -2115,8 +2136,8 @@
      href="../../match/EUN1_3689447899%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">28:37 · 06.11.2024</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">28:37 · 6.11.2024</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kayn.png" alt="Kayn"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt=""></div>
@@ -2221,7 +2242,7 @@
      href="../../match/EUN1_3683977348%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">32:33 · 24.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2327,7 +2348,7 @@
      href="../../match/EUN1_3683674205%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">38:08 · 23.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2433,7 +2454,7 @@
      href="../../match/EUN1_3681468964%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">35:26 · 18.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2541,7 +2562,7 @@
      href="../../match/EUN1_3681445663%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">36:56 · 18.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2649,7 +2670,7 @@
      href="../../match/EUN1_3681428402%253Ffocus=VvLJg9DsiV_OYHKG97dXYzTebHmOpm18BiP5vKmm8njPDbGXiMg84PrC5XG6M41zKw7FoFQ_zoqUCQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">29:43 · 18.10.2024</div>
     </div>
     <div class="champ-cell">

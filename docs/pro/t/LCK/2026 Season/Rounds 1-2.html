@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LCK 2026 Rounds 1-2 — Pro scéna</title>
+<link rel="stylesheet" href="../../../../static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../../../../index.html">⌬ LoL Tracker</a>
+  <a class="nav-link active" href="../../../../pro.html">Pro scéna</a>
+  <span class="live-summary" id="live-summary"></span>
+</header>
+<main>
+<div class="player-head">
+  <div>
+    <h1>LCK 2026 Rounds 1-2</h1>
+    <a class="muted" href="../../../../pro%253Fyear=2026.html">← Pro scéna</a>
+    <span class="muted">· 1.4.2026 → 31.5.2026</span>
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+(function () {
+  document.querySelectorAll(".bracket.playoffs").forEach(function (root) {
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "bracket-svg");
+    root.appendChild(svg);
+    function draw() {
+      svg.innerHTML = "";
+      var rr = root.getBoundingClientRect();
+      svg.setAttribute("width", root.scrollWidth);
+      svg.setAttribute("height", root.scrollHeight);
+      var cells = {};
+      root.querySelectorAll(".bracket-cell[data-mid]").forEach(function (c) {
+        cells[c.dataset.mid] = c;
+      });
+      Object.values(cells).forEach(function (c) {
+        if (!c.dataset.feeds) return;
+        var to = c.querySelector(".bracket-match").getBoundingClientRect();
+        c.dataset.feeds.split("|").forEach(function (fid) {
+          var f = cells[fid];
+          if (!f) return;
+          var from = f.querySelector(".bracket-match").getBoundingClientRect();
+          var x1 = from.right - rr.left, y1 = from.top + from.height / 2 - rr.top;
+          var x2 = to.left - rr.left, y2 = to.top + to.height / 2 - rr.top;
+          var mx = x1 + (x2 - x1) / 2;
+          var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          p.setAttribute("d", "M" + x1 + " " + y1 + " H" + mx + " V" + y2 + " H" + x2);
+          p.setAttribute("fill", "none");
+          p.setAttribute("stroke", "rgba(255,255,255,0.35)");
+          p.setAttribute("stroke-width", "1.5");
+          svg.appendChild(p);
+        });
+      });
+    }
+    draw();
+    addEventListener("resize", draw);
+    root._redraw = draw;
+  });
+})();
+</script>
+
+<div class="two-col">
+  <section class="panel">
+    <h2>Pick / ban <span class="muted">204 her</span></h2>
+    <table class="games sortable">
+      <thead><tr><th></th><th data-sort="name">Champion</th><th data-sort="picks" class="num">Picky</th>
+        <th data-sort="bans" class="num">Bany</th>
+        <th data-sort="presence" class="num">Presence</th><th data-sort="wr" class="num">WR</th></tr></thead>
+      <tbody>
+      
+      <tr class="top-champ" data-name="Varus"
+          data-picks="11" data-bans="179" data-presence="93.13725490196079"
+          data-wr="27.272727272727273">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Varus.png" alt=""></td>
+        <td>Varus</td>
+        <td class="num">11</td>
+        <td class="num">179</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 93.13725490196079%"></span></span>
+          <b>93%</b></td>
+        <td class="num bad">
+          27%</td>
+      </tr>
+      
+      <tr class="top-champ" data-name="Orianna"
+          data-picks="26" data-bans="154" data-presence="88.23529411764706"
+          data-wr="53.84615384615385">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Orianna.png" alt=""></td>
+        <td>Orianna</td>
+        <td class="num">26</td>
+        <td class="num">154</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 88.23529411764706%"></span></span>
+          <b>88%</b></td>
+        <td class="num good">
+          54%</td>
+      </tr>
+      
+      <tr class="top-champ" data-name="Rumble"
+          data-picks="33" data-bans="142" data-presence="85.7843137254902"
+          data-wr="51.515151515151516">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Rumble.png" alt=""></td>
+        <td>Rumble</td>
+        <td class="num">33</td>
+        <td class="num">142</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 85.7843137254902%"></span></span>
+          <b>86%</b></td>
+        <td class="num good">
+          52%</td>
+      </tr>
+      
+      <tr class="" data-name="Karma"
+          data-picks="41" data-bans="117" data-presence="77.45098039215686"
+          data-wr="56.09756097560975">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Karma.png" alt=""></td>
+        <td>Karma</td>
+        <td class="num">41</td>
+        <td class="num">117</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 77.45098039215686%"></span></span>
+          <b>77%</b></td>
+        <td class="num good">
+          56%</td>
+      </tr>
+      
+      <tr class="" data-name="Bard"
+          data-picks="50" data-bans="83" data-presence="65.19607843137256"
+          data-wr="60.0">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Bard.png" alt=""></td>
+        <td>Bard</td>
+        <td class="num">50</td>
+        <td class="num">83</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 65.19607843137256%"></span></span>
+          <b>65%</b></td>
+        <td class="num good">
+          60%</td>
+      </tr>
+      
+      <tr class="" data-name="Jarvan IV"
+          data-picks="70" data-bans="59" data-presence="63.23529411764706"
+          data-wr="55.714285714285715">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/JarvanIV.png" alt=""></td>
+        <td>Jarvan IV</td>
+        <td class="num">70</td>
+        <td class="num">59</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 63.23529411764706%"></span></span>
+          <b>63%</b></td>
+        <td class="num good">
+          56%</td>
+      </tr>
+      
+      <tr class="" data-name="Jayce"
+          data-picks="54" data-bans="58" data-presence="54.90196078431372"
+          data-wr="48.148148148148145">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jayce.png" alt=""></td>
+        <td>Jayce</td>
+        <td class="num">54</td>
+        <td class="num">58</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 54.90196078431372%"></span></span>
+          <b>55%</b></td>
+        <td class="num bad">
+          48%</td>
+      </tr>
+      
+      <tr class="" data-name="Pantheon"
+          data-picks="59" data-bans="53" data-presence="54.90196078431372"
+          data-wr="42.3728813559322">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Pantheon.png" alt=""></td>
+        <td>Pantheon</td>
+        <td class="num">59</td>
+        <td class="num">53</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 54.90196078431372%"></span></span>
+          <b>55%</b></td>
+        <td class="num bad">
+          42%</td>
+      </tr>
+      
+      <tr class="" data-name="Xin Zhao"
+          data-picks="72" data-bans="37" data-presence="53.431372549019606"
+          data-wr="48.611111111111114">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/XinZhao.png" alt=""></td>
+        <td>Xin Zhao</td>
+        <td class="num">72</td>
+        <td class="num">37</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 53.431372549019606%"></span></span>
+          <b>53%</b></td>
+        <td class="num bad">
+          49%</td>
+      </tr>
+      
+      <tr class="" data-name="Nocturne"
+          data-picks="33" data-bans="76" data-presence="53.431372549019606"
+          data-wr="45.45454545454545">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nocturne.png" alt=""></td>
+        <td>Nocturne</td>
+        <td class="num">33</td>
+        <td class="num">76</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 53.431372549019606%"></span></span>
+          <b>53%</b></td>
+        <td class="num bad">
+          45%</td>
+      </tr>
+      
+      <tr class="" data-name="Ryze"
+          data-picks="62" data-bans="45" data-presence="52.450980392156865"
+          data-wr="45.16129032258065">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ryze.png" alt=""></td>
+        <td>Ryze</td>
+        <td class="num">62</td>
+        <td class="num">45</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 52.450980392156865%"></span></span>
+          <b>52%</b></td>
+        <td class="num bad">
+          45%</td>
+      </tr>
+      
+      <tr class="" data-name="Ezreal"
+          data-picks="60" data-bans="45" data-presence="51.470588235294116"
+          data-wr="36.666666666666664">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ezreal.png" alt=""></td>
+        <td>Ezreal</td>
+        <td class="num">60</td>
+        <td class="num">45</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 51.470588235294116%"></span></span>
+          <b>51%</b></td>
+        <td class="num bad">
+          37%</td>
+      </tr>
+      
+      <tr class="" data-name="Nautilus"
+          data-picks="38" data-bans="64" data-presence="50.0"
+          data-wr="34.21052631578947">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nautilus.png" alt=""></td>
+        <td>Nautilus</td>
+        <td class="num">38</td>
+        <td class="num">64</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 50.0%"></span></span>
+          <b>50%</b></td>
+        <td class="num bad">
+          34%</td>
+      </tr>
+      
+      <tr class="" data-name="Ashe"
+          data-picks="48" data-bans="49" data-presence="47.549019607843135"
+          data-wr="56.25">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ashe.png" alt=""></td>
+        <td>Ashe</td>
+        <td class="num">48</td>
+        <td class="num">49</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 47.549019607843135%"></span></span>
+          <b>48%</b></td>
+        <td class="num good">
+          56%</td>
+      </tr>
+      
+      <tr class="" data-name="Caitlyn"
+          data-picks="44" data-bans="48" data-presence="45.09803921568628"
+          data-wr="56.81818181818182">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Caitlyn.png" alt=""></td>
+        <td>Caitlyn</td>
+        <td class="num">44</td>
+        <td class="num">48</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 45.09803921568628%"></span></span>
+          <b>45%</b></td>
+        <td class="num good">
+          57%</td>
+      </tr>
+      
+      <tr class="" data-name="Azir"
+          data-picks="33" data-bans="58" data-presence="44.6078431372549"
+          data-wr="51.515151515151516">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Azir.png" alt=""></td>
+        <td>Azir</td>
+        <td class="num">33</td>
+        <td class="num">58</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 44.6078431372549%"></span></span>
+          <b>45%</b></td>
+        <td class="num good">
+          52%</td>
+      </tr>
+      
+      <tr class="" data-name="Vi"
+          data-picks="43" data-bans="44" data-presence="42.64705882352941"
+          data-wr="55.81395348837209">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vi.png" alt=""></td>
+        <td>Vi</td>
+        <td class="num">43</td>
+        <td class="num">44</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 42.64705882352941%"></span></span>
+          <b>43%</b></td>
+        <td class="num good">
+          56%</td>
+      </tr>
+      
+      <tr class="" data-name="Annie"
+          data-picks="51" data-bans="31" data-presence="40.19607843137255"
+          data-wr="56.86274509803921">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Annie.png" alt=""></td>
+        <td>Annie</td>
+        <td class="num">51</td>
+        <td class="num">31</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 40.19607843137255%"></span></span>
+          <b>40%</b></td>
+        <td class="num good">
+          57%</td>
+      </tr>
+      
+      <tr class="" data-name="Gnar"
+          data-picks="55" data-bans="23" data-presence="38.23529411764706"
+          data-wr="65.45454545454545">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Gnar.png" alt=""></td>
+        <td>Gnar</td>
+        <td class="num">55</td>
+        <td class="num">23</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 38.23529411764706%"></span></span>
+          <b>38%</b></td>
+        <td class="num good">
+          65%</td>
+      </tr>
+      
+      <tr class="" data-name="Lucian"
+          data-picks="38" data-bans="37" data-presence="36.76470588235294"
+          data-wr="52.63157894736842">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Lucian.png" alt=""></td>
+        <td>Lucian</td>
+        <td class="num">38</td>
+        <td class="num">37</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 36.76470588235294%"></span></span>
+          <b>37%</b></td>
+        <td class="num good">
+          53%</td>
+      </tr>
+      
+      <tr class="" data-name="Yunara"
+          data-picks="50" data-bans="23" data-presence="35.78431372549019"
+          data-wr="44.0">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yunara.png" alt=""></td>
+        <td>Yunara</td>
+        <td class="num">50</td>
+        <td class="num">23</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 35.78431372549019%"></span></span>
+          <b>36%</b></td>
+        <td class="num bad">
+          44%</td>
+      </tr>
+      
+      <tr class="" data-name="Lee Sin"
+          data-picks="37" data-bans="35" data-presence="35.294117647058826"
+          data-wr="51.351351351351354">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/LeeSin.png" alt=""></td>
+        <td>Lee Sin</td>
+        <td class="num">37</td>
+        <td class="num">35</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 35.294117647058826%"></span></span>
+          <b>35%</b></td>
+        <td class="num good">
+          51%</td>
+      </tr>
+      
+      <tr class="" data-name="Cassiopeia"
+          data-picks="23" data-bans="48" data-presence="34.80392156862745"
+          data-wr="52.17391304347826">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Cassiopeia.png" alt=""></td>
+        <td>Cassiopeia</td>
+        <td class="num">23</td>
+        <td class="num">48</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 34.80392156862745%"></span></span>
+          <b>35%</b></td>
+        <td class="num good">
+          52%</td>
+      </tr>
+      
+      <tr class="" data-name="Anivia"
+          data-picks="39" data-bans="30" data-presence="33.8235294117647"
+          data-wr="53.84615384615385">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Anivia.png" alt=""></td>
+        <td>Anivia</td>
+        <td class="num">39</td>
+        <td class="num">30</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 33.8235294117647%"></span></span>
+          <b>34%</b></td>
+        <td class="num good">
+          54%</td>
+      </tr>
+      
+      <tr class="" data-name="Lulu"
+          data-picks="45" data-bans="24" data-presence="33.8235294117647"
+          data-wr="44.44444444444444">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Lulu.png" alt=""></td>
+        <td>Lulu</td>
+        <td class="num">45</td>
+        <td class="num">24</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 33.8235294117647%"></span></span>
+          <b>34%</b></td>
+        <td class="num bad">
+          44%</td>
+      </tr>
+      
+      <tr class="" data-name="Jhin"
+          data-picks="49" data-bans="12" data-presence="29.901960784313726"
+          data-wr="57.142857142857146">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt=""></td>
+        <td>Jhin</td>
+        <td class="num">49</td>
+        <td class="num">12</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 29.901960784313726%"></span></span>
+          <b>30%</b></td>
+        <td class="num good">
+          57%</td>
+      </tr>
+      
+      <tr class="" data-name="Seraphine"
+          data-picks="49" data-bans="10" data-presence="28.92156862745098"
+          data-wr="48.97959183673469">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Seraphine.png" alt=""></td>
+        <td>Seraphine</td>
+        <td class="num">49</td>
+        <td class="num">10</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 28.92156862745098%"></span></span>
+          <b>29%</b></td>
+        <td class="num bad">
+          49%</td>
+      </tr>
+      
+      <tr class="" data-name="Aurora"
+          data-picks="43" data-bans="16" data-presence="28.92156862745098"
+          data-wr="39.53488372093023">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Aurora.png" alt=""></td>
+        <td>Aurora</td>
+        <td class="num">43</td>
+        <td class="num">16</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 28.92156862745098%"></span></span>
+          <b>29%</b></td>
+        <td class="num bad">
+          40%</td>
+      </tr>
+      
+      <tr class="" data-name="Ambessa"
+          data-picks="37" data-bans="21" data-presence="28.431372549019606"
+          data-wr="27.027027027027028">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ambessa.png" alt=""></td>
+        <td>Ambessa</td>
+        <td class="num">37</td>
+        <td class="num">21</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 28.431372549019606%"></span></span>
+          <b>28%</b></td>
+        <td class="num bad">
+          27%</td>
+      </tr>
+      
+      <tr class="" data-name="Akali"
+          data-picks="20" data-bans="38" data-presence="28.431372549019606"
+          data-wr="40.0">
+        <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Akali.png" alt=""></td>
+        <td>Akali</td>
+        <td class="num">20</td>
+        <td class="num">38</td>
+        <td class="num presence-cell">
+          <span class="presence-bar"><span class="bar-fill" style="width: 28.431372549019606%"></span></span>
+          <b>28%</b></td>
+        <td class="num bad">
+          40%</td>
+      </tr>
+      
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Týmy</h2>
+    <table class="games sortable">
+      <thead><tr><th data-sort="name">Tým</th><th data-sort="games" class="num">Hry</th>
+        <th data-sort="wins" class="num">W/L</th><th data-sort="wr" class="num">WR</th></tr></thead>
+      <tbody>
+      
+      <tr data-name="Hanwha Life Esports" data-games="43" data-wins="32"
+          data-wr="74.4186046511628">
+        <td>Hanwha Life Esports</td>
+        <td class="num">43</td>
+        <td class="num">32/11</td>
+        <td class="num good">
+          74%</td>
+      </tr>
+      
+      <tr data-name="Gen.G" data-games="41" data-wins="30"
+          data-wr="73.17073170731707">
+        <td>Gen.G</td>
+        <td class="num">41</td>
+        <td class="num">30/11</td>
+        <td class="num good">
+          73%</td>
+      </tr>
+      
+      <tr data-name="T1" data-games="40" data-wins="30"
+          data-wr="75.0">
+        <td>T1</td>
+        <td class="num">40</td>
+        <td class="num">30/10</td>
+        <td class="num good">
+          75%</td>
+      </tr>
+      
+      <tr data-name="KT Rolster" data-games="41" data-wins="26"
+          data-wr="63.41463414634146">
+        <td>KT Rolster</td>
+        <td class="num">41</td>
+        <td class="num">26/15</td>
+        <td class="num good">
+          63%</td>
+      </tr>
+      
+      <tr data-name="Dplus Kia" data-games="42" data-wins="24"
+          data-wr="57.142857142857146">
+        <td>Dplus Kia</td>
+        <td class="num">42</td>
+        <td class="num">24/18</td>
+        <td class="num good">
+          57%</td>
+      </tr>
+      
+      <tr data-name="HANJIN BRION" data-games="40" data-wins="16"
+          data-wr="40.0">
+        <td>HANJIN BRION</td>
+        <td class="num">40</td>
+        <td class="num">16/24</td>
+        <td class="num bad">
+          40%</td>
+      </tr>
+      
+      <tr data-name="Kiwoom DRX" data-games="44" data-wins="16"
+          data-wr="36.36363636363637">
+        <td>Kiwoom DRX</td>
+        <td class="num">44</td>
+        <td class="num">16/28</td>
+        <td class="num bad">
+          36%</td>
+      </tr>
+      
+      <tr data-name="BNK FEARX" data-games="39" data-wins="14"
+          data-wr="35.8974358974359">
+        <td>BNK FEARX</td>
+        <td class="num">39</td>
+        <td class="num">14/25</td>
+        <td class="num bad">
+          36%</td>
+      </tr>
+      
+      <tr data-name="Nongshim RedForce" data-games="41" data-wins="13"
+          data-wr="31.70731707317073">
+        <td>Nongshim RedForce</td>
+        <td class="num">41</td>
+        <td class="num">13/28</td>
+        <td class="num bad">
+          32%</td>
+      </tr>
+      
+      <tr data-name="DN SOOPers" data-games="37" data-wins="3"
+          data-wr="8.108108108108109">
+        <td>DN SOOPers</td>
+        <td class="num">37</td>
+        <td class="num">3/34</td>
+        <td class="num bad">
+          8%</td>
+      </tr>
+      
+      </tbody>
+    </table>
+    <p class="muted">Meta analýza eventu:
+      <a class="tracked-link" href="../../../meta/LCK/2026%20Season/Rounds%201-2.html">buffy/nerfy a presence →</a></p>
+  </section>
+</div>
+</main>
+<footer class="footer muted">
+  Data: Riot Games API · pro scéna: <a href="../../../../index.html">Leaguepedia</a> (CC BY-SA)
+</footer>
+<div class="tooltip" id="tooltip" hidden></div>
+<script src="../../../../static/app.js"></script>
+</body>
+</html>

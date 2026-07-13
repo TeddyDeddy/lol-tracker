@@ -44,14 +44,14 @@
   
   
   <div class="tile">
-    <div class="tile-label">SoloQ</div>
+    <div class="tile-label">SoloQ (aktuální)</div>
     <div class="tile-value">Emerald I</div>
     <div class="tile-sub">61 LP · 50W/42L</div>
   </div>
   <div class="tile">
-    <div class="tile-label">Flex</div>
-    <div class="tile-value">Emerald I</div>
-    <div class="tile-sub">79 LP · 48W/41L</div>
+    <div class="tile-label">Flex (aktuální)</div>
+    <div class="tile-value">Diamond IV</div>
+    <div class="tile-sub">1 LP · 49W/41L</div>
   </div>
   <div class="tile">
     <div class="tile-label">Winrate (4 her)</div>
@@ -65,93 +65,193 @@
   </div>
 </div>
 
-
+<section class="panel">
+  <h2>Herní aktivita <span class="muted">podle módu · 2024</span></h2>
+  <div class="mode-counts">
+    
+    
+    <div class="mc-row">
+      <span class="mc-name">Flex</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 100.0%"></span></span>
+      <span class="bar-val">74</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Draft</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 71.62162162162163%"></span></span>
+      <span class="bar-val">53</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">ARAM</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 25.675675675675677%"></span></span>
+      <span class="bar-val">19</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">SoloQ</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 5.405405405405405%"></span></span>
+      <span class="bar-val">4</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Clash</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 2.7027027027027026%"></span></span>
+      <span class="bar-val">2</span>
+    </div>
+    
+  </div>
+</section>
 
 <div class="two-col">
   <section class="panel">
-    <h2>Champion pool <span class="muted">podle počtu her</span></h2>
-    <div class="bars">
-      
-      
-      <a class="bar-row" href="Benjee%20Netanyahu%23osss/champ/Jhin%253Fmode=SoloQ.html"
-         data-tip="Jhin: 3 her · 100% WR · KDA 8.20 — klikni pro detail">
-        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt="">
-        <span class="bar-name">Jhin</span>
-        <span class="bar-track"><span class="bar-fill" style="width: 100.0%"></span></span>
-        <span class="bar-val">3</span>
-        <span class="bar-wr good">100%</span>
-      </a>
-      
-      <a class="bar-row" href="Benjee%20Netanyahu%23osss/champ/Draven%253Fmode=SoloQ.html"
-         data-tip="Draven: 1 her · 100% WR · KDA 2.25 — klikni pro detail">
-        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Draven.png" alt="">
-        <span class="bar-name">Draven</span>
-        <span class="bar-track"><span class="bar-fill" style="width: 33.333333333333336%"></span></span>
-        <span class="bar-val">1</span>
-        <span class="bar-wr good">100%</span>
-      </a>
-      
-    </div>
+    <h2>Champion pool <span class="muted">klikni na hlavičku pro řazení</span></h2>
+    <input type="text" class="champ-search" data-target="champ-table" data-collapse="10"
+           placeholder="Hledat championa…">
+    <table class="games sortable" id="champ-table">
+      <thead>
+        <tr>
+          <th data-sort="name">Champion</th>
+          <th data-sort="games" class="num">Her</th>
+          <th data-sort="wr" class="num">WR</th>
+          <th data-sort="kda" class="num">KDA</th>
+          <th data-sort="kills" class="num">Kills</th>
+          <th data-sort="deaths" class="num">Deaths</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr data-name="Jhin" data-games="3"
+            data-wr="100.0"
+            data-kda="8.2"
+            data-kills="15.0"
+            data-deaths="3.3">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Jhin%253Fmode=SoloQ.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt="">
+              Jhin
+            </a>
+          </td>
+          <td class="num">3</td>
+          <td class="num good">100%</td>
+          <td class="num">8.20</td>
+          <td class="num">15.0</td>
+          <td class="num">3.3</td>
+        </tr>
+        
+        <tr data-name="Draven" data-games="1"
+            data-wr="100.0"
+            data-kda="2.25"
+            data-kills="8.0"
+            data-deaths="8.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Draven%253Fmode=SoloQ.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Draven.png" alt="">
+              Draven
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">2.25</td>
+          <td class="num">8.0</td>
+          <td class="num">8.0</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <button type="button" class="show-more" data-target="champ-table" hidden></button>
   </section>
 
   <section class="panel">
-    <h2>Rekordy <span class="muted">soloq</span></h2>
+    <h2>Rekordy <span class="muted">soloq</span>
+      <a class="muted all-games-link" href="Benjee%20Netanyahu%23osss/records%253Fmode=SoloQ&season=2024.html">Všechny rekordy →</a></h2>
     <div class="records">
+      
       
       <a class="record record-link" href="../match/EUN1_3713257627%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
         <div class="tile-label">Nejvíc killů</div>
-        <div class="record-value">19</div>
-        <div class="tile-sub">Jhin · 20.12.2024 ·
+        <div class="record-value">
+          19
+        </div>
+        <div class="tile-sub">Jhin · 19/9/16 · 20.12.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3713257627%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
         <div class="tile-label">Nejvíc smrtí</div>
-        <div class="record-value">9</div>
-        <div class="tile-sub">Jhin · 20.12.2024 ·
+        <div class="record-value">
+          9
+        </div>
+        <div class="tile-sub">Jhin · 19/9/16 · 20.12.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3713257627%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
         <div class="tile-label">Nejvíc asistencí</div>
-        <div class="record-value">16</div>
-        <div class="tile-sub">Jhin · 20.12.2024 ·
+        <div class="record-value">
+          16
+        </div>
+        <div class="tile-sub">Jhin · 19/9/16 · 20.12.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3691170977%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
         <div class="tile-label">Nejvíc CS</div>
-        <div class="record-value">251</div>
-        <div class="tile-sub">Jhin · 10.11.2024 ·
+        <div class="record-value">
+          251
+        </div>
+        <div class="tile-sub">Jhin · 13/0/7 · 10.11.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3713257627%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
         <div class="tile-label">Nejvíc dmg do championů</div>
-        <div class="record-value">48 732</div>
-        <div class="tile-sub">Jhin · 20.12.2024 ·
+        <div class="record-value">
+          48 732
+        </div>
+        <div class="tile-sub">Jhin · 19/9/16 · 20.12.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3713257627%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
         <div class="tile-label">Nejvíc goldů</div>
-        <div class="record-value">19 976</div>
-        <div class="tile-sub">Jhin · 20.12.2024 ·
+        <div class="record-value">
+          19 976
+        </div>
+        <div class="tile-sub">Jhin · 19/9/16 · 20.12.2024 ·
           <span class="good">W</span></div>
       </a>
       
+      
       <a class="record record-link" href="../match/EUN1_3713257627%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
         <div class="tile-label">Nejdelší hra</div>
-        <div class="record-value">39:14</div>
-        <div class="tile-sub">Jhin · 20.12.2024 ·
+        <div class="record-value">
+          39:14
+          
+        </div>
+        <div class="tile-sub">Jhin · 19/9/16 · 20.12.2024 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3702782433%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejhorší KDA</div>
+        <div class="record-value">
+          2.25
+          
+        </div>
+        <div class="tile-sub">Draven · 8/8/10 · 1.12.2024 ·
           <span class="good">W</span></div>
       </a>
       
     </div>
   </section>
 </div>
-
-
 
 <section class="panel">
   <h2>Posledních 4 her
@@ -169,7 +269,7 @@
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3094.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3032.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt="">
         </td>
-        <td>Ranked Solo</td>
+        <td>SoloQ</td>
         <td class="num">39:14</td>
         <td class="muted">20.12.2024</td>
       </tr>
@@ -183,9 +283,9 @@
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1018.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3072.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3035.png" alt="">
         </td>
-        <td>Ranked Solo</td>
+        <td>SoloQ</td>
         <td class="num">32:52</td>
-        <td class="muted">01.12.2024</td>
+        <td class="muted">1.12.2024</td>
       </tr>
     
       <tr class="row-w row-click">
@@ -197,9 +297,9 @@
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3094.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1036.png" alt="">
         </td>
-        <td>Ranked Solo</td>
+        <td>SoloQ</td>
         <td class="num">26:54</td>
-        <td class="muted">01.12.2024</td>
+        <td class="muted">1.12.2024</td>
       </tr>
     
       <tr class="row-w row-click">
@@ -211,7 +311,7 @@
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3094.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1036.png" alt="">
         </td>
-        <td>Ranked Solo</td>
+        <td>SoloQ</td>
         <td class="num">33:51</td>
         <td class="muted">10.11.2024</td>
       </tr>

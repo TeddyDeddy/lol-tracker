@@ -1,6 +1,16 @@
-/* Sdílený tooltip + line chart (rolling winrate) + live badge refresh. */
+/**
+ * @file Shared page behavior: tooltips, sortable/searchable tables, whole-row/card
+ *       clicks, bracket phase tabs, and the live-badge polling refresh.
+ */
 const tooltip = document.getElementById("tooltip");
 
+/**
+ * @brief Show the shared tooltip at a position near the cursor, clamped to viewport.
+ *
+ * @param {string} html Tooltip inner HTML.
+ * @param {number} x    Cursor X (client coordinates).
+ * @param {number} y    Cursor Y (client coordinates).
+ */
 function showTip(html, x, y) {
   tooltip.innerHTML = html;
   tooltip.hidden = false;
@@ -8,87 +18,186 @@ function showTip(html, x, y) {
   tooltip.style.left = Math.min(x + pad, window.innerWidth - tooltip.offsetWidth - 8) + "px";
   tooltip.style.top = (y - tooltip.offsetHeight - pad < 0 ? y + pad : y - tooltip.offsetHeight - pad) + "px";
 }
+/** @brief Hide the shared tooltip. */
 function hideTip() { tooltip.hidden = true; }
 
-/* tooltipy pro elementy s data-tip (champion pool) */
+/**
+ * @brief Wire up tooltips for every `[data-tip]` element (e.g. champion pool rows).
+ *
+ * Position is computed once on `mouseenter`, not on `mousemove` — recomputing
+ * continuously made the tooltip jitter/drift while hovering over a wide element.
+ */
 for (const el of document.querySelectorAll("[data-tip]")) {
-  el.addEventListener("mousemove", e => showTip(el.dataset.tip, e.clientX, e.clientY));
+  el.addEventListener("mouseenter", e => showTip(el.dataset.tip, e.clientX, e.clientY));
   el.addEventListener("mouseleave", hideTip);
 }
 
-/* ---------- rolling winrate line chart ---------- */
-const chartEl = document.getElementById("wr-chart");
-if (chartEl) {
-  const data = JSON.parse(chartEl.dataset.series);
-  const W = chartEl.clientWidth || 900, H = 220;
-  const M = { l: 40, r: 14, t: 12, b: 24 };
-  const xs = i => M.l + (i / (data.length - 1)) * (W - M.l - M.r);
-  const ys = wr => M.t + (1 - wr / 100) * (H - M.t - M.b);
-  const NS = "http://www.w3.org/2000/svg";
-  const svg = document.createElementNS(NS, "svg");
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+/* refresher callbacks for each champ-search box, keyed by target container id — makeSortable
+   calls these after re-ordering rows so a search+collapse cap re-applies against the new
+   (sorted) row order instead of the original page-load order. */
+const champSearchRefreshers = {};
 
-  const add = (tag, attrs, parent = svg) => {
-    const el = document.createElementNS(NS, tag);
-    for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
-    parent.appendChild(el);
-    return el;
-  };
-
-  // mřížka: 0/25/50/75/100 %
-  for (const v of [0, 25, 50, 75, 100]) {
-    add("line", { x1: M.l, x2: W - M.r, y1: ys(v), y2: ys(v),
-                  stroke: "#2c2c2a", "stroke-width": 1 });
-    add("text", { x: M.l - 8, y: ys(v) + 4, "text-anchor": "end",
-                  fill: "#898781", "font-size": 11 }).textContent = v + " %";
+/**
+ * @brief Wire up click-to-sort headers on a `table.sortable`.
+ *
+ * Reads `data-<key>` on each row for the sort key's value; numeric columns
+ * compare as numbers, everything else falls back to locale string compare.
+ *
+ * @param table The `<table class="sortable">` element to make sortable.
+ */
+function makeSortable(table) {
+  const tbody = table.querySelector("tbody");
+  for (const th of table.querySelectorAll("th[data-sort]")) {
+    let asc = false;
+    th.addEventListener("click", () => {
+      const key = th.dataset.sort;
+      asc = !asc;
+      const rows = [...tbody.querySelectorAll("tr")];
+      rows.sort((a, b) => {
+        const av = a.dataset[key], bv = b.dataset[key];
+        const an = parseFloat(av), bn = parseFloat(bv);
+        const cmp = Number.isNaN(an) || Number.isNaN(bn)
+          ? av.localeCompare(bv) : an - bn;
+        return asc ? cmp : -cmp;
+      });
+      for (const r of rows) tbody.appendChild(r);
+      for (const h of table.querySelectorAll("th[data-sort]"))
+        h.classList.remove("sort-asc", "sort-desc");
+      th.classList.add(asc ? "sort-asc" : "sort-desc");
+      if (champSearchRefreshers[table.id]) champSearchRefreshers[table.id]();
+    });
   }
-  // 50% referenční linka o chlup výraznější
-  add("line", { x1: M.l, x2: W - M.r, y1: ys(50), y2: ys(50),
-                stroke: "#383835", "stroke-width": 1 });
+}
+for (const table of document.querySelectorAll("table.sortable")) makeSortable(table);
 
-  // plocha (wash 10 %) + čára 2px
-  const pts = data.map((d, i) => `${xs(i)},${ys(d.wr)}`).join(" ");
-  add("polygon", { points: `${M.l},${ys(0)} ${pts} ${W - M.r},${ys(0)}`,
-                   fill: "#3987e5", opacity: 0.1 });
-  add("polyline", { points: pts, fill: "none", stroke: "#3987e5",
-                    "stroke-width": 2, "stroke-linejoin": "round",
-                    "stroke-linecap": "round" });
+/**
+ * @brief Wire up a champion search box: filters `[data-name]` rows/cards in the target
+ *        container by substring match, and — if the input carries `data-collapse="N"` — caps
+ *        the match list to the first N (in current DOM order) with a paired `.show-more`
+ *        button to reveal the rest. Typing a query always searches the full set, ignoring
+ *        the cap, and auto-hides the button while a query is active.
+ *
+ * Registers its refresh function in `champSearchRefreshers` keyed by container id, so
+ * `makeSortable` can re-run it after a sort — otherwise the cap would keep showing the
+ * pre-sort top N instead of the top N in the newly sorted order.
+ *
+ * @param input `<input class="champ-search" data-target="...">` element.
+ */
+function initChampSearch(input) {
+  const container = document.getElementById(input.dataset.target);
+  if (!container) return;
+  const cap = parseInt(input.dataset.collapse, 10) || 0;
+  const moreBtn = document.querySelector(`.show-more[data-target="${input.dataset.target}"]`);
+  let showAll = false;
 
-  // koncový bod s ringem + přímý popisek poslední hodnoty
-  const last = data[data.length - 1];
-  add("circle", { cx: xs(data.length - 1), cy: ys(last.wr), r: 5,
-                  fill: "#3987e5", stroke: "#1a1a19", "stroke-width": 2 });
-  add("text", { x: xs(data.length - 1) - 6, y: ys(last.wr) - 10,
-                "text-anchor": "end", fill: "#ffffff", "font-size": 12,
-                "font-weight": 600 }).textContent = last.wr.toFixed(0) + " %";
+  function apply() {
+    const q = input.value.trim().toLowerCase();
+    const capped = cap && !showAll && !q;
+    let shown = 0;
+    for (const el of container.querySelectorAll("[data-name]")) {
+      const matches = el.dataset.name.toLowerCase().includes(q);
+      const visible = matches && !(capped && shown >= cap);
+      el.hidden = !visible;
+      if (visible) shown++;
+    }
+    if (moreBtn && cap) {
+      const total = container.querySelectorAll("[data-name]").length;
+      moreBtn.hidden = !!q || total <= cap;
+      moreBtn.textContent = showAll ? "▲ méně" : `▼ zobrazit všechny (${total})`;
+    }
+  }
 
-  // crosshair + hover
-  const cross = add("line", { y1: M.t, y2: H - M.b, stroke: "#898781",
-                              "stroke-width": 1, visibility: "hidden" });
-  const dot = add("circle", { r: 5, fill: "#3987e5", stroke: "#1a1a19",
-                              "stroke-width": 2, visibility: "hidden" });
-  svg.addEventListener("mousemove", e => {
-    const rect = svg.getBoundingClientRect();
-    const px = ((e.clientX - rect.left) / rect.width) * W;
-    const i = Math.max(0, Math.min(data.length - 1,
-        Math.round(((px - M.l) / (W - M.l - M.r)) * (data.length - 1))));
-    const d = data[i];
-    cross.setAttribute("x1", xs(i)); cross.setAttribute("x2", xs(i));
-    cross.setAttribute("visibility", "visible");
-    dot.setAttribute("cx", xs(i)); dot.setAttribute("cy", ys(d.wr));
-    dot.setAttribute("visibility", "visible");
-    showTip(`<b>${d.wr.toFixed(0)} % WR</b><br>okno 10 her · ${d.when}`,
-            e.clientX, e.clientY);
+  input.addEventListener("input", apply);
+  if (moreBtn) moreBtn.addEventListener("click", () => { showAll = !showAll; apply(); });
+  if (input.dataset.target) champSearchRefreshers[input.dataset.target] = apply;
+  apply();
+}
+for (const input of document.querySelectorAll(".champ-search")) initChampSearch(input);
+
+/**
+ * @brief Flag `input[list]` text that can't possibly complete to a known option (e.g. a
+ *        typo'd champion name) by toggling `.invalid` on every keystroke.
+ *
+ * Checks as soon as no `<datalist>` option starts with what's typed so far,
+ * rather than waiting for an exact-match check on submit.
+ */
+for (const input of document.querySelectorAll("input[list]")) {
+  const datalist = input.list;
+  if (!datalist) continue;
+  const names = [...datalist.options].map(o => o.value.toLowerCase());
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    input.classList.toggle("invalid", !!q && !names.some(n => n.startsWith(q)));
   });
-  svg.addEventListener("mouseleave", () => {
-    cross.setAttribute("visibility", "hidden");
-    dot.setAttribute("visibility", "hidden");
-    hideTip();
-  });
-  chartEl.appendChild(svg);
 }
 
-/* ---------- live badge refresh (à 60 s) ---------- */
+/**
+ * @brief Whole-row click on `.row-click` rows, delegating to the row's own `<a>`.
+ *
+ * Lets a table row act as a single clickable link without wrapping every
+ * cell in an anchor; clicks on a real `<a>` inside the row keep their own
+ * target instead of being overridden.
+ */
+for (const tr of document.querySelectorAll("tr.row-click")) {
+  tr.addEventListener("click", e => {
+    if (e.target.closest("a")) return;  // real links keep their own behavior
+    const link = tr.querySelector("a");
+    if (link) location.href = link.href;
+  });
+}
+
+/**
+ * @brief Whole-card click on `.card-click` cards that also contain a nested
+ *        secondary link (e.g. "meta →").
+ *
+ * A card can't be a single `<a>` when it needs a second, differently-targeted
+ * link inside it (nested anchors are invalid HTML) — so the card carries
+ * `data-href` for the primary target and this delegates clicks to it, except
+ * when the click landed on a real `<a>`, which keeps its own href.
+ */
+for (const card of document.querySelectorAll(".card-click")) {
+  card.addEventListener("click", e => {
+    if (e.target.closest("a")) return;
+    if (card.dataset.href) location.href = card.dataset.href;
+  });
+}
+
+/**
+ * @brief Wire up phase tab buttons (Základní část / Play-off / Play-In / ...)
+ *        on a tournament page to switch which `.phase-panel` is visible.
+ *
+ * Redraws every bracket in the shown panel's connectors on switch — a
+ * double-elimination phase renders THREE separate `.bracket.playoffs` roots
+ * (upper/lower/grand-final), not one, so this must redraw all of them, not
+ * just the first. A bracket drawn while its panel was `hidden` gets
+ * zero-sized rects from `getBoundingClientRect`, so the initial draw() on
+ * page load is a no-op for any non-default tab and must be redone once the
+ * panel becomes visible.
+ */
+function initPhaseTabs() {
+  const tabs = document.querySelector(".phase-tabs");
+  if (!tabs) return;
+  const buttons = [...tabs.querySelectorAll(".phase-tab")];
+  const panels = [...document.querySelectorAll(".phase-panel")];
+  for (const btn of buttons) {
+    btn.addEventListener("click", () => {
+      for (const b of buttons) b.classList.remove("active");
+      btn.classList.add("active");
+      for (const p of panels) p.hidden = p.dataset.phase !== btn.dataset.phase;
+      const shown = panels.find(p => p.dataset.phase === btn.dataset.phase);
+      for (const bracket of shown ? shown.querySelectorAll(".bracket.playoffs") : [])
+        if (bracket._redraw) bracket._redraw();
+    });
+  }
+}
+initPhaseTabs();
+
+/**
+ * @brief Poll `/api/live` every 60s and update live-game badges/summary in place.
+ *
+ * Silently swallows fetch errors — a transient failure just leaves the
+ * previous badge state until the next successful poll.
+ */
 async function refreshLive() {
   try {
     const rows = await (await fetch("/api/live")).json();

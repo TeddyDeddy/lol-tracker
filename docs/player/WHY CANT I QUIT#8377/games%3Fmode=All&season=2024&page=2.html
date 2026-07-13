@@ -13,6 +13,7 @@
   <span class="live-summary" id="live-summary"></span>
 </header>
 <main>
+
 <div class="player-head">
   <div>
     <h1>Seznam her</h1>
@@ -35,6 +36,15 @@
     <a class="pill "
        href="games%253Fmode=ARAM&season=2024.html">ARAM</a>
     
+    <a class="pill "
+       href="games%253Fmode=URF&season=2024.html">URF</a>
+    
+    <a class="pill "
+       href="games%253Fmode=Swarm&season=2024.html">Swarm</a>
+    
+    <a class="pill "
+       href="games%253Fmode=Arena&season=2024.html">Arena</a>
+    
     <span class="pill-sep"></span>
     <a class="pill "
        href="games%253Fmode=All.html">Vše roky</a>
@@ -53,7 +63,18 @@
 
 <p class="muted">60 her · strana 2/3</p>
 
-<div class="game-list">
+<form class="champ-search-form" method="get">
+  <input type="hidden" name="mode" value="All">
+  <input type="hidden" name="season" value="2024">
+  <input type="text" name="champion" value="" class="champ-search" list="champ-datalist"
+         autocomplete="off" placeholder="Hledat championa… (Enter, prohledá celou historii)">
+  <datalist id="champ-datalist">
+    <option value="Aatrox"><option value="Ahri"><option value="Akali"><option value="Akshan"><option value="Alistar"><option value="Ambessa"><option value="Amumu"><option value="Anivia"><option value="Annie"><option value="Aphelios"><option value="Ashe"><option value="AurelionSol"><option value="Aurora"><option value="Azir"><option value="Bard"><option value="Belveth"><option value="Blitzcrank"><option value="Brand"><option value="Braum"><option value="Briar"><option value="Caitlyn"><option value="Camille"><option value="Cassiopeia"><option value="Chogath"><option value="Corki"><option value="Darius"><option value="Diana"><option value="DrMundo"><option value="Draven"><option value="Ekko"><option value="Elise"><option value="Evelynn"><option value="Ezreal"><option value="FiddleSticks"><option value="Fiora"><option value="Fizz"><option value="Galio"><option value="Gangplank"><option value="Garen"><option value="Gragas"><option value="Graves"><option value="Gwen"><option value="Hecarim"><option value="Heimerdinger"><option value="Hwei"><option value="Illaoi"><option value="Irelia"><option value="Ivern"><option value="Janna"><option value="JarvanIV"><option value="Jax"><option value="Jayce"><option value="Jhin"><option value="Jinx"><option value="KSante"><option value="Kaisa"><option value="Kalista"><option value="Karma"><option value="Karthus"><option value="Kassadin"><option value="Katarina"><option value="Kayle"><option value="Kayn"><option value="Kennen"><option value="Khazix"><option value="Kindred"><option value="Kled"><option value="KogMaw"><option value="Leblanc"><option value="LeeSin"><option value="Leona"><option value="Lillia"><option value="Lissandra"><option value="Locke"><option value="Lucian"><option value="Lulu"><option value="Lux"><option value="Malphite"><option value="Malzahar"><option value="Maokai"><option value="MasterYi"><option value="Mel"><option value="Milio"><option value="MissFortune"><option value="MonkeyKing"><option value="Mordekaiser"><option value="Morgana"><option value="Naafiri"><option value="Nami"><option value="Nasus"><option value="Nautilus"><option value="Neeko"><option value="Nidalee"><option value="Nilah"><option value="Nocturne"><option value="Nunu"><option value="Olaf"><option value="Orianna"><option value="Ornn"><option value="Pantheon"><option value="Poppy"><option value="Pyke"><option value="Qiyana"><option value="Quinn"><option value="Rakan"><option value="Rammus"><option value="RekSai"><option value="Rell"><option value="Renata"><option value="Renekton"><option value="Rengar"><option value="Riven"><option value="Rumble"><option value="Ryze"><option value="Samira"><option value="Sejuani"><option value="Senna"><option value="Seraphine"><option value="Sett"><option value="Shaco"><option value="Shen"><option value="Shyvana"><option value="Singed"><option value="Sion"><option value="Sivir"><option value="Skarner"><option value="Smolder"><option value="Soraka"><option value="Swain"><option value="Sylas"><option value="TahmKench"><option value="Taliyah"><option value="Talon"><option value="Taric"><option value="Teemo"><option value="Thresh"><option value="Tristana"><option value="Trundle"><option value="Tryndamere"><option value="TwistedFate"><option value="Twitch"><option value="Udyr"><option value="Urgot"><option value="Varus"><option value="Vayne"><option value="Veigar"><option value="Velkoz"><option value="Vex"><option value="Vi"><option value="Viego"><option value="Viktor"><option value="Vladimir"><option value="Volibear"><option value="Warwick"><option value="Xayah"><option value="Xerath"><option value="XinZhao"><option value="Yasuo"><option value="Yone"><option value="Yorick"><option value="Yunara"><option value="Yuumi"><option value="Zaahen"><option value="Zac"><option value="Zeri"><option value="Ziggs"><option value="Zilean"><option value="Zoe">
+  </datalist>
+  
+</form>
+
+<div class="game-list" id="game-list">
   
   
   
@@ -61,7 +82,7 @@
      href="../../match/EUN1_3700884423%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
+      <div class="gc-sub">SoloQ</div>
       <div class="gc-sub">35:21 · 28.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -167,7 +188,7 @@
      href="../../match/EUN1_3700333585%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
+      <div class="gc-sub">SoloQ</div>
       <div class="gc-sub">28:53 · 27.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -273,7 +294,7 @@
      href="../../match/EUN1_3694192023%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">700</div>
+      <div class="gc-sub">Clash</div>
       <div class="gc-sub">34:01 · 16.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -379,7 +400,7 @@
      href="../../match/EUN1_3694165626%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">700</div>
+      <div class="gc-sub">Clash</div>
       <div class="gc-sub">29:28 · 16.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -485,7 +506,7 @@
      href="../../match/EUN1_3694128839%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">700</div>
+      <div class="gc-sub">Clash</div>
       <div class="gc-sub">41:15 · 16.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -591,7 +612,7 @@
      href="../../match/EUN1_3693721896%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">22:28 · 15.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -699,7 +720,7 @@
      href="../../match/EUN1_3693708286%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">24:33 · 15.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -807,7 +828,7 @@
      href="../../match/EUN1_3693682055%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">24:23 · 15.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -915,7 +936,7 @@
      href="../../match/EUN1_3693276463%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">39:38 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1023,7 +1044,7 @@
      href="../../match/EUN1_3693242443%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">41:11 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1131,7 +1152,7 @@
      href="../../match/EUN1_3693163504%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
+      <div class="gc-sub">SoloQ</div>
       <div class="gc-sub">37:09 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1237,7 +1258,7 @@
      href="../../match/EUN1_3693143654%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
+      <div class="gc-sub">SoloQ</div>
       <div class="gc-sub">30:35 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1343,7 +1364,7 @@
      href="../../match/EUN1_3693135134%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
+      <div class="gc-sub">SoloQ</div>
       <div class="gc-sub">25:58 · 14.11.2024</div>
     </div>
     <div class="champ-cell">
@@ -1449,7 +1470,7 @@
      href="../../match/EUN1_3682524495%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">700</div>
+      <div class="gc-sub">Clash</div>
       <div class="gc-sub">30:35 · 20.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -1559,7 +1580,7 @@
      href="../../match/EUN1_3682496634%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">700</div>
+      <div class="gc-sub">Clash</div>
       <div class="gc-sub">31:12 · 20.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -1669,7 +1690,7 @@
      href="../../match/EUN1_3682472105%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">700</div>
+      <div class="gc-sub">Clash</div>
       <div class="gc-sub">23:22 · 20.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -1779,7 +1800,7 @@
      href="../../match/EUN1_3682430437%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">700</div>
+      <div class="gc-sub">Clash</div>
       <div class="gc-sub">37:27 · 20.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -1889,7 +1910,7 @@
      href="../../match/EUN1_3681468964%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">35:26 · 18.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -1997,7 +2018,7 @@
      href="../../match/EUN1_3681445663%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">36:56 · 18.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2105,7 +2126,7 @@
      href="../../match/EUN1_3681428402%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">29:43 · 18.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2213,7 +2234,7 @@
      href="../../match/EUN1_3681016893%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">36:42 · 17.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2323,7 +2344,7 @@
      href="../../match/EUN1_3681002277%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
+      <div class="gc-sub">Flex</div>
       <div class="gc-sub">31:45 · 17.10.2024</div>
     </div>
     <div class="champ-cell">
@@ -2433,8 +2454,8 @@
      href="../../match/EUN1_3668625723%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">35:08 · 18.09.2024</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">35:08 · 18.9.2024</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ziggs.png" alt="Ziggs"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -2543,8 +2564,8 @@
      href="../../match/EUN1_3668620110%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">28:55 · 18.09.2024</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">28:55 · 18.9.2024</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Pantheon.png" alt="Pantheon"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/PressTheAttack/PressTheAttack.png" alt=""></div>
@@ -2653,8 +2674,8 @@
      href="../../match/EUN1_3668450638%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">37:42 · 18.09.2024</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">37:42 · 18.9.2024</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ashe.png" alt="Ashe"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/HailOfBlades/HailOfBlades.png" alt=""></div>

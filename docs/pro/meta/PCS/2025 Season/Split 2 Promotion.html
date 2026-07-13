@@ -26,17 +26,22 @@
 <section class="panel">
   <h2>Presence: před eventem vs. na eventu
     <span class="muted">🟢 buff · 🔴 nerf · 🔵 adjust na patchi eventu</span></h2>
-  <table class="games">
-    <thead><tr><th></th><th>Champion</th><th>Změna v patchi</th>
-      <th>Před</th><th>Na eventu</th><th>Δ</th><th>P/B na eventu</th></tr></thead>
+  <table class="games sortable">
+    <thead><tr><th></th><th data-sort="name">Champion</th><th>Změna v patchi</th>
+      <th data-sort="before" class="num">Před</th><th data-sort="at" class="num">Na eventu</th>
+      <th data-sort="delta" class="num">Δ</th><th data-sort="picks" class="num">P/B na eventu</th></tr></thead>
     <tbody>
     
-    <tr>
+    <tr data-name="K&#39;Sante" data-before="59.435626102292765" data-at="20.0"
+        data-delta="-39.435626102292765" data-picks="4" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/KSante.png" alt=""></td>
       <td>K&#39;Sante</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="K&#39;Sante&#39;s early laning phase is just too strong, and some of his outputs later in the game are a bit shocking and overly powerful, especially around highly charged Path Maker casts. We&#39;re nerfing both of these aspects with a couple of targeted adjustments. (Mark Damage: 20 (+1-2% (based on level) target&#39;s max HP) → 12 (+1-2% (based on level) target&#39;s max HP); All Out Bonus True Damage: 10-100% (based on channel duration) → 10-80% (based on channel duration))">
+          <span class="bad">🔴 nerf</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">59%</td>
       <td class="num"><b>20%</b></td>
@@ -47,12 +52,15 @@
       <td class="num muted">4/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Karma" data-before="10.582010582010582" data-at="50.0"
+        data-delta="39.41798941798942" data-picks="2" data-bans="8">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Karma.png" alt=""></td>
       <td>Karma</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">11%</td>
       <td class="num"><b>50%</b></td>
@@ -63,12 +71,16 @@
       <td class="num muted">2/8</td>
     </tr>
     
-    <tr>
+    <tr data-name="Aurora" data-before="49.029982363315696" data-at="15.0"
+        data-delta="-34.029982363315696" data-picks="3" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Aurora.png" alt=""></td>
       <td>Aurora</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="Aurora&#39;s too good at catching out targets and bursting them in the midgame, so we&#39;re taking down some of her reliable burst damage and making it a bit less punishing to run away from her. (Damage: 70/110/150/190/230 (+80% AP) → 70/110/150/190/230 (+70% AP); Border Collision Slow: 75% → 50%)">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">49%</td>
       <td class="num"><b>15%</b></td>
@@ -79,12 +91,15 @@
       <td class="num muted">3/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Irelia" data-before="1.2345679012345678" data-at="35.0"
+        data-delta="33.76543209876543" data-picks="2" data-bans="5">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Irelia.png" alt=""></td>
       <td>Irelia</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">1%</td>
       <td class="num"><b>35%</b></td>
@@ -95,12 +110,15 @@
       <td class="num muted">2/5</td>
     </tr>
     
-    <tr>
+    <tr data-name="Renekton" data-before="19.400352733686066" data-at="50.0"
+        data-delta="30.599647266313934" data-picks="2" data-bans="8">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Renekton.png" alt=""></td>
       <td>Renekton</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">19%</td>
       <td class="num"><b>50%</b></td>
@@ -111,12 +129,15 @@
       <td class="num muted">2/8</td>
     </tr>
     
-    <tr>
+    <tr data-name="Nocturne" data-before="42.504409171075835" data-at="70.0"
+        data-delta="27.495590828924165" data-picks="1" data-bans="13">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nocturne.png" alt=""></td>
       <td>Nocturne</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">43%</td>
       <td class="num"><b>70%</b></td>
@@ -127,12 +148,15 @@
       <td class="num muted">1/13</td>
     </tr>
     
-    <tr>
+    <tr data-name="Lee Sin" data-before="13.580246913580247" data-at="40.0"
+        data-delta="26.419753086419753" data-picks="2" data-bans="6">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/LeeSin.png" alt=""></td>
       <td>Lee Sin</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">14%</td>
       <td class="num"><b>40%</b></td>
@@ -143,12 +167,15 @@
       <td class="num muted">2/6</td>
     </tr>
     
-    <tr>
+    <tr data-name="Nunu &amp; Willump" data-before="0" data-at="25.0"
+        data-delta="25.0" data-picks="2" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nunu.png" alt=""></td>
       <td>Nunu &amp; Willump</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">0%</td>
       <td class="num"><b>25%</b></td>
@@ -159,12 +186,15 @@
       <td class="num muted">2/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Darius" data-before="0" data-at="25.0"
+        data-delta="25.0" data-picks="3" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Darius.png" alt=""></td>
       <td>Darius</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">0%</td>
       <td class="num"><b>25%</b></td>
@@ -175,12 +205,16 @@
       <td class="num muted">3/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Ambessa" data-before="52.55731922398589" data-at="75.0"
+        data-delta="22.442680776014107" data-picks="5" data-bans="10">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ambessa.png" alt=""></td>
       <td>Ambessa</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="Ambessa is a bit too good at assassinating squishy targets quickly, so taking down some base damage to make sure she needs to hit the right number of spells to kill her targets. (Damage: 40/65/90/115/140 (+60% bonus AD) → 40/60/80/100/120 (+60 bonus AD))">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">53%</td>
       <td class="num"><b>75%</b></td>
@@ -191,12 +225,15 @@
       <td class="num muted">5/10</td>
     </tr>
     
-    <tr>
+    <tr data-name="Ezreal" data-before="45.14991181657848" data-at="65.0"
+        data-delta="19.85008818342152" data-picks="10" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ezreal.png" alt=""></td>
       <td>Ezreal</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">45%</td>
       <td class="num"><b>65%</b></td>
@@ -207,12 +244,15 @@
       <td class="num muted">10/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Wukong" data-before="28.747795414462082" data-at="10.0"
+        data-delta="-18.747795414462082" data-picks="1" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MonkeyKing.png" alt=""></td>
       <td>Wukong</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">29%</td>
       <td class="num"><b>10%</b></td>
@@ -223,12 +263,16 @@
       <td class="num muted">1/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Elise" data-before="23.104056437389772" data-at="5.0"
+        data-delta="-18.104056437389772" data-picks="1" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Elise.png" alt=""></td>
       <td>Elise</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="Last patch&#39;s changes succeeded in bringing Elise jungle and support closer together in power, but we overshot the magnitude of our buffs. We&#39;re happy with her offensive power being more about sustained spider attacks, so we&#39;re going to pull some more burst spell damage out. (Damage: 40/75/110/145/180 (+4 % of targets health)(+3% per 100 AP)) → 40/70/100/130/160 (+4 % of targets health)(+3% per 100 AP)); Damage: 60/90/120/150/180 (+8 of targets missing HP (+3% per 100 AP)) → 50/80/110/140/180 (+8 of targets missing HP (+3% per 100 AP)))">
+          <span class="good">🟢 buff</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">23%</td>
       <td class="num"><b>5%</b></td>
@@ -239,12 +283,15 @@
       <td class="num muted">1/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Corki" data-before="47.61904761904762" data-at="30.0"
+        data-delta="-17.61904761904762" data-picks="3" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Corki.png" alt=""></td>
       <td>Corki</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">48%</td>
       <td class="num"><b>30%</b></td>
@@ -255,12 +302,15 @@
       <td class="num muted">3/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Akali" data-before="21.869488536155202" data-at="5.0"
+        data-delta="-16.869488536155202" data-picks="1" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Akali.png" alt=""></td>
       <td>Akali</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">22%</td>
       <td class="num"><b>5%</b></td>
@@ -271,12 +321,15 @@
       <td class="num muted">1/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Jhin" data-before="14.638447971781305" data-at="30.0"
+        data-delta="15.361552028218695" data-picks="6" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt=""></td>
       <td>Jhin</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">15%</td>
       <td class="num"><b>30%</b></td>
@@ -287,12 +340,15 @@
       <td class="num muted">6/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Aatrox" data-before="5.114638447971782" data-at="20.0"
+        data-delta="14.885361552028218" data-picks="2" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Aatrox.png" alt=""></td>
       <td>Aatrox</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">5%</td>
       <td class="num"><b>20%</b></td>
@@ -303,12 +359,15 @@
       <td class="num muted">2/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Rumble" data-before="55.379188712522044" data-at="70.0"
+        data-delta="14.620811287477956" data-picks="8" data-bans="6">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Rumble.png" alt=""></td>
       <td>Rumble</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">55%</td>
       <td class="num"><b>70%</b></td>
@@ -319,12 +378,15 @@
       <td class="num muted">8/6</td>
     </tr>
     
-    <tr>
+    <tr data-name="Vi" data-before="55.379188712522044" data-at="70.0"
+        data-delta="14.620811287477956" data-picks="3" data-bans="11">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vi.png" alt=""></td>
       <td>Vi</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">55%</td>
       <td class="num"><b>70%</b></td>
@@ -335,12 +397,15 @@
       <td class="num muted">3/11</td>
     </tr>
     
-    <tr>
+    <tr data-name="Sejuani" data-before="35.80246913580247" data-at="50.0"
+        data-delta="14.197530864197532" data-picks="7" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Sejuani.png" alt=""></td>
       <td>Sejuani</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">36%</td>
       <td class="num"><b>50%</b></td>
@@ -351,12 +416,15 @@
       <td class="num muted">7/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Galio" data-before="28.21869488536155" data-at="15.0"
+        data-delta="-13.21869488536155" data-picks="3" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Galio.png" alt=""></td>
       <td>Galio</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">28%</td>
       <td class="num"><b>15%</b></td>
@@ -367,12 +435,15 @@
       <td class="num muted">3/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Nautilus" data-before="26.984126984126984" data-at="40.0"
+        data-delta="13.015873015873016" data-picks="4" data-bans="4">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nautilus.png" alt=""></td>
       <td>Nautilus</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">27%</td>
       <td class="num"><b>40%</b></td>
@@ -383,12 +454,16 @@
       <td class="num muted">4/4</td>
     </tr>
     
-    <tr>
+    <tr data-name="Skarner" data-before="87.1252204585538" data-at="75.0"
+        data-delta="-12.125220458553798" data-picks="6" data-bans="9">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Skarner.png" alt=""></td>
       <td>Skarner</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="The Skorpion is due for another hit, this time targeting high skilled players&#39; ability to optimize his Q. We&#39;re also increasing the cooldown on his mobility to force him to commit to engagements for longer before escaping. (Slow Duration: 1.25 seconds → 1 second; Final Attack Bonus Damage: +10% of target&#39;s maximum health → +8% of target&#39;s maximum health; Cooldown: 20/19/18/17/16 → 22/21/20/19/18)">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">87%</td>
       <td class="num"><b>75%</b></td>
@@ -399,12 +474,15 @@
       <td class="num muted">6/9</td>
     </tr>
     
-    <tr>
+    <tr data-name="Viktor" data-before="32.098765432098766" data-at="20.0"
+        data-delta="-12.098765432098766" data-picks="3" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt=""></td>
       <td>Viktor</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">32%</td>
       <td class="num"><b>20%</b></td>
@@ -415,12 +493,15 @@
       <td class="num muted">3/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Leona" data-before="36.860670194003525" data-at="25.0"
+        data-delta="-11.860670194003525" data-picks="4" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Leona.png" alt=""></td>
       <td>Leona</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">37%</td>
       <td class="num"><b>25%</b></td>
@@ -431,12 +512,15 @@
       <td class="num muted">4/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Caitlyn" data-before="16.57848324514991" data-at="5.0"
+        data-delta="-11.578483245149911" data-picks="1" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Caitlyn.png" alt=""></td>
       <td>Caitlyn</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">17%</td>
       <td class="num"><b>5%</b></td>
@@ -447,12 +531,15 @@
       <td class="num muted">1/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Orianna" data-before="21.340388007054674" data-at="10.0"
+        data-delta="-11.340388007054674" data-picks="2" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Orianna.png" alt=""></td>
       <td>Orianna</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">21%</td>
       <td class="num"><b>10%</b></td>
@@ -463,12 +550,15 @@
       <td class="num muted">2/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Nidalee" data-before="21.164021164021165" data-at="10.0"
+        data-delta="-11.164021164021165" data-picks="1" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nidalee.png" alt=""></td>
       <td>Nidalee</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">21%</td>
       <td class="num"><b>10%</b></td>
@@ -479,12 +569,15 @@
       <td class="num muted">1/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Rakan" data-before="36.15520282186949" data-at="25.0"
+        data-delta="-11.155202821869487" data-picks="4" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Rakan.png" alt=""></td>
       <td>Rakan</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">36%</td>
       <td class="num"><b>25%</b></td>
@@ -495,12 +588,15 @@
       <td class="num muted">4/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Viego" data-before="20.811287477954146" data-at="10.0"
+        data-delta="-10.811287477954146" data-picks="2" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viego.png" alt=""></td>
       <td>Viego</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">21%</td>
       <td class="num"><b>10%</b></td>
@@ -511,12 +607,15 @@
       <td class="num muted">2/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Jayce" data-before="49.382716049382715" data-at="60.0"
+        data-delta="10.617283950617285" data-picks="5" data-bans="7">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jayce.png" alt=""></td>
       <td>Jayce</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">49%</td>
       <td class="num"><b>60%</b></td>
@@ -527,12 +626,15 @@
       <td class="num muted">5/7</td>
     </tr>
     
-    <tr>
+    <tr data-name="Xayah" data-before="15.343915343915343" data-at="5.0"
+        data-delta="-10.343915343915343" data-picks="1" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Xayah.png" alt=""></td>
       <td>Xayah</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">15%</td>
       <td class="num"><b>5%</b></td>
@@ -543,12 +645,15 @@
       <td class="num muted">1/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Alistar" data-before="25.044091710758376" data-at="35.0"
+        data-delta="9.955908289241624" data-picks="5" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Alistar.png" alt=""></td>
       <td>Alistar</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">25%</td>
       <td class="num"><b>35%</b></td>
@@ -559,12 +664,15 @@
       <td class="num muted">5/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Pantheon" data-before="24.33862433862434" data-at="15.0"
+        data-delta="-9.338624338624339" data-picks="3" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Pantheon.png" alt=""></td>
       <td>Pantheon</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">24%</td>
       <td class="num"><b>15%</b></td>
@@ -575,12 +683,15 @@
       <td class="num muted">3/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Taliyah" data-before="25.749559082892418" data-at="35.0"
+        data-delta="9.250440917107582" data-picks="6" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Taliyah.png" alt=""></td>
       <td>Taliyah</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">26%</td>
       <td class="num"><b>35%</b></td>
@@ -591,12 +702,15 @@
       <td class="num muted">6/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Kai&#39;Sa" data-before="31.393298059964728" data-at="40.0"
+        data-delta="8.606701940035272" data-picks="6" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kaisa.png" alt=""></td>
       <td>Kai&#39;Sa</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">31%</td>
       <td class="num"><b>40%</b></td>
@@ -607,12 +721,15 @@
       <td class="num muted">6/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Syndra" data-before="1.763668430335097" data-at="10.0"
+        data-delta="8.236331569664904" data-picks="1" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Syndra.png" alt=""></td>
       <td>Syndra</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">2%</td>
       <td class="num"><b>10%</b></td>
@@ -623,12 +740,15 @@
       <td class="num muted">1/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Miss Fortune" data-before="27.86596119929453" data-at="20.0"
+        data-delta="-7.8659611992945315" data-picks="2" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MissFortune.png" alt=""></td>
       <td>Miss Fortune</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">28%</td>
       <td class="num"><b>20%</b></td>
@@ -639,12 +759,15 @@
       <td class="num muted">2/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Lillia" data-before="12.16931216931217" data-at="20.0"
+        data-delta="7.830687830687831" data-picks="1" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Lillia.png" alt=""></td>
       <td>Lillia</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">12%</td>
       <td class="num"><b>20%</b></td>
@@ -655,12 +778,15 @@
       <td class="num muted">1/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Azir" data-before="42.857142857142854" data-at="50.0"
+        data-delta="7.142857142857146" data-picks="7" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Azir.png" alt=""></td>
       <td>Azir</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">43%</td>
       <td class="num"><b>50%</b></td>

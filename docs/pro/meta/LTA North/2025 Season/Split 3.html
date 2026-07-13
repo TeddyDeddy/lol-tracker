@@ -26,17 +26,22 @@
 <section class="panel">
   <h2>Presence: před eventem vs. na eventu
     <span class="muted">🟢 buff · 🔴 nerf · 🔵 adjust na patchi eventu</span></h2>
-  <table class="games">
-    <thead><tr><th></th><th>Champion</th><th>Změna v patchi</th>
-      <th>Před</th><th>Na eventu</th><th>Δ</th><th>P/B na eventu</th></tr></thead>
+  <table class="games sortable">
+    <thead><tr><th></th><th data-sort="name">Champion</th><th>Změna v patchi</th>
+      <th data-sort="before" class="num">Před</th><th data-sort="at" class="num">Na eventu</th>
+      <th data-sort="delta" class="num">Δ</th><th data-sort="picks" class="num">P/B na eventu</th></tr></thead>
     <tbody>
     
-    <tr>
+    <tr data-name="Yunara" data-before="0" data-at="42.64705882352941"
+        data-delta="42.64705882352941" data-picks="14" data-bans="15">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yunara.png" alt=""></td>
       <td>Yunara</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;As players have gotten better at her, Yunara has risen to be one of the most potent ADCs in the game. We&amp;#x27;ve got several bug fixes in this patch that we expect will nerf her popular Kraken Slayer + Hurricane build. We&amp;#x27;ll continue to keep an eye on her performance metrics to see how she lands after these changes.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.16.1/img/spell/YunaraQ.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Q - Cultivation of Spirit&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;Fixed a bug where sometimes the bounce could trigger multiple stacks per bounce for some items. It&#39;s intended for Yunara to build 1 stack per bounce.&lt;/li&gt;&lt;li&gt;Fixed an issue where sometimes items would fail to do damage on Q bounces in situations where a significant number of bounces were taking place. (The poros on the calculators behind the scenes are ready now)&lt;/li&gt;&lt;li&gt;Fixed an issue where items like Runnan&#39;s Hurricane were dealing full on-hit damage when bouncing from the secondary target to the primary target, triggering the full-on hit value multiple times in a single auto.&lt;/li&gt;&lt;li&gt;Fixed an issue where Runnan&#39;s Hurricane bolts were having their on-hit damage reduced incorrectly and will now apply the full on-hit damage correctly.&lt;/li&gt;&lt;/ul&gt;">
+          <span class="bad">🔴 nerf</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">0%</td>
       <td class="num"><b>43%</b></td>
@@ -47,12 +52,16 @@
       <td class="num muted">14/15</td>
     </tr>
     
-    <tr>
+    <tr data-name="Pantheon" data-before="64.86486486486487" data-at="100.0"
+        data-delta="35.13513513513513" data-picks="1" data-bans="67">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Pantheon.png" alt=""></td>
       <td>Pantheon</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Pantheon’s most optimal role has been Jungle for a few patches in a row now. We’re looking to reduce its viability slightly as it&amp;#x27;s been dominant and has taken some of the shine from his Top lane.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.14.1/img/spell/PantheonQ.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Q - Comet Spear&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Monster Damage&lt;/strong&gt;: 105% → &lt;strong&gt;90%&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">65%</td>
       <td class="num"><b>100%</b></td>
@@ -63,12 +72,16 @@
       <td class="num muted">1/67</td>
     </tr>
     
-    <tr>
+    <tr data-name="Kalista" data-before="36.148648648648646" data-at="1.4705882352941178"
+        data-delta="-34.67806041335453" data-picks="1" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kalista.png" alt=""></td>
       <td>Kalista</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Kalista has finally fallen off of the pro play radar, which gives us room to buff her back up for everyone else. We’re steering clear of her first 3 levels, as her former extreme lane dominance is what caused her woes in the first place. Instead, we’re buffing her late laning phase, second item power spike, and beyond in hopes of giving her a fighting chance in solo queue while giving her opponents a fighting chance in lane. While AP may seem like an odd buff, it represents an additional 9-13.5 damage per Rend stack due to Rageblade’s 30 AP. Also, remember that the recent Blade of the Ruined King buff was meaningful for her as well, so if it’s been a while since you last played Kalista, give her a try!&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;b&gt;Base Stats&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Attack Damage Growth&lt;/strong&gt;: 4 → &lt;strong&gt;4.25&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.15.1/img/spell/KalistaExpungeWrapper.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;E - Rend&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Initial Damage AP Ratio&lt;/strong&gt;: 20% → &lt;strong&gt;65%&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Subsequent Damage AP Ratio&lt;/strong&gt;: 20% → &lt;strong&gt;50%&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span class="good">🟢 buff</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">36%</td>
       <td class="num"><b>1%</b></td>
@@ -79,12 +92,15 @@
       <td class="num muted">1/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Aurora" data-before="25.675675675675677" data-at="55.88235294117647"
+        data-delta="30.206677265500794" data-picks="13" data-bans="25">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Aurora.png" alt=""></td>
       <td>Aurora</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">26%</td>
       <td class="num"><b>56%</b></td>
@@ -95,12 +111,15 @@
       <td class="num muted">13/25</td>
     </tr>
     
-    <tr>
+    <tr data-name="Sivir" data-before="14.527027027027026" data-at="42.64705882352941"
+        data-delta="28.12003179650239" data-picks="8" data-bans="21">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Sivir.png" alt=""></td>
       <td>Sivir</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">15%</td>
       <td class="num"><b>43%</b></td>
@@ -111,12 +130,15 @@
       <td class="num muted">8/21</td>
     </tr>
     
-    <tr>
+    <tr data-name="Jayce" data-before="32.0945945945946" data-at="5.882352941176471"
+        data-delta="-26.212241653418126" data-picks="1" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jayce.png" alt=""></td>
       <td>Jayce</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">32%</td>
       <td class="num"><b>6%</b></td>
@@ -127,12 +149,15 @@
       <td class="num muted">1/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Bard" data-before="12.5" data-at="38.23529411764706"
+        data-delta="25.735294117647058" data-picks="14" data-bans="12">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Bard.png" alt=""></td>
       <td>Bard</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">12%</td>
       <td class="num"><b>38%</b></td>
@@ -143,12 +168,15 @@
       <td class="num muted">14/12</td>
     </tr>
     
-    <tr>
+    <tr data-name="Annie" data-before="31.756756756756758" data-at="55.88235294117647"
+        data-delta="24.125596184419713" data-picks="13" data-bans="25">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Annie.png" alt=""></td>
       <td>Annie</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">32%</td>
       <td class="num"><b>56%</b></td>
@@ -159,12 +187,15 @@
       <td class="num muted">13/25</td>
     </tr>
     
-    <tr>
+    <tr data-name="Poppy" data-before="42.567567567567565" data-at="66.17647058823529"
+        data-delta="23.608903020667725" data-picks="8" data-bans="37">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Poppy.png" alt=""></td>
       <td>Poppy</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">43%</td>
       <td class="num"><b>66%</b></td>
@@ -175,12 +206,15 @@
       <td class="num muted">8/37</td>
     </tr>
     
-    <tr>
+    <tr data-name="Yone" data-before="36.148648648648646" data-at="58.8235294117647"
+        data-delta="22.674880763116057" data-picks="9" data-bans="31">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yone.png" alt=""></td>
       <td>Yone</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">36%</td>
       <td class="num"><b>59%</b></td>
@@ -191,12 +225,15 @@
       <td class="num muted">9/31</td>
     </tr>
     
-    <tr>
+    <tr data-name="Ahri" data-before="29.39189189189189" data-at="7.352941176470588"
+        data-delta="-22.038950715421304" data-picks="3" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ahri.png" alt=""></td>
       <td>Ahri</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">29%</td>
       <td class="num"><b>7%</b></td>
@@ -207,12 +244,16 @@
       <td class="num muted">3/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Ziggs" data-before="6.418918918918919" data-at="26.470588235294116"
+        data-delta="20.051669316375197" data-picks="7" data-bans="11">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ziggs.png" alt=""></td>
       <td>Ziggs</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Ziggs can often feel a bit unassailable, so we want to bring down some of the frustration that he brings without taking him out of the picture completely.&lt;/p&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;Q CD increased from 4 → 6-4 (match SR)&lt;/li&gt;&lt;li&gt;E duration reduced from 10s → 7s&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">6%</td>
       <td class="num"><b>26%</b></td>
@@ -223,12 +264,16 @@
       <td class="num muted">7/11</td>
     </tr>
     
-    <tr>
+    <tr data-name="Nautilus" data-before="38.513513513513516" data-at="19.11764705882353"
+        data-delta="-19.395866454689987" data-picks="11" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nautilus.png" alt=""></td>
       <td>Nautilus</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;We’re buffing Nautilus jungle with the hope of making him a viable tank jungler like he was in times of old. We’re changing his monster-specific damage to make him less reliant on optimizing Riptide’s multi-hits, which should also make him more approachable for those just trying him out and not requiring as much optimization, while still making it beneficial to maximize repeated hits for those that have practiced his clear.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.15.1/img/spell/NautilusSplashZone.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;E - Riptide&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Monster Damage Modifier&lt;/strong&gt;: 150% → &lt;strong&gt;The first hit of E will deal 125/165/205/245/285 (+ 50% AP) bonus damage to monsters&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span class="good">🟢 buff</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">39%</td>
       <td class="num"><b>19%</b></td>
@@ -239,12 +284,16 @@
       <td class="num muted">11/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Azir" data-before="55.4054054054054" data-at="73.52941176470588"
+        data-delta="18.12400635930048" data-picks="11" data-bans="39">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Azir.png" alt=""></td>
       <td>Azir</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Our recent set of changes for Azir has left him a bit weak, so we&amp;#x27;ve carefully curated some buffs for everyone&amp;#x27;s favorite bird emperor. We&amp;#x27;re starting by giving him some additional base health to help out his early game while also increasing his W&amp;#x27;s AP Ratio to incentivize him to stack AP over health.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;b&gt;Base Stats&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Base Health&lt;/strong&gt;: 550 → &lt;strong&gt;575&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=http://ddragon.leagueoflegends.com/cdn/15.13.1/img/spell/AzirW.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;W - Arise!&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Damage&lt;/strong&gt;: (+ 40 / 45 / 50 / 55 / 60% AP) → &lt;strong&gt;(+ 45 / 50 / 55 / 60 / 65% AP)&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span class="good">🟢 buff</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">55%</td>
       <td class="num"><b>74%</b></td>
@@ -255,12 +304,16 @@
       <td class="num muted">11/39</td>
     </tr>
     
-    <tr>
+    <tr data-name="Naafiri" data-before="18.91891891891892" data-at="1.4705882352941178"
+        data-delta="-17.448330683624803" data-picks="1" data-bans="0">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Naafiri.png" alt=""></td>
       <td>Naafiri</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;The dog&amp;#x27;s nose is feeling a bit dry, and Naafiri could use a bit more bite to go with her bark. We&amp;#x27;re looking to increase her abilities as an assassin as well as help her bring her pack back together if they fall due to some AoE or poke.&lt;/p&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;P CD reduced on ability hit : 4 → 7s&lt;/li&gt;&lt;li&gt;P Packmate Bonus AD rato : 4% → 6%&lt;/li&gt;&lt;li&gt;Q Heal AD ratio : 50% → 60%&lt;/li&gt;&lt;li&gt;Q 1st hit base damage : 35/40/45/50/55 → 40/50/60/70/80&lt;/li&gt;&lt;li&gt;W CD reduced : 18/17/16/15/14 → 16/15/14/13/12&lt;/li&gt;&lt;li&gt;E Dash AD ratio increased : 40% bonus AD → 55% bonus AD&lt;/li&gt;&lt;li&gt;E Flurry AD ratio increased : 80% bonus AD → 100% bonus AD&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">19%</td>
       <td class="num"><b>1%</b></td>
@@ -271,12 +324,16 @@
       <td class="num muted">1/0</td>
     </tr>
     
-    <tr>
+    <tr data-name="Rakan" data-before="37.5" data-at="54.411764705882355"
+        data-delta="16.911764705882355" data-picks="17" data-bans="20">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Rakan.png" alt=""></td>
       <td>Rakan</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Rakan relies a lot on his teammate and we want to make sure he isn&amp;#x27;t letting them down. This should move him closer to an equal relationship with them (but not with Xayah).&lt;/p&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;P Shield basic attacks and ability hits CD refund 1 → 2s&lt;/li&gt;&lt;li&gt;Q Damage AP ratio 70% → 80%&lt;/li&gt;&lt;li&gt;Q Heal AP ratio 55% → 60%&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">38%</td>
       <td class="num"><b>54%</b></td>
@@ -287,12 +344,16 @@
       <td class="num muted">17/20</td>
     </tr>
     
-    <tr>
+    <tr data-name="Twisted Fate" data-before="20.27027027027027" data-at="4.411764705882353"
+        data-delta="-15.858505564387917" data-picks="1" data-bans="2">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/TwistedFate.png" alt=""></td>
       <td>Twisted Fate</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Twisted Fate has been playing with a stacked deck, so we&amp;#x27;re looking to bring him back closer to an even playing ground.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=http://ddragon.leagueoflegends.com/cdn/15.13.1/img/spell/WildCards.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Q - Wild Cards&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Damage&lt;/strong&gt;: 70 / 115 / 160 / 205 / 250 (+ 50% bonus AD) (+ 85% AP) → &lt;strong&gt;60 / 105 / 150 / 195 / 240&lt;/strong&gt; (+ 50% bonus AD) (+ 85% AP)&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">20%</td>
       <td class="num"><b>4%</b></td>
@@ -303,12 +364,16 @@
       <td class="num muted">1/2</td>
     </tr>
     
-    <tr>
+    <tr data-name="Rumble" data-before="55.4054054054054" data-at="39.705882352941174"
+        data-delta="-15.69952305246423" data-picks="20" data-bans="7">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Rumble.png" alt=""></td>
       <td>Rumble</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Rumble has climbed greatly in win rate since the consistency changes we made last patch, so we&amp;#x27;re moving some power out of Flamespitter and Junkyard Titan&amp;#x27;s damage output.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.16.1/img/passive/Rumble_JunkyardTitan1.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Passive - Junkyard Titan&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Overheated Damage&lt;/strong&gt;: 5-40 (+ 25% AP) + 5% target max HP → 5-40 (+ 25% AP)&lt;strong&gt;(+ 4% target max HP)&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.16.1/img/spell/RumbleFlameThrower.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Q - Flamespitter&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Damage Over 3 Seconds&lt;/strong&gt;: 60 / 90 / 120 / 150 / 180 (+ 100% AP) + 6 / 6.5 / 7 / 7.5 / 8% target max HP → &lt;strong&gt;60 / 85 / 110 / 135 / 160&lt;/strong&gt; (+ 100% AP) + 6 / 6.5 / 7 / 7.5 / 8% target max HP&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">55%</td>
       <td class="num"><b>40%</b></td>
@@ -319,12 +384,16 @@
       <td class="num muted">20/7</td>
     </tr>
     
-    <tr>
+    <tr data-name="Trundle" data-before="30.06756756756757" data-at="45.588235294117645"
+        data-delta="15.520667726550077" data-picks="16" data-bans="15">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Trundle.png" alt=""></td>
       <td>Trundle</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Trundle is pummeling all other junglers at all ranks in addition to being highly prevalent in pro play, so we need to take some power out of his direct combat potential. Frozen Domain is going up in cooldown to create clearer windows when you can and can’t fight him, alongside a tap down to his attack speed increase per rank.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.15.1/img/spell/trundledesecrate.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;W - Frozen Domain&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Bonus Attack Speed&lt;/strong&gt;: 30 / 50 / 70 / 90 / 110% → &lt;strong&gt;30 / 45 / 60 / 75 / 90%&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Cooldown&lt;/strong&gt;: 16 / 15 / 14 / 13 / 12 seconds → &lt;strong&gt;18 / 17 / 16 / 15 / 14 seconds&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">30%</td>
       <td class="num"><b>46%</b></td>
@@ -335,12 +404,16 @@
       <td class="num muted">16/15</td>
     </tr>
     
-    <tr>
+    <tr data-name="Miss Fortune" data-before="21.283783783783782" data-at="7.352941176470588"
+        data-delta="-13.930842607313195" data-picks="2" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MissFortune.png" alt=""></td>
       <td>Miss Fortune</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;If only there was a word to describe Miss Fortune&amp;#x27;s current state. Hmm, yeah.. can&amp;#x27;t really think of one. Anyway, we&amp;#x27;re buffing her this patch to bring her up to pace with the rest of the pack.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;b&gt;Base Stats&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Base Attack Damage&lt;/strong&gt;: 53 → &lt;strong&gt;55&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span class="good">🟢 buff</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">21%</td>
       <td class="num"><b>7%</b></td>
@@ -351,12 +424,16 @@
       <td class="num muted">2/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Orianna" data-before="19.93243243243243" data-at="33.8235294117647"
+        data-delta="13.891096979332271" data-picks="16" data-bans="7">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Orianna.png" alt=""></td>
       <td>Orianna</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;We&amp;#x27;re looking to revert some extra power that Orianna has in Arena, nothing major but it should reduce some hidden damage she has laying around.&lt;/p&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;P On-hit AP ratio reverted from 25% → 15%&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">20%</td>
       <td class="num"><b>34%</b></td>
@@ -367,12 +444,15 @@
       <td class="num muted">16/7</td>
     </tr>
     
-    <tr>
+    <tr data-name="Taliyah" data-before="55.067567567567565" data-at="42.64705882352941"
+        data-delta="-12.420508744038152" data-picks="16" data-bans="13">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Taliyah.png" alt=""></td>
       <td>Taliyah</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">55%</td>
       <td class="num"><b>43%</b></td>
@@ -383,12 +463,16 @@
       <td class="num muted">16/13</td>
     </tr>
     
-    <tr>
+    <tr data-name="Alistar" data-before="40.54054054054054" data-at="52.94117647058823"
+        data-delta="12.400635930047692" data-picks="21" data-bans="15">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Alistar.png" alt=""></td>
       <td>Alistar</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Alistar has been one of the strongest support tanks for a while, whether you’re measuring pros or not. In order to create a more equitable support ecosystem, we’re delivering a nerf. While 7 armor may seem like a drastic change, recent armor nerfs to Braum and Leona both showed that these champions are very resilient to this type of change. We’ll of course be monitoring this change to ensure it hits our desired mark here.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;b&gt;Base Stats&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Base Armor&lt;/strong&gt;: 47 → &lt;strong&gt;40&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span class="bad">🔴 nerf</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">41%</td>
       <td class="num"><b>53%</b></td>
@@ -399,12 +483,15 @@
       <td class="num muted">21/15</td>
     </tr>
     
-    <tr>
+    <tr data-name="Galio" data-before="21.62162162162162" data-at="33.8235294117647"
+        data-delta="12.201907790143082" data-picks="13" data-bans="10">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Galio.png" alt=""></td>
       <td>Galio</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">22%</td>
       <td class="num"><b>34%</b></td>
@@ -415,12 +502,16 @@
       <td class="num muted">13/10</td>
     </tr>
     
-    <tr>
+    <tr data-name="Corki" data-before="19.256756756756758" data-at="30.88235294117647"
+        data-delta="11.625596184419713" data-picks="18" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Corki.png" alt=""></td>
       <td>Corki</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;We’re delivering some adjustments to Corki with the intent of pushing him toward squishier high-AD builds and slightly toning down his extremely potent late-laning phase spike while still maintaining his presence as a strong laner.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.14.1/img/spell/PhosphorusBomb.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Q - Phosphorous Bomb&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Damage&lt;/strong&gt;: 70 / 120 / 170 / 220 / 270 (+ 120% bonus AD) (+ 100% AP) → &lt;strong&gt;70 / 115 / 160 / 205 / 250 (+ 130% bonus AD)&lt;/strong&gt; (+ 100% AP)&lt;/li&gt;&lt;/ul&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.14.1/img/spell/MissileBarrage.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;R - Missile Barrage&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Damage&lt;/strong&gt;: 90 / 170 / 250 (+ 80% bonus AD) → 90 / 170 / 250 &lt;strong&gt;(+ 85% bonus AD)&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span class="bad">🔴 nerf</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">19%</td>
       <td class="num"><b>31%</b></td>
@@ -431,12 +522,15 @@
       <td class="num muted">18/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Neeko" data-before="39.86486486486486" data-at="51.470588235294116"
+        data-delta="11.605723370429253" data-picks="16" data-bans="19">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Neeko.png" alt=""></td>
       <td>Neeko</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">40%</td>
       <td class="num"><b>51%</b></td>
@@ -447,12 +541,15 @@
       <td class="num muted">16/19</td>
     </tr>
     
-    <tr>
+    <tr data-name="Renekton" data-before="24.324324324324323" data-at="35.294117647058826"
+        data-delta="10.969793322734503" data-picks="17" data-bans="7">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Renekton.png" alt=""></td>
       <td>Renekton</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">24%</td>
       <td class="num"><b>35%</b></td>
@@ -463,12 +560,15 @@
       <td class="num muted">17/7</td>
     </tr>
     
-    <tr>
+    <tr data-name="Xayah" data-before="27.027027027027028" data-at="16.176470588235293"
+        data-delta="-10.850556438791735" data-picks="7" data-bans="4">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Xayah.png" alt=""></td>
       <td>Xayah</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">27%</td>
       <td class="num"><b>16%</b></td>
@@ -479,12 +579,16 @@
       <td class="num muted">7/4</td>
     </tr>
     
-    <tr>
+    <tr data-name="Sylas" data-before="19.594594594594593" data-at="8.823529411764707"
+        data-delta="-10.771065182829886" data-picks="2" data-bans="4">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Sylas.png" alt=""></td>
       <td>Sylas</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Sylas is a reasonably popular jungler, despite the fact that he isn’t really able to jungle effectively. To help the players that want to play him there we’re re-visiting his ability to clear the jungle by letting him whip his chains around and slay jungle camps.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://am-a.akamaihd.net/image?f=https://ddragon.leagueoflegends.com/cdn/15.15.1/img/passive/SylasP.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Passive - Petricite Burst&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Monster Damage Modifier&lt;/strong&gt;: 100% → &lt;strong&gt;150%&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">20%</td>
       <td class="num"><b>9%</b></td>
@@ -495,12 +599,15 @@
       <td class="num muted">2/4</td>
     </tr>
     
-    <tr>
+    <tr data-name="Yorick" data-before="23.986486486486488" data-at="13.235294117647058"
+        data-delta="-10.75119236883943" data-picks="3" data-bans="6">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yorick.png" alt=""></td>
       <td>Yorick</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">24%</td>
       <td class="num"><b>13%</b></td>
@@ -511,12 +618,15 @@
       <td class="num muted">3/6</td>
     </tr>
     
-    <tr>
+    <tr data-name="Karma" data-before="11.14864864864865" data-at="20.58823529411765"
+        data-delta="9.439586645469" data-picks="4" data-bans="10">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Karma.png" alt=""></td>
       <td>Karma</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">11%</td>
       <td class="num"><b>21%</b></td>
@@ -527,12 +637,15 @@
       <td class="num muted">4/10</td>
     </tr>
     
-    <tr>
+    <tr data-name="Jax" data-before="22.2972972972973" data-at="13.235294117647058"
+        data-delta="-9.06200317965024" data-picks="6" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jax.png" alt=""></td>
       <td>Jax</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">22%</td>
       <td class="num"><b>13%</b></td>
@@ -543,12 +656,15 @@
       <td class="num muted">6/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Leona" data-before="20.60810810810811" data-at="11.764705882352942"
+        data-delta="-8.843402225755167" data-picks="7" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Leona.png" alt=""></td>
       <td>Leona</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">21%</td>
       <td class="num"><b>12%</b></td>
@@ -559,12 +675,16 @@
       <td class="num muted">7/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Nocturne" data-before="26.35135135135135" data-at="17.647058823529413"
+        data-delta="-8.704292527821938" data-picks="3" data-bans="9">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nocturne.png" alt=""></td>
       <td>Nocturne</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Nocturne’s currently one of the winningest junglers so we’re looking to nerf him in this patch. With Experimental Hexplate getting buffed, we’re accounting for that by swinging a bit harder than we normally would have, taking out a moderate mix of damage and durability.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;b&gt;Base Stats&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Armor Growth&lt;/strong&gt;: 4.7 → &lt;strong&gt;4.2&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;img class=&#34;pn-icon&#34; src=&#34;https://ddragon.leagueoflegends.com/cdn/15.15.1/img/spell/NocturneDuskbringer.png&#34; alt=&#34;&#34;&gt;&lt;b&gt;Q - Duskbringer&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Bonus AD&lt;/strong&gt;: 20 / 30 / 40 / 50 / 60 → &lt;strong&gt;15 / 25 / 35 / 45 / 55&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">26%</td>
       <td class="num"><b>18%</b></td>
@@ -575,12 +695,15 @@
       <td class="num muted">3/9</td>
     </tr>
     
-    <tr>
+    <tr data-name="Maokai" data-before="24.324324324324323" data-at="16.176470588235293"
+        data-delta="-8.14785373608903" data-picks="7" data-bans="4">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Maokai.png" alt=""></td>
       <td>Maokai</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">24%</td>
       <td class="num"><b>16%</b></td>
@@ -591,12 +714,16 @@
       <td class="num muted">7/4</td>
     </tr>
     
-    <tr>
+    <tr data-name="Jarvan IV" data-before="15.54054054054054" data-at="23.529411764705884"
+        data-delta="7.988871224165344" data-picks="11" data-bans="5">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/JarvanIV.png" alt=""></td>
       <td>Jarvan IV</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Jarvan IV has been overperforming thanks to the combination of his ability to engage well and his tankiness. We want to level the playing field in the jungle this patch, so we&amp;#x27;re lowering his armor over game time to create clearer windows of vulnerability for his opponents to take advantage of.&lt;/p&gt;&lt;div class=&#34;pn-ability&#34;&gt;&lt;b&gt;Base Stats&lt;/b&gt;&lt;/div&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;&lt;strong&gt;Armor Growth&lt;/strong&gt;: 5.2 → &lt;strong&gt;4.6&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">16%</td>
       <td class="num"><b>24%</b></td>
@@ -607,12 +734,15 @@
       <td class="num muted">11/5</td>
     </tr>
     
-    <tr>
+    <tr data-name="Aphelios" data-before="2.364864864864865" data-at="10.294117647058824"
+        data-delta="7.929252782193959" data-picks="6" data-bans="1">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Aphelios.png" alt=""></td>
       <td>Aphelios</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">2%</td>
       <td class="num"><b>10%</b></td>
@@ -623,12 +753,16 @@
       <td class="num muted">6/1</td>
     </tr>
     
-    <tr>
+    <tr data-name="Ryze" data-before="31.08108108108108" data-at="23.529411764705884"
+        data-delta="-7.551669316375197" data-picks="13" data-bans="3">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ryze.png" alt=""></td>
       <td>Ryze</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge" data-tip="&lt;p class=&#34;pn-commentary&#34;&gt;Ryze is still sitting as one of the top mages, and isn&amp;#x27;t reliant on augments. These changes hope to hit some of his utility and damage without gutting his identity as Mr. Mana.&lt;/p&gt;&lt;ul class=&#34;pn-stats&#34;&gt;&lt;li&gt;W Slow : 50% → 40%&lt;/li&gt;&lt;li&gt;W Root duration : 1.5 → 1.25&lt;/li&gt;&lt;li&gt;R Bonus Damage : 40/60/80 → 30/50/70&lt;/li&gt;&lt;/ul&gt;">
+          <span>🔵 adjust</span>
+          
+          <span class="muted"> ⓘ</span>
+        </span>
       </td>
       <td class="num">31%</td>
       <td class="num"><b>24%</b></td>
@@ -639,12 +773,15 @@
       <td class="num muted">13/3</td>
     </tr>
     
-    <tr>
+    <tr data-name="Vi" data-before="63.17567567567568" data-at="55.88235294117647"
+        data-delta="-7.293322734499206" data-picks="17" data-bans="21">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vi.png" alt=""></td>
       <td>Vi</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">63%</td>
       <td class="num"><b>56%</b></td>
@@ -655,12 +792,15 @@
       <td class="num muted">17/21</td>
     </tr>
     
-    <tr>
+    <tr data-name="Lucian" data-before="45.270270270270274" data-at="38.23529411764706"
+        data-delta="-7.034976152623216" data-picks="13" data-bans="13">
       <td class="champ-cell"><img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Lucian.png" alt=""></td>
       <td>Lucian</td>
       <td>
-        <span class="muted">—</span>
-        
+        <span class="kind-badge">
+          <span class="muted">—</span>
+          
+        </span>
       </td>
       <td class="num">45%</td>
       <td class="num"><b>38%</b></td>

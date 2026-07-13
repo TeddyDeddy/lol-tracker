@@ -1,0 +1,1343 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benjee Netanyahu#osss — LoL Tracker</title>
+<link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="../index.html">⌬ LoL Tracker</a>
+  <a class="nav-link " href="../pro.html">Pro scéna</a>
+  <span class="live-summary" id="live-summary"></span>
+</header>
+<main>
+<div class="player-head">
+  <img class="avatar lg" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Evelynn.png" alt="">
+  <h1>Benjee Netanyahu#osss</h1>
+  <nav class="modes">
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=All&season=.html">All</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=SoloQ&season=.html">SoloQ</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=Flex&season=.html">Flex</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=Normal&season=.html">Normal</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=ARAM&season=.html">ARAM</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=URF&season=.html">URF</a>
+    
+    <a class="pill active" href="Benjee%20Netanyahu%23osss%253Fmode=Arena&season=.html">Arena</a>
+    
+    <span class="pill-sep"></span>
+    <a class="pill active" href="Benjee%20Netanyahu%23osss%253Fmode=Arena.html">Vše roky</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=Arena&season=2026.html">2026</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=Arena&season=2025.html">2025</a>
+    
+    <a class="pill " href="Benjee%20Netanyahu%23osss%253Fmode=Arena&season=2024.html">2024</a>
+    
+  </nav>
+</div>
+
+<div class="tiles">
+  
+  
+  <div class="tile">
+    <div class="tile-label">SoloQ</div>
+    <div class="tile-value">Emerald I</div>
+    <div class="tile-sub">61 LP · 50W/42L</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Flex</div>
+    <div class="tile-value">Diamond IV</div>
+    <div class="tile-sub">1 LP · 49W/41L</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">Winrate (56 her)</div>
+    <div class="tile-value">57.1%</div>
+    <div class="tile-sub">32W/24L</div>
+  </div>
+  <div class="tile">
+    <div class="tile-label">KDA</div>
+    <div class="tile-value">2.51</div>
+    <div class="tile-sub">431/398/569</div>
+  </div>
+</div>
+
+<section class="panel">
+  <h2>Herní aktivita <span class="muted">podle módu</span></h2>
+  <div class="mode-counts">
+    
+    
+    <div class="mc-row">
+      <span class="mc-name">Flex</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 100.0%"></span></span>
+      <span class="bar-val">506</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">SoloQ</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 36.758893280632414%"></span></span>
+      <span class="bar-val">186</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">URF</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 18.57707509881423%"></span></span>
+      <span class="bar-val">94</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Draft</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 17.58893280632411%"></span></span>
+      <span class="bar-val">89</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Arena</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 11.067193675889328%"></span></span>
+      <span class="bar-val">56</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">ARAM</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 7.905138339920948%"></span></span>
+      <span class="bar-val">40</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Clash</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 1.5810276679841897%"></span></span>
+      <span class="bar-val">8</span>
+    </div>
+    
+  </div>
+</section>
+
+<div class="two-col">
+  <section class="panel">
+    <h2>Champion pool <span class="muted">klikni na hlavičku pro řazení</span></h2>
+    <input type="text" class="champ-search" data-target="champ-table" data-collapse="10"
+           placeholder="Hledat championa…">
+    <table class="games sortable" id="champ-table">
+      <thead>
+        <tr>
+          <th data-sort="name">Champion</th>
+          <th data-sort="games" class="num">Her</th>
+          <th data-sort="wr" class="num">WR</th>
+          <th data-sort="kda" class="num">KDA</th>
+          <th data-sort="kills" class="num">Kills</th>
+          <th data-sort="deaths" class="num">Deaths</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr data-name="Zeri" data-games="2"
+            data-wr="50.0"
+            data-kda="2.8"
+            data-kills="12.0"
+            data-deaths="7.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Zeri%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Zeri.png" alt="">
+              Zeri
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">50%</td>
+          <td class="num">2.80</td>
+          <td class="num">12.0</td>
+          <td class="num">7.5</td>
+        </tr>
+        
+        <tr data-name="Xayah" data-games="2"
+            data-wr="50.0"
+            data-kda="2.466666666666667"
+            data-kills="9.0"
+            data-deaths="7.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Xayah%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Xayah.png" alt="">
+              Xayah
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">50%</td>
+          <td class="num">2.47</td>
+          <td class="num">9.0</td>
+          <td class="num">7.5</td>
+        </tr>
+        
+        <tr data-name="Viktor" data-games="2"
+            data-wr="0.0"
+            data-kda="1.6923076923076923"
+            data-kills="5.0"
+            data-deaths="6.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Viktor%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt="">
+              Viktor
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.69</td>
+          <td class="num">5.0</td>
+          <td class="num">6.5</td>
+        </tr>
+        
+        <tr data-name="Sett" data-games="2"
+            data-wr="0.0"
+            data-kda="1.4545454545454546"
+            data-kills="3.5"
+            data-deaths="5.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Sett%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Sett.png" alt="">
+              Sett
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.45</td>
+          <td class="num">3.5</td>
+          <td class="num">5.5</td>
+        </tr>
+        
+        <tr data-name="Riven" data-games="2"
+            data-wr="100.0"
+            data-kda="3.4375"
+            data-kills="12.5"
+            data-deaths="8.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Riven%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Riven.png" alt="">
+              Riven
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">100%</td>
+          <td class="num">3.44</td>
+          <td class="num">12.5</td>
+          <td class="num">8.0</td>
+        </tr>
+        
+        <tr data-name="Orianna" data-games="2"
+            data-wr="100.0"
+            data-kda="3.625"
+            data-kills="9.0"
+            data-deaths="8.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Orianna%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Orianna.png" alt="">
+              Orianna
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">100%</td>
+          <td class="num">3.62</td>
+          <td class="num">9.0</td>
+          <td class="num">8.0</td>
+        </tr>
+        
+        <tr data-name="Kennen" data-games="2"
+            data-wr="100.0"
+            data-kda="2.526315789473684"
+            data-kills="11.5"
+            data-deaths="9.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Kennen%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kennen.png" alt="">
+              Kennen
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">100%</td>
+          <td class="num">2.53</td>
+          <td class="num">11.5</td>
+          <td class="num">9.5</td>
+        </tr>
+        
+        <tr data-name="Kayn" data-games="2"
+            data-wr="50.0"
+            data-kda="1.4705882352941178"
+            data-kills="6.0"
+            data-deaths="8.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Kayn%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kayn.png" alt="">
+              Kayn
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">50%</td>
+          <td class="num">1.47</td>
+          <td class="num">6.0</td>
+          <td class="num">8.5</td>
+        </tr>
+        
+        <tr data-name="Galio" data-games="2"
+            data-wr="50.0"
+            data-kda="1.7692307692307692"
+            data-kills="2.5"
+            data-deaths="6.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Galio%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Galio.png" alt="">
+              Galio
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">50%</td>
+          <td class="num">1.77</td>
+          <td class="num">2.5</td>
+          <td class="num">6.5</td>
+        </tr>
+        
+        <tr data-name="AurelionSol" data-games="2"
+            data-wr="100.0"
+            data-kda="4.3076923076923075"
+            data-kills="16.0"
+            data-deaths="6.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/AurelionSol%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/AurelionSol.png" alt="">
+              AurelionSol
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">100%</td>
+          <td class="num">4.31</td>
+          <td class="num">16.0</td>
+          <td class="num">6.5</td>
+        </tr>
+        
+        <tr data-name="Ashe" data-games="2"
+            data-wr="100.0"
+            data-kda="1.8823529411764706"
+            data-kills="6.0"
+            data-deaths="8.5">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Ashe%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ashe.png" alt="">
+              Ashe
+            </a>
+          </td>
+          <td class="num">2</td>
+          <td class="num good">100%</td>
+          <td class="num">1.88</td>
+          <td class="num">6.0</td>
+          <td class="num">8.5</td>
+        </tr>
+        
+        <tr data-name="Yone" data-games="1"
+            data-wr="100.0"
+            data-kda="30.0"
+            data-kills="20.0"
+            data-deaths="1.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Yone%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yone.png" alt="">
+              Yone
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">30.00</td>
+          <td class="num">20.0</td>
+          <td class="num">1.0</td>
+        </tr>
+        
+        <tr data-name="Viego" data-games="1"
+            data-wr="100.0"
+            data-kda="4.25"
+            data-kills="13.0"
+            data-deaths="4.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Viego%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viego.png" alt="">
+              Viego
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">4.25</td>
+          <td class="num">13.0</td>
+          <td class="num">4.0</td>
+        </tr>
+        
+        <tr data-name="Velkoz" data-games="1"
+            data-wr="100.0"
+            data-kda="36.0"
+            data-kills="7.0"
+            data-deaths="1.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Velkoz%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Velkoz.png" alt="">
+              Velkoz
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">36.00</td>
+          <td class="num">7.0</td>
+          <td class="num">1.0</td>
+        </tr>
+        
+        <tr data-name="Varus" data-games="1"
+            data-wr="0.0"
+            data-kda="2.4"
+            data-kills="11.0"
+            data-deaths="10.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Varus%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Varus.png" alt="">
+              Varus
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">2.40</td>
+          <td class="num">11.0</td>
+          <td class="num">10.0</td>
+        </tr>
+        
+        <tr data-name="Urgot" data-games="1"
+            data-wr="100.0"
+            data-kda="2.8333333333333335"
+            data-kills="15.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Urgot%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Urgot.png" alt="">
+              Urgot
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">2.83</td>
+          <td class="num">15.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+        <tr data-name="Teemo" data-games="1"
+            data-wr="100.0"
+            data-kda="2.7"
+            data-kills="14.0"
+            data-deaths="10.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Teemo%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Teemo.png" alt="">
+              Teemo
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">2.70</td>
+          <td class="num">14.0</td>
+          <td class="num">10.0</td>
+        </tr>
+        
+        <tr data-name="Taric" data-games="1"
+            data-wr="0.0"
+            data-kda="1.3333333333333333"
+            data-kills="3.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Taric%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Taric.png" alt="">
+              Taric
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.33</td>
+          <td class="num">3.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+        <tr data-name="Soraka" data-games="1"
+            data-wr="100.0"
+            data-kda="4.142857142857143"
+            data-kills="3.0"
+            data-deaths="7.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Soraka%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Soraka.png" alt="">
+              Soraka
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">4.14</td>
+          <td class="num">3.0</td>
+          <td class="num">7.0</td>
+        </tr>
+        
+        <tr data-name="Smolder" data-games="1"
+            data-wr="100.0"
+            data-kda="1.5"
+            data-kills="10.0"
+            data-deaths="8.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Smolder%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Smolder.png" alt="">
+              Smolder
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">1.50</td>
+          <td class="num">10.0</td>
+          <td class="num">8.0</td>
+        </tr>
+        
+        <tr data-name="Samira" data-games="1"
+            data-wr="0.0"
+            data-kda="1.5714285714285714"
+            data-kills="4.0"
+            data-deaths="7.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Samira%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Samira.png" alt="">
+              Samira
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.57</td>
+          <td class="num">4.0</td>
+          <td class="num">7.0</td>
+        </tr>
+        
+        <tr data-name="Ryze" data-games="1"
+            data-wr="100.0"
+            data-kda="2.1666666666666665"
+            data-kills="5.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Ryze%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ryze.png" alt="">
+              Ryze
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">2.17</td>
+          <td class="num">5.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+        <tr data-name="Rammus" data-games="1"
+            data-wr="100.0"
+            data-kda="1.6666666666666667"
+            data-kills="1.0"
+            data-deaths="9.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Rammus%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Rammus.png" alt="">
+              Rammus
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">1.67</td>
+          <td class="num">1.0</td>
+          <td class="num">9.0</td>
+        </tr>
+        
+        <tr data-name="Poppy" data-games="1"
+            data-wr="0.0"
+            data-kda="1.1428571428571428"
+            data-kills="5.0"
+            data-deaths="7.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Poppy%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Poppy.png" alt="">
+              Poppy
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.14</td>
+          <td class="num">5.0</td>
+          <td class="num">7.0</td>
+        </tr>
+        
+        <tr data-name="Nautilus" data-games="1"
+            data-wr="100.0"
+            data-kda="8.5"
+            data-kills="11.0"
+            data-deaths="4.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Nautilus%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nautilus.png" alt="">
+              Nautilus
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">8.50</td>
+          <td class="num">11.0</td>
+          <td class="num">4.0</td>
+        </tr>
+        
+        <tr data-name="Nasus" data-games="1"
+            data-wr="100.0"
+            data-kda="2.142857142857143"
+            data-kills="7.0"
+            data-deaths="7.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Nasus%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nasus.png" alt="">
+              Nasus
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">2.14</td>
+          <td class="num">7.0</td>
+          <td class="num">7.0</td>
+        </tr>
+        
+        <tr data-name="MonkeyKing" data-games="1"
+            data-wr="100.0"
+            data-kda="3.8333333333333335"
+            data-kills="9.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/MonkeyKing%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MonkeyKing.png" alt="">
+              MonkeyKing
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">3.83</td>
+          <td class="num">9.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+        <tr data-name="Malphite" data-games="1"
+            data-wr="0.0"
+            data-kda="0.875"
+            data-kills="5.0"
+            data-deaths="8.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Malphite%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Malphite.png" alt="">
+              Malphite
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">0.88</td>
+          <td class="num">5.0</td>
+          <td class="num">8.0</td>
+        </tr>
+        
+        <tr data-name="Lillia" data-games="1"
+            data-wr="0.0"
+            data-kda="0.5555555555555556"
+            data-kills="1.0"
+            data-deaths="9.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Lillia%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Lillia.png" alt="">
+              Lillia
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">0.56</td>
+          <td class="num">1.0</td>
+          <td class="num">9.0</td>
+        </tr>
+        
+        <tr data-name="Jhin" data-games="1"
+            data-wr="100.0"
+            data-kda="2.3333333333333335"
+            data-kills="13.0"
+            data-deaths="9.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Jhin%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt="">
+              Jhin
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">2.33</td>
+          <td class="num">13.0</td>
+          <td class="num">9.0</td>
+        </tr>
+        
+        <tr data-name="Jayce" data-games="1"
+            data-wr="100.0"
+            data-kda="1.9"
+            data-kills="10.0"
+            data-deaths="10.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Jayce%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jayce.png" alt="">
+              Jayce
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">1.90</td>
+          <td class="num">10.0</td>
+          <td class="num">10.0</td>
+        </tr>
+        
+        <tr data-name="Janna" data-games="1"
+            data-wr="0.0"
+            data-kda="1.0"
+            data-kills="3.0"
+            data-deaths="9.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Janna%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Janna.png" alt="">
+              Janna
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.00</td>
+          <td class="num">3.0</td>
+          <td class="num">9.0</td>
+        </tr>
+        
+        <tr data-name="Ivern" data-games="1"
+            data-wr="100.0"
+            data-kda="5.0"
+            data-kills="6.0"
+            data-deaths="5.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Ivern%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ivern.png" alt="">
+              Ivern
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">5.00</td>
+          <td class="num">6.0</td>
+          <td class="num">5.0</td>
+        </tr>
+        
+        <tr data-name="Gnar" data-games="1"
+            data-wr="100.0"
+            data-kda="3.375"
+            data-kills="9.0"
+            data-deaths="8.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Gnar%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Gnar.png" alt="">
+              Gnar
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">3.38</td>
+          <td class="num">9.0</td>
+          <td class="num">8.0</td>
+        </tr>
+        
+        <tr data-name="Evelynn" data-games="1"
+            data-wr="0.0"
+            data-kda="0.14285714285714285"
+            data-kills="1.0"
+            data-deaths="7.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Evelynn%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Evelynn.png" alt="">
+              Evelynn
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">0.14</td>
+          <td class="num">1.0</td>
+          <td class="num">7.0</td>
+        </tr>
+        
+        <tr data-name="Draven" data-games="1"
+            data-wr="0.0"
+            data-kda="1.1111111111111112"
+            data-kills="0.0"
+            data-deaths="9.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Draven%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Draven.png" alt="">
+              Draven
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.11</td>
+          <td class="num">0.0</td>
+          <td class="num">9.0</td>
+        </tr>
+        
+        <tr data-name="Darius" data-games="1"
+            data-wr="0.0"
+            data-kda="1.8333333333333333"
+            data-kills="4.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Darius%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Darius.png" alt="">
+              Darius
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.83</td>
+          <td class="num">4.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+        <tr data-name="Corki" data-games="1"
+            data-wr="0.0"
+            data-kda="1.5555555555555556"
+            data-kills="11.0"
+            data-deaths="9.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Corki%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Corki.png" alt="">
+              Corki
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.56</td>
+          <td class="num">11.0</td>
+          <td class="num">9.0</td>
+        </tr>
+        
+        <tr data-name="Camille" data-games="1"
+            data-wr="100.0"
+            data-kda="8.25"
+            data-kills="17.0"
+            data-deaths="4.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Camille%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Camille.png" alt="">
+              Camille
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">8.25</td>
+          <td class="num">17.0</td>
+          <td class="num">4.0</td>
+        </tr>
+        
+        <tr data-name="Caitlyn" data-games="1"
+            data-wr="0.0"
+            data-kda="1.7777777777777777"
+            data-kills="6.0"
+            data-deaths="9.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Caitlyn%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Caitlyn.png" alt="">
+              Caitlyn
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.78</td>
+          <td class="num">6.0</td>
+          <td class="num">9.0</td>
+        </tr>
+        
+        <tr data-name="Brand" data-games="1"
+            data-wr="0.0"
+            data-kda="1.3333333333333333"
+            data-kills="6.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Brand%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Brand.png" alt="">
+              Brand
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.33</td>
+          <td class="num">6.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+        <tr data-name="Aurora" data-games="1"
+            data-wr="0.0"
+            data-kda="1.8571428571428572"
+            data-kills="4.0"
+            data-deaths="7.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Aurora%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Aurora.png" alt="">
+              Aurora
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.86</td>
+          <td class="num">4.0</td>
+          <td class="num">7.0</td>
+        </tr>
+        
+        <tr data-name="Anivia" data-games="1"
+            data-wr="0.0"
+            data-kda="2.2857142857142856"
+            data-kills="9.0"
+            data-deaths="7.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Anivia%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Anivia.png" alt="">
+              Anivia
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">2.29</td>
+          <td class="num">9.0</td>
+          <td class="num">7.0</td>
+        </tr>
+        
+        <tr data-name="Alistar" data-games="1"
+            data-wr="100.0"
+            data-kda="4.333333333333333"
+            data-kills="1.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Alistar%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Alistar.png" alt="">
+              Alistar
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">4.33</td>
+          <td class="num">1.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+        <tr data-name="Aatrox" data-games="1"
+            data-wr="0.0"
+            data-kda="1.0"
+            data-kills="1.0"
+            data-deaths="6.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Benjee%20Netanyahu%23osss/champ/Aatrox%253Fmode=Arena.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Aatrox.png" alt="">
+              Aatrox
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num bad">0%</td>
+          <td class="num">1.00</td>
+          <td class="num">1.0</td>
+          <td class="num">6.0</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <button type="button" class="show-more" data-target="champ-table" hidden></button>
+  </section>
+
+  <section class="panel">
+    <h2>Rekordy <span class="muted">arena</span>
+      <a class="muted all-games-link" href="Benjee%20Netanyahu%23osss/records%253Fmode=Arena&season=.html">Všechny rekordy →</a></h2>
+    <div class="records">
+      
+      
+      <a class="record record-link" href="../match/EUN1_3972004377%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejvíc killů</div>
+        <div class="record-value">
+          20
+        </div>
+        <div class="tile-sub">AurelionSol · 20/6/20 · 30.6.2026 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3963633585%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejvíc smrtí</div>
+        <div class="record-value">
+          13
+        </div>
+        <div class="tile-sub">Kennen · 15/13/13 · 11.6.2026 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3957926316%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejvíc asistencí</div>
+        <div class="record-value">
+          29
+        </div>
+        <div class="tile-sub">Orianna · 4/5/29 · 29.5.2026 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3755833684%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejvíc CS</div>
+        <div class="record-value">
+          10
+        </div>
+        <div class="tile-sub">Viego · 13/4/4 · 13.3.2025 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3972004377%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejvíc dmg do championů</div>
+        <div class="record-value">
+          157 737
+        </div>
+        <div class="tile-sub">AurelionSol · 20/6/20 · 30.6.2026 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3963633585%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejvíc goldů</div>
+        <div class="record-value">
+          37 963
+        </div>
+        <div class="tile-sub">Kennen · 15/13/13 · 11.6.2026 ·
+          <span class="good">W</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3970999161%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejdelší hra</div>
+        <div class="record-value">
+          31:03
+          
+        </div>
+        <div class="tile-sub">Varus · 11/10/13 · 28.6.2026 ·
+          <span class="bad">L</span></div>
+      </a>
+      
+      
+      <a class="record record-link" href="../match/EUN1_3976515298%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">
+        <div class="tile-label">Nejhorší KDA</div>
+        <div class="record-value">
+          0.14
+          
+        </div>
+        <div class="tile-sub">Evelynn · 1/7/0 · 11.7.2026 ·
+          <span class="bad">L</span></div>
+      </a>
+      
+    </div>
+  </section>
+</div>
+
+<section class="panel">
+  <h2>Posledních 20 her
+    <a class="muted all-games-link" href="Benjee%20Netanyahu%23osss/games%253Fmode=Arena&season=.html">Všechny hry →</a></h2>
+  <table class="games">
+    <thead><tr><th></th><th>Champion</th><th>K/D/A</th><th>CS</th><th>Itemy</th><th>Mód</th><th>Délka</th><th>Kdy</th></tr></thead>
+    <tbody>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Evelynn.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3976515298%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Evelynn</a></td>
+        <td class="num">1/7/0</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223100.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223020.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447113.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223089.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">24:17</td>
+        <td class="muted">11.7.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ivern.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3976497818%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Ivern</a></td>
+        <td class="num">6/5/19</td>
+        <td class="num">1</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223158.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447104.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4011.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223075.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226617.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223050.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">23:09</td>
+        <td class="muted">11.7.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Nasus.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3974940432%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Nasus</a></td>
+        <td class="num">7/7/8</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223008.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443054.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223084.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226610.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223075.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/222502.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">22:44</td>
+        <td class="muted">7.7.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Soraka.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3974928599%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Soraka</a></td>
+        <td class="num">3/7/26</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443063.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447110.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223005.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4011.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226617.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223504.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">22:13</td>
+        <td class="muted">7.7.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Lillia.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3974919597%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Lillia</a></td>
+        <td class="num">1/9/4</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/444637.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">21:17</td>
+        <td class="muted">7.7.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Caitlyn.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3972354418%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Caitlyn</a></td>
+        <td class="num">6/9/10</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443060.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/222523.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">25:14</td>
+        <td class="muted">1.7.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Draven.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3972343609%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Draven</a></td>
+        <td class="num">0/9/10</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443069.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/220012.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">24:24</td>
+        <td class="muted">1.7.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/AurelionSol.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3972004377%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">AurelionSol</a></td>
+        <td class="num">20/6/20</td>
+        <td class="num">2</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223020.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/444637.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226653.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226657.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4010.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223089.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">30:55</td>
+        <td class="muted">30.6.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3971478849%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Viktor</a></td>
+        <td class="num">7/7/9</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223020.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447108.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/228002.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/224645.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">24:51</td>
+        <td class="muted">29.6.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Camille.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3971040418%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Camille</a></td>
+        <td class="num">17/4/16</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/446632.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/220012.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">22:21</td>
+        <td class="muted">28.6.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Zeri.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3971028370%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Zeri</a></td>
+        <td class="num">15/8/12</td>
+        <td class="num">2</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447100.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443069.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223087.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">24:29</td>
+        <td class="muted">28.6.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Taric.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3971016784%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Taric</a></td>
+        <td class="num">3/6/5</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447114.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223084.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">20:39</td>
+        <td class="muted">28.6.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Varus.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3970999161%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Varus</a></td>
+        <td class="num">11/10/13</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223072.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223124.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223153.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223033.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226672.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">31:03</td>
+        <td class="muted">28.6.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Velkoz.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3970958631%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Velkoz</a></td>
+        <td class="num">7/1/29</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223020.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/444644.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226653.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223135.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223089.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/444637.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">21:14</td>
+        <td class="muted">28.6.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Gnar.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3970764887%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Gnar</a></td>
+        <td class="num">9/8/18</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/446632.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223153.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226672.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223302.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447111.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">27:20</td>
+        <td class="muted">27.6.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Alistar.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3970500392%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Alistar</a></td>
+        <td class="num">1/6/25</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/446667.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">24:38</td>
+        <td class="muted">27.6.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Zeri.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3970490529%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Zeri</a></td>
+        <td class="num">9/7/6</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223006.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443069.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223087.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443090.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">25:07</td>
+        <td class="muted">27.6.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Riven.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3969291752%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Riven</a></td>
+        <td class="num">11/7/22</td>
+        <td class="num">2</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223158.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/443060.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/226692.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447103.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/224403.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/446691.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">24:56</td>
+        <td class="muted">24.6.2026</td>
+      </tr>
+    
+      <tr class="row-w row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kennen.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3968910305%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Kennen</a></td>
+        <td class="num">8/6/12</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447109.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/220012.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">24:10</td>
+        <td class="muted">23.6.2026</td>
+      </tr>
+    
+      <tr class="row-l row-click">
+        <td class="champ-cell">
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Anivia.png" alt=""></td>
+        <td><a class="tracked-link" href="../match/EUN1_3968896268%253Ffocus=1oUlQcFBm3aeTzVNVS8PJ59ckT_4e7GHU2MhBB9NS9u_GmFFhiPAdwxhQQebo9G7q2zYHodPd1qk5g.html">Anivia</a></td>
+        <td class="num">9/7/7</td>
+        <td class="num">0</td>
+        <td class="items">
+          <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223020.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/447109.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/228002.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223003.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/223135.png" alt="">
+        </td>
+        <td>Arena</td>
+        <td class="num">22:20</td>
+        <td class="muted">23.6.2026</td>
+      </tr>
+    
+    </tbody>
+  </table>
+</section>
+</main>
+<footer class="footer muted">
+  Data: Riot Games API · pro scéna: <a href="../index.html">Leaguepedia</a> (CC BY-SA)
+</footer>
+<div class="tooltip" id="tooltip" hidden></div>
+<script src="../static/app.js"></script>
+</body>
+</html>

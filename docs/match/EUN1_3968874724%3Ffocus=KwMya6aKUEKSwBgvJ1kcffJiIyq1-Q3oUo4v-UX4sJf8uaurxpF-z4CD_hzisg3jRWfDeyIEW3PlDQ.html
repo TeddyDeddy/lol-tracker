@@ -15,7 +15,7 @@
 <main>
 <div class="player-head">
   <h1>Detail zápasu</h1>
-  <span class="muted">Ranked Flex · 32:12 · 23.06.2026 · patch 16.12</span>
+  <span class="muted">Flex · 32:12 · 23.6.2026 · patch 16.12</span>
 </div>
 
 
@@ -25,26 +25,66 @@
     Modrý tým
     <span class="good">VÍTĚZSTVÍ</span>
     <span class="muted obj-row">
-      ⚔ 47 · 🗼 13 · 🐉 4 · 👑 1
+      ⚔ 47
+      
+        <img class="obj-icon" src="https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/tower.png" alt="towers"> 13
+      
+        <img class="obj-icon" src="https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/dragon.png" alt="dragons"> 4
+      
+        <img class="obj-icon" src="https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/baron.png" alt="barons"> 1
+      
+        <img class="obj-icon" src="https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/riftherald.png" alt="heralds"> 1
+      
+        <img class="obj-icon" src="https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/inhibitor.png" alt="inhibitors"> 3
+      
     </span>
   </h2>
   <table class="games match-table">
-    <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Itemy</th></tr></thead>
+    <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>KP</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Dmg utrženo</th><th>Itemy</th></tr></thead>
     <tbody>
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vayne.png" alt="Vayne" data-tip="Vayne · level 20"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Vayne.png" alt="Vayne" data-tip="Vayne · level 20">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerHaste.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7203_Whimsy.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           Vito Bagpiper#EUNE
+          <div class="badge-row">
+            <span class="badge-tag fb">First blood</span>
+            <span class="badge-tag mk">Triple kill</span>
+          </div>
         </td>
-        <td class="num">17/1/1</td>
-        <td class="num">248</td>
-        <td class="num">17 932</td>
-        <td class="num">33</td>
+        <td class="num">
+          <div><span class="stat-best">17</span>/1/1</div>
+          <div class="stat-sub stat-best">18.00 KDA</div>
+        </td>
+        <td class="num">38%</td>
+        <td class="num">
+          <div class="">248</div>
+          <div class="stat-sub">7.7/min</div>
+        </td>
+        <td class="num">
+          <div class="stat-best">17 932</div>
+          <div class="stat-sub">557/min</div>
+        </td>
+        <td class="num ">33</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 100.0%"></span></span>
           <span class="num">46 692</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 49.95951715000736%"></span></span>
+          <span class="num">27 150</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3073.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3078.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3097.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2512.png" alt="">
@@ -53,17 +93,46 @@
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ekko.png" alt="Ekko" data-tip="Ekko · level 18"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Ekko.png" alt="Ekko" data-tip="Ekko · level 18">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerSmite.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7203_Whimsy.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           Kruci#PÍSEK
+          <div class="badge-row">
+            <span class="badge-tag fb">First blood</span>
+            
+          </div>
         </td>
-        <td class="num">10/3/9</td>
-        <td class="num">210</td>
-        <td class="num">14 205</td>
-        <td class="num">13</td>
+        <td class="num">
+          <div><span class="">10</span>/3/9</div>
+          <div class="stat-sub ">6.33 KDA</div>
+        </td>
+        <td class="num">40%</td>
+        <td class="num">
+          <div class="">210</div>
+          <div class="stat-sub">6.5/min</div>
+        </td>
+        <td class="num">
+          <div class="">14 205</div>
+          <div class="stat-sub">441/min</div>
+        </td>
+        <td class="num ">13</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 44.61578000514007%"></span></span>
           <span class="num">20 832</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 61.77314882967761%"></span></span>
+          <span class="num">33 570</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3157.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2510.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3020.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3041.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4645.png" alt="">
@@ -72,18 +141,47 @@
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Xerath.png" alt="Xerath" data-tip="Xerath · level 17"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Xerath.png" alt="Xerath" data-tip="Xerath · level 17">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerTeleport.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7201_Precision.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           <a class="tracked-link" href="../player/RIP%20Peugeot%23206.html">RIP Peugeot#206</a>
           
+          <div class="badge-row">
+            
+            <span class="badge-tag mk">Double kill</span>
+          </div>
         </td>
-        <td class="num">11/4/12</td>
-        <td class="num">193</td>
-        <td class="num">13 513</td>
-        <td class="num">23</td>
+        <td class="num">
+          <div><span class="">11</span>/4/12</div>
+          <div class="stat-sub ">5.75 KDA</div>
+        </td>
+        <td class="num">49%</td>
+        <td class="num">
+          <div class="">193</div>
+          <div class="stat-sub">6.0/min</div>
+        </td>
+        <td class="num">
+          <div class="">13 513</div>
+          <div class="stat-sub">420/min</div>
+        </td>
+        <td class="num ">23</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 91.4696307718667%"></span></span>
           <span class="num">42 709</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 33.396511114382456%"></span></span>
+          <span class="num">18 149</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1056.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3175.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6655.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4645.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3041.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3089.png" alt="">
@@ -92,18 +190,47 @@
     
       <tr class="focus-row">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Varus.png" alt="Varus" data-tip="Varus · level 16"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/FirstStrike/FirstStrike.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Varus.png" alt="Varus" data-tip="Varus · level 16">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerHaste.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/FirstStrike/FirstStrike.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           <a class="tracked-link" href="../player/Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582.html">Teddy#暗い魂</a>
           
+          <div class="badge-row">
+            
+            <span class="badge-tag mk">Double kill</span>
+          </div>
         </td>
-        <td class="num">7/3/10</td>
-        <td class="num">205</td>
-        <td class="num">15 161</td>
-        <td class="num">23</td>
+        <td class="num">
+          <div><span class="">7</span>/3/10</div>
+          <div class="stat-sub ">5.67 KDA</div>
+        </td>
+        <td class="num">36%</td>
+        <td class="num">
+          <div class="">205</div>
+          <div class="stat-sub">6.4/min</div>
+        </td>
+        <td class="num">
+          <div class="">15 161</div>
+          <div class="stat-sub">471/min</div>
+        </td>
+        <td class="num ">23</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 58.18983980125075%"></span></span>
           <span class="num">27 170</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 35.797880170764024%"></span></span>
+          <span class="num">19 454</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6699.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6697.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2512.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6696.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1038.png" alt="">
@@ -112,18 +239,47 @@
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Milio.png" alt="Milio" data-tip="Milio · level 15"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Milio.png" alt="Milio" data-tip="Milio · level 15">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerExhaust.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           <a class="tracked-link" href="../player/Benjee%20Netanyahu%23osss.html">Benjee Netanyahu#osss</a>
           
+          <div class="badge-row">
+            
+            
+          </div>
         </td>
-        <td class="num">2/2/25</td>
-        <td class="num">30</td>
-        <td class="num">10 048</td>
-        <td class="num">79</td>
+        <td class="num">
+          <div><span class="">2</span>/2/25</div>
+          <div class="stat-sub ">13.50 KDA</div>
+        </td>
+        <td class="num">57%</td>
+        <td class="num">
+          <div class="">30</div>
+          <div class="stat-sub">0.9/min</div>
+        </td>
+        <td class="num">
+          <div class="">10 048</div>
+          <div class="stat-sub">312/min</div>
+        </td>
+        <td class="num ">79</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 16.471772466375395%"></span></span>
           <span class="num">7 691</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 33.922788164286764%"></span></span>
+          <span class="num">18 435</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3870.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6620.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2065.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3504.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3158.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3108.png" alt="">
@@ -140,26 +296,66 @@
     Červený tým
     <span class="bad">PROHRA</span>
     <span class="muted obj-row">
-      ⚔ 13 · 🗼 3 · 🐉 0 · 👑 0
+      ⚔ 13
+      
+        <img class="obj-icon" src="https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons/tower.png" alt="towers"> 3
+      
+        
+      
+        
+      
+        
+      
+        
+      
     </span>
   </h2>
   <table class="games match-table">
-    <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Itemy</th></tr></thead>
+    <thead><tr><th></th><th>Hráč</th><th>K/D/A</th><th>KP</th><th>CS</th><th>Zlato</th><th>Vision</th><th>Dmg do champů</th><th>Dmg utrženo</th><th>Itemy</th></tr></thead>
     <tbody>
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Sett.png" alt="Sett" data-tip="Sett · level 15"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Sett.png" alt="Sett" data-tip="Sett · level 15">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerHaste.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           Inferno#Raul
+          <div class="badge-row">
+            
+            
+          </div>
         </td>
-        <td class="num">3/12/2</td>
-        <td class="num">162</td>
-        <td class="num">10 344</td>
-        <td class="num">13</td>
+        <td class="num">
+          <div><span class="">3</span>/12/2</div>
+          <div class="stat-sub ">0.42 KDA</div>
+        </td>
+        <td class="num">38%</td>
+        <td class="num">
+          <div class="">162</div>
+          <div class="stat-sub">5.0/min</div>
+        </td>
+        <td class="num">
+          <div class="">10 344</div>
+          <div class="stat-sub">321/min</div>
+        </td>
+        <td class="num ">13</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 44.58793797652703%"></span></span>
           <span class="num">20 819</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 100.0%"></span></span>
+          <span class="num">54 344</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6631.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3053.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2021.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1028.png" alt="">
@@ -168,17 +364,46 @@
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MonkeyKing.png" alt="MonkeyKing" data-tip="MonkeyKing · level 14"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/MonkeyKing.png" alt="MonkeyKing" data-tip="MonkeyKing · level 14">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerSmite.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           CrisstiPur#CPUR
+          <div class="badge-row">
+            
+            
+          </div>
         </td>
-        <td class="num">1/8/4</td>
-        <td class="num">142</td>
-        <td class="num">9 395</td>
-        <td class="num">23</td>
+        <td class="num">
+          <div><span class="">1</span>/8/4</div>
+          <div class="stat-sub ">0.62 KDA</div>
+        </td>
+        <td class="num">38%</td>
+        <td class="num">
+          <div class="">142</div>
+          <div class="stat-sub">4.4/min</div>
+        </td>
+        <td class="num">
+          <div class="">9 395</div>
+          <div class="stat-sub">292/min</div>
+        </td>
+        <td class="num ">23</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 18.472115137496786%"></span></span>
           <span class="num">8 625</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 57.23538937141175%"></span></span>
+          <span class="num">31 104</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6698.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3078.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3047.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2019.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2022.png" alt="">
@@ -187,17 +412,46 @@
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt="Viktor" data-tip="Viktor · level 17"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/DeathfireTouch/DEATHFIRE_TOUCH_KEYSTONE.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt="Viktor" data-tip="Viktor · level 17">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerTeleport.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/DeathfireTouch/DEATHFIRE_TOUCH_KEYSTONE.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           TheUnseenBlaadee#EUNE
+          <div class="badge-row">
+            
+            
+          </div>
         </td>
-        <td class="num">5/8/2</td>
-        <td class="num">269</td>
-        <td class="num">14 299</td>
-        <td class="num">32</td>
+        <td class="num">
+          <div><span class="">5</span>/8/2</div>
+          <div class="stat-sub ">0.88 KDA</div>
+        </td>
+        <td class="num">54%</td>
+        <td class="num">
+          <div class="">269</div>
+          <div class="stat-sub">8.4/min</div>
+        </td>
+        <td class="num">
+          <div class="">14 299</div>
+          <div class="stat-sub">444/min</div>
+        </td>
+        <td class="num ">32</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 55.2621434078643%"></span></span>
           <span class="num">25 803</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 46.794494332401%"></span></span>
+          <span class="num">25 430</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3157.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/4646.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3173.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3089.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6655.png" alt="">
@@ -206,17 +460,46 @@
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt="Jhin" data-tip="Jhin · level 15"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jhin.png" alt="Jhin" data-tip="Jhin · level 15">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerBarrier.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/FleetFootwork/FleetFootwork.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           L E R X#booom
+          <div class="badge-row">
+            
+            
+          </div>
         </td>
-        <td class="num">3/8/3</td>
-        <td class="num">276</td>
-        <td class="num">13 388</td>
-        <td class="num">16</td>
+        <td class="num">
+          <div><span class="">3</span>/8/3</div>
+          <div class="stat-sub ">0.75 KDA</div>
+        </td>
+        <td class="num">46%</td>
+        <td class="num">
+          <div class="stat-best">276</div>
+          <div class="stat-sub">8.6/min</div>
+        </td>
+        <td class="num">
+          <div class="">13 388</div>
+          <div class="stat-sub">416/min</div>
+        </td>
+        <td class="num ">16</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 32.39098774950741%"></span></span>
           <span class="num">15 124</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 52.34984542911821%"></span></span>
+          <span class="num">28 449</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1055.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/6676.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3094.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1036.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/1018.png" alt="">
@@ -225,17 +508,46 @@
     
       <tr class="">
         <td class="champ-cell">
-          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Senna.png" alt="Senna" data-tip="Senna · level 15"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png" alt=""></td>
+          <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Senna.png" alt="Senna" data-tip="Senna · level 15">
+          <div class="loadout">
+            <div class="loadout-col">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerFlash.png" alt="">
+              <img class="loadout-icon" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/spell/SummonerHeal.png" alt="">
+            </div>
+            <div class="loadout-col">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png" alt="">
+              <img class="loadout-icon round" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png" alt="">
+            </div>
+          </div>
+        </td>
         <td>
           TheKoreanMadKid#777
+          <div class="badge-row">
+            
+            
+          </div>
         </td>
-        <td class="num">0/11/3</td>
-        <td class="num">33</td>
-        <td class="num">7 766</td>
-        <td class="num">82</td>
+        <td class="num">
+          <div><span class="">0</span>/11/3</div>
+          <div class="stat-sub ">0.27 KDA</div>
+        </td>
+        <td class="num">23%</td>
+        <td class="num">
+          <div class="">33</div>
+          <div class="stat-sub">1.0/min</div>
+        </td>
+        <td class="num">
+          <div class="">7 766</div>
+          <div class="stat-sub">241/min</div>
+        </td>
+        <td class="num stat-best">82</td>
         <td class="dmg-cell">
           <span class="bar-track dmg-bar"><span class="bar-fill" style="width: 14.619206716353979%"></span></span>
           <span class="num">6 826</span>
+        </td>
+        <td class="dmg-cell">
+          <span class="bar-track dmg-bar taken"><span class="bar-fill" style="width: 48.870160459296336%"></span></span>
+          <span class="num">26 558</span>
         </td>
         <td class="items">
           <img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3877.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3087.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/2031.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3009.png" alt=""><img class="item" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/item/3094.png" alt="">

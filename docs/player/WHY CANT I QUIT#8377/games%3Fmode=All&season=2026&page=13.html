@@ -13,6 +13,7 @@
   <span class="live-summary" id="live-summary"></span>
 </header>
 <main>
+
 <div class="player-head">
   <div>
     <h1>Seznam her</h1>
@@ -35,6 +36,15 @@
     <a class="pill "
        href="games%253Fmode=ARAM&season=2026.html">ARAM</a>
     
+    <a class="pill "
+       href="games%253Fmode=URF&season=2026.html">URF</a>
+    
+    <a class="pill "
+       href="games%253Fmode=Swarm&season=2026.html">Swarm</a>
+    
+    <a class="pill "
+       href="games%253Fmode=Arena&season=2026.html">Arena</a>
+    
     <span class="pill-sep"></span>
     <a class="pill "
        href="games%253Fmode=All.html">Vše roky</a>
@@ -53,7 +63,18 @@
 
 <p class="muted">498 her · strana 13/20</p>
 
-<div class="game-list">
+<form class="champ-search-form" method="get">
+  <input type="hidden" name="mode" value="All">
+  <input type="hidden" name="season" value="2026">
+  <input type="text" name="champion" value="" class="champ-search" list="champ-datalist"
+         autocomplete="off" placeholder="Hledat championa… (Enter, prohledá celou historii)">
+  <datalist id="champ-datalist">
+    <option value="Aatrox"><option value="Ahri"><option value="Akali"><option value="Akshan"><option value="Alistar"><option value="Ambessa"><option value="Amumu"><option value="Anivia"><option value="Annie"><option value="Aphelios"><option value="Ashe"><option value="AurelionSol"><option value="Aurora"><option value="Azir"><option value="Bard"><option value="Belveth"><option value="Blitzcrank"><option value="Brand"><option value="Braum"><option value="Briar"><option value="Caitlyn"><option value="Camille"><option value="Cassiopeia"><option value="Chogath"><option value="Corki"><option value="Darius"><option value="Diana"><option value="DrMundo"><option value="Draven"><option value="Ekko"><option value="Elise"><option value="Evelynn"><option value="Ezreal"><option value="FiddleSticks"><option value="Fiora"><option value="Fizz"><option value="Galio"><option value="Gangplank"><option value="Garen"><option value="Gragas"><option value="Graves"><option value="Gwen"><option value="Hecarim"><option value="Heimerdinger"><option value="Hwei"><option value="Illaoi"><option value="Irelia"><option value="Ivern"><option value="Janna"><option value="JarvanIV"><option value="Jax"><option value="Jayce"><option value="Jhin"><option value="Jinx"><option value="KSante"><option value="Kaisa"><option value="Kalista"><option value="Karma"><option value="Karthus"><option value="Kassadin"><option value="Katarina"><option value="Kayle"><option value="Kayn"><option value="Kennen"><option value="Khazix"><option value="Kindred"><option value="Kled"><option value="KogMaw"><option value="Leblanc"><option value="LeeSin"><option value="Leona"><option value="Lillia"><option value="Lissandra"><option value="Locke"><option value="Lucian"><option value="Lulu"><option value="Lux"><option value="Malphite"><option value="Malzahar"><option value="Maokai"><option value="MasterYi"><option value="Mel"><option value="Milio"><option value="MissFortune"><option value="MonkeyKing"><option value="Mordekaiser"><option value="Morgana"><option value="Naafiri"><option value="Nami"><option value="Nasus"><option value="Nautilus"><option value="Neeko"><option value="Nidalee"><option value="Nilah"><option value="Nocturne"><option value="Nunu"><option value="Olaf"><option value="Orianna"><option value="Ornn"><option value="Pantheon"><option value="Poppy"><option value="Pyke"><option value="Qiyana"><option value="Quinn"><option value="Rakan"><option value="Rammus"><option value="RekSai"><option value="Rell"><option value="Renata"><option value="Renekton"><option value="Rengar"><option value="Riven"><option value="Rumble"><option value="Ryze"><option value="Samira"><option value="Sejuani"><option value="Senna"><option value="Seraphine"><option value="Sett"><option value="Shaco"><option value="Shen"><option value="Shyvana"><option value="Singed"><option value="Sion"><option value="Sivir"><option value="Skarner"><option value="Smolder"><option value="Soraka"><option value="Swain"><option value="Sylas"><option value="TahmKench"><option value="Taliyah"><option value="Talon"><option value="Taric"><option value="Teemo"><option value="Thresh"><option value="Tristana"><option value="Trundle"><option value="Tryndamere"><option value="TwistedFate"><option value="Twitch"><option value="Udyr"><option value="Urgot"><option value="Varus"><option value="Vayne"><option value="Veigar"><option value="Velkoz"><option value="Vex"><option value="Vi"><option value="Viego"><option value="Viktor"><option value="Vladimir"><option value="Volibear"><option value="Warwick"><option value="Xayah"><option value="Xerath"><option value="XinZhao"><option value="Yasuo"><option value="Yone"><option value="Yorick"><option value="Yunara"><option value="Yuumi"><option value="Zaahen"><option value="Zac"><option value="Zeri"><option value="Ziggs"><option value="Zilean"><option value="Zoe">
+  </datalist>
+  
+</form>
+
+<div class="game-list" id="game-list">
   
   
   
@@ -61,8 +82,8 @@
      href="../../match/EUN1_3939580158%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">25:28 · 17.04.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">25:28 · 17.4.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yone.png" alt="Yone"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></div>
@@ -169,8 +190,8 @@
      href="../../match/EUN1_3939555972%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">17:05 · 17.04.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">17:05 · 17.4.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Garen.png" alt="Garen"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt=""></div>
@@ -277,8 +298,8 @@
      href="../../match/EUN1_3939544086%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">26:52 · 17.04.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">26:52 · 17.4.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/JarvanIV.png" alt="JarvanIV"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt=""></div>
@@ -385,8 +406,8 @@
      href="../../match/EUN1_3939526142%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">23:28 · 17.04.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">23:28 · 17.4.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Shyvana.png" alt="Shyvana"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/PressTheAttack/PressTheAttack.png" alt=""></div>
@@ -493,8 +514,8 @@
      href="../../match/EUN1_3939502343%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">28:10 · 17.04.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">28:10 · 17.4.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yasuo.png" alt="Yasuo"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></div>
@@ -599,8 +620,8 @@
      href="../../match/EUN1_3938054498%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">33:13 · 14.04.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">33:13 · 14.4.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yasuo.png" alt="Yasuo"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></div>
@@ -703,8 +724,8 @@
      href="../../match/EUN1_3937861784%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">34:00 · 13.04.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">34:00 · 13.4.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt="Viktor"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -807,8 +828,8 @@
      href="../../match/EUN1_3930262766%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">33:49 · 27.03.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">33:49 · 27.3.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Morgana.png" alt="Morgana"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -917,8 +938,8 @@
      href="../../match/EUN1_3930237043%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">28:54 · 27.03.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">28:54 · 27.3.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Veigar.png" alt="Veigar"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -1027,8 +1048,8 @@
      href="../../match/EUN1_3913227646%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">35:12 · 20.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">35:12 · 20.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Smolder.png" alt="Smolder"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -1131,8 +1152,8 @@
      href="../../match/EUN1_3913040326%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">33:30 · 20.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">33:30 · 20.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Samira.png" alt="Samira"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt=""></div>
@@ -1235,8 +1256,8 @@
      href="../../match/EUN1_3910315136%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">46:11 · 15.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">46:11 · 15.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Jinx.png" alt="Jinx"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></div>
@@ -1339,8 +1360,8 @@
      href="../../match/EUN1_3909685151%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">17:13 · 14.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">17:13 · 14.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kaisa.png" alt="Kaisa"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></div>
@@ -1443,8 +1464,8 @@
      href="../../match/EUN1_3909442094%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">31:32 · 13.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">31:32 · 13.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Mel.png" alt="Mel"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -1549,8 +1570,8 @@
      href="../../match/EUN1_3909404380%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">40:11 · 13.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">40:11 · 13.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Veigar.png" alt="Veigar"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -1655,8 +1676,8 @@
      href="../../match/EUN1_3909364451%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">29:39 · 13.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">29:39 · 13.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Smolder.png" alt="Smolder"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -1759,8 +1780,8 @@
      href="../../match/EUN1_3909240174%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">25:50 · 13.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">25:50 · 13.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Kaisa.png" alt="Kaisa"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></div>
@@ -1863,8 +1884,8 @@
      href="../../match/EUN1_3908853978%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">47:25 · 12.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">47:25 · 12.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt="Viktor"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -1969,8 +1990,8 @@
      href="../../match/EUN1_3908357083%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">38:19 · 11.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">38:19 · 11.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viktor.png" alt="Viktor"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -2075,8 +2096,8 @@
      href="../../match/EUN1_3908185306%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">22:50 · 11.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">22:50 · 11.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Veigar.png" alt="Veigar"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -2181,8 +2202,8 @@
      href="../../match/EUN1_3908176207%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">11:58 · 11.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">11:58 · 11.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Mel.png" alt="Mel"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/DarkHarvest/DarkHarvest.png" alt=""></div>
@@ -2287,8 +2308,8 @@
      href="../../match/EUN1_3907815286%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Solo</div>
-      <div class="gc-sub">35:24 · 10.02.2026</div>
+      <div class="gc-sub">SoloQ</div>
+      <div class="gc-sub">35:24 · 10.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Veigar.png" alt="Veigar"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -2393,8 +2414,8 @@
      href="../../match/EUN1_3907211720%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">18:49 · 09.02.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">18:49 · 9.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Neeko.png" alt="Neeko"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png" alt=""></div>
@@ -2503,8 +2524,8 @@
      href="../../match/EUN1_3907187552%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl bad">Prohra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">25:17 · 09.02.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">25:17 · 9.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Volibear.png" alt="Volibear"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LethalTempo/LethalTempoTemp.png" alt=""></div>
@@ -2613,8 +2634,8 @@
      href="../../match/EUN1_3906454268%253Ffocus=BEk7qubeypR1Qhuhjvw-UhwOpWlnSSfFkEurrMtDi1FSqnTmtkxmVGiVCBbzLoiE_638LXicsG14WQ.html">
     <div class="gc-result">
       <div class="gc-wl good">Výhra</div>
-      <div class="gc-sub">Ranked Flex</div>
-      <div class="gc-sub">40:08 · 08.02.2026</div>
+      <div class="gc-sub">Flex</div>
+      <div class="gc-sub">40:08 · 8.2.2026</div>
     </div>
     <div class="champ-cell">
       <img class="avatar" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Viego.png" alt="Viego"><img class="rune" src="https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png" alt=""></div>

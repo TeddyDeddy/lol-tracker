@@ -28,6 +28,10 @@
     
     <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=ARAM&season=2024.html">ARAM</a>
     
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Swarm&season=2024.html">Swarm</a>
+    
+    <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Arena&season=2024.html">Arena</a>
+    
     <span class="pill-sep"></span>
     <a class="pill " href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582%253Fmode=Normal.html">Vše roky</a>
     
@@ -44,14 +48,14 @@
   
   
   <div class="tile">
-    <div class="tile-label">SoloQ</div>
+    <div class="tile-label">SoloQ (aktuální)</div>
     <div class="tile-value">Emerald I</div>
     <div class="tile-sub">75 LP · 21W/13L</div>
   </div>
   <div class="tile">
-    <div class="tile-label">Flex</div>
-    <div class="tile-value">Emerald IV</div>
-    <div class="tile-sub">61 LP · 63W/57L</div>
+    <div class="tile-label">Flex (aktuální)</div>
+    <div class="tile-value">Emerald III</div>
+    <div class="tile-sub">5 LP · 69W/62L</div>
   </div>
   <div class="tile">
     <div class="tile-label">Winrate (2 her)</div>
@@ -65,93 +69,200 @@
   </div>
 </div>
 
-
+<section class="panel">
+  <h2>Herní aktivita <span class="muted">podle módu · 2024</span></h2>
+  <div class="mode-counts">
+    
+    
+    <div class="mc-row">
+      <span class="mc-name">Flex</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 100.0%"></span></span>
+      <span class="bar-val">80</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">SoloQ</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 42.5%"></span></span>
+      <span class="bar-val">34</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Swarm</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 27.5%"></span></span>
+      <span class="bar-val">22</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Clash</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 25.0%"></span></span>
+      <span class="bar-val">20</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Draft</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 2.5%"></span></span>
+      <span class="bar-val">2</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">ARAM</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 2.5%"></span></span>
+      <span class="bar-val">2</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Ultimate Spellbook</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 2.5%"></span></span>
+      <span class="bar-val">2</span>
+    </div>
+    
+    <div class="mc-row">
+      <span class="mc-name">Arena</span>
+      <span class="bar-track"><span class="bar-fill" style="width: 1.25%"></span></span>
+      <span class="bar-val">1</span>
+    </div>
+    
+  </div>
+</section>
 
 <div class="two-col">
   <section class="panel">
-    <h2>Champion pool <span class="muted">podle počtu her</span></h2>
-    <div class="bars">
-      
-      
-      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Yone%253Fmode=Normal.html"
-         data-tip="Yone: 1 her · 100% WR · KDA 4.50 — klikni pro detail">
-        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yone.png" alt="">
-        <span class="bar-name">Yone</span>
-        <span class="bar-track"><span class="bar-fill" style="width: 100.0%"></span></span>
-        <span class="bar-val">1</span>
-        <span class="bar-wr good">100%</span>
-      </a>
-      
-      <a class="bar-row" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Gragas%253Fmode=Normal.html"
-         data-tip="Gragas: 1 her · 100% WR · KDA 2.25 — klikni pro detail">
-        <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Gragas.png" alt="">
-        <span class="bar-name">Gragas</span>
-        <span class="bar-track"><span class="bar-fill" style="width: 100.0%"></span></span>
-        <span class="bar-val">1</span>
-        <span class="bar-wr good">100%</span>
-      </a>
-      
-    </div>
+    <h2>Champion pool <span class="muted">klikni na hlavičku pro řazení</span></h2>
+    <input type="text" class="champ-search" data-target="champ-table" data-collapse="10"
+           placeholder="Hledat championa…">
+    <table class="games sortable" id="champ-table">
+      <thead>
+        <tr>
+          <th data-sort="name">Champion</th>
+          <th data-sort="games" class="num">Her</th>
+          <th data-sort="wr" class="num">WR</th>
+          <th data-sort="kda" class="num">KDA</th>
+          <th data-sort="kills" class="num">Kills</th>
+          <th data-sort="deaths" class="num">Deaths</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr data-name="Yone" data-games="1"
+            data-wr="100.0"
+            data-kda="4.5"
+            data-kills="4.0"
+            data-deaths="2.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Yone%253Fmode=Normal.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Yone.png" alt="">
+              Yone
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">4.50</td>
+          <td class="num">4.0</td>
+          <td class="num">2.0</td>
+        </tr>
+        
+        <tr data-name="Gragas" data-games="1"
+            data-wr="100.0"
+            data-kda="2.25"
+            data-kills="7.0"
+            data-deaths="4.0">
+          <td class="champ-cell">
+            <a class="tracked-link" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/champ/Gragas%253Fmode=Normal.html">
+              <img class="avatar sm" src="https://ddragon.leagueoflegends.com/cdn/16.13.1/img/champion/Gragas.png" alt="">
+              Gragas
+            </a>
+          </td>
+          <td class="num">1</td>
+          <td class="num good">100%</td>
+          <td class="num">2.25</td>
+          <td class="num">7.0</td>
+          <td class="num">4.0</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <button type="button" class="show-more" data-target="champ-table" hidden></button>
   </section>
 
   <section class="panel">
-    <h2>Rekordy <span class="muted">normal</span></h2>
+    <h2>Rekordy <span class="muted">normal</span>
+      <a class="muted all-games-link" href="Teddy%23%25E6%259A%2597%25E3%2581%2584%25E9%25AD%2582/records%253Fmode=Normal&season=2024.html">Všechny rekordy →</a></h2>
     <div class="records">
+      
       
       <a class="record record-link" href="../match/EUN1_3683710451%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
         <div class="tile-label">Nejvíc killů</div>
-        <div class="record-value">7</div>
-        <div class="tile-sub">Gragas · 23.10.2024 ·
+        <div class="record-value">
+          7
+        </div>
+        <div class="tile-sub">Gragas · 7/4/2 · 23.10.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3683710451%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
         <div class="tile-label">Nejvíc smrtí</div>
-        <div class="record-value">4</div>
-        <div class="tile-sub">Gragas · 23.10.2024 ·
+        <div class="record-value">
+          4
+        </div>
+        <div class="tile-sub">Gragas · 7/4/2 · 23.10.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3683692984%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
         <div class="tile-label">Nejvíc asistencí</div>
-        <div class="record-value">5</div>
-        <div class="tile-sub">Yone · 23.10.2024 ·
+        <div class="record-value">
+          5
+        </div>
+        <div class="tile-sub">Yone · 4/2/5 · 23.10.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3683692984%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
         <div class="tile-label">Nejvíc CS</div>
-        <div class="record-value">222</div>
-        <div class="tile-sub">Yone · 23.10.2024 ·
+        <div class="record-value">
+          222
+        </div>
+        <div class="tile-sub">Yone · 4/2/5 · 23.10.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3683710451%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
         <div class="tile-label">Nejvíc dmg do championů</div>
-        <div class="record-value">19 957</div>
-        <div class="tile-sub">Gragas · 23.10.2024 ·
+        <div class="record-value">
+          19 957
+        </div>
+        <div class="tile-sub">Gragas · 7/4/2 · 23.10.2024 ·
           <span class="good">W</span></div>
       </a>
+      
       
       <a class="record record-link" href="../match/EUN1_3683710451%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
         <div class="tile-label">Nejvíc goldů</div>
-        <div class="record-value">11 647</div>
-        <div class="tile-sub">Gragas · 23.10.2024 ·
+        <div class="record-value">
+          11 647
+        </div>
+        <div class="tile-sub">Gragas · 7/4/2 · 23.10.2024 ·
           <span class="good">W</span></div>
       </a>
       
+      
       <a class="record record-link" href="../match/EUN1_3683710451%253Ffocus=KwMya6aKUEKSwBgvJ1kcffJiIyq1-Q3oUo4v-UX4sJf8uaurxpF-z4CD_hzisg3jRWfDeyIEW3PlDQ.html">
         <div class="tile-label">Nejdelší hra</div>
-        <div class="record-value">29:05</div>
-        <div class="tile-sub">Gragas · 23.10.2024 ·
+        <div class="record-value">
+          29:05
+          
+        </div>
+        <div class="tile-sub">Gragas · 7/4/2 · 23.10.2024 ·
           <span class="good">W</span></div>
       </a>
       
     </div>
   </section>
 </div>
-
-
 
 <section class="panel">
   <h2>Posledních 2 her

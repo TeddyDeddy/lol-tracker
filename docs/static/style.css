@@ -1,4 +1,7 @@
-/* Dark-only téma — tokeny z validované dataviz palety + zlatý brand akcent. */
+/**
+ * @file Dark-only theme: tokens from the validated dataviz palette plus a
+ *       gold brand accent.
+ */
 :root {
   --page: #0d0d0d;
   --surface: #1a1a19;
@@ -42,7 +45,7 @@ a { color: inherit; text-decoration: none; }
 .nav-link.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
 .live-summary { font-size: 13px; color: var(--muted); }
 
-/* ---------- karty hráčů ---------- */
+/** @brief Player cards (home page). */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
 .card {
   background: linear-gradient(180deg, #1d1d1b, #171716);
@@ -50,10 +53,11 @@ a { color: inherit; text-decoration: none; }
   border-radius: 12px; padding: 14px; display: flex; gap: 12px;
   transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
-a.card:hover {
+a.card:hover, .card-click:hover {
   border-color: var(--accent); transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
+.card-click { cursor: pointer; }
 .card-title { color: var(--ink); font-weight: 600; display: flex; gap: 8px; align-items: center; }
 .card-sub { font-size: 13px; color: var(--muted); margin: 2px 0 8px; }
 .badge {
@@ -71,7 +75,7 @@ a.card:hover {
 .tick.l { background: var(--bad); opacity: 0.55; height: 10px; align-self: flex-end; }
 .form-label { margin-left: 8px; font-size: 12px; color: var(--muted); }
 
-/* ---------- profil ---------- */
+/** @brief Player profile page. */
 .player-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 18px 0; }
 .player-head h1 { margin: 0; }
 .modes { margin-left: auto; display: flex; gap: 6px; }
@@ -99,7 +103,7 @@ a.card:hover {
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 820px) { .two-col { grid-template-columns: 1fr; } }
 
-/* ---------- bar chart (champion pool) ---------- */
+/** @brief Bar chart (champion pool). */
 .bars { display: flex; flex-direction: column; gap: 8px; }
 .bar-row { display: grid; grid-template-columns: 26px 92px 1fr 34px 44px; gap: 10px; align-items: center; }
 .bar-name { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -111,11 +115,18 @@ a.card:hover {
 .bar-val { font-size: 13px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
 .bar-wr { font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
 
-/* ---------- rekordy ---------- */
+/** @brief Records section. */
 .records { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.records-full { grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.record-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
 .record-value { font-size: 20px; font-weight: 600; color: var(--ink); }
+.record-card .tile-label { margin-bottom: 8px; font-size: 16px; font-weight: 600; color: var(--ink); }
+.record-card table.games { font-size: 13px; }
+.record-card table.games thead th { position: static; }
+.record-table-val { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+.mode-cell { white-space: nowrap; }
 
-/* ---------- tabulka her ---------- */
+/** @brief Games table. */
 table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .games th {
   text-align: left; font-size: 12px; font-weight: 500; color: var(--muted);
@@ -129,7 +140,7 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .games tr.row-w td:first-child { box-shadow: inset 3px 0 0 var(--good); }
 .games tr.row-l td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
 
-/* ---------- matchupy + itemy/runy ---------- */
+/** @brief Matchups + items/runes. */
 .matchup { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--grid); }
 .matchup:last-child { border-bottom: 0; }
 .mu-name { flex: 1; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -139,7 +150,7 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .champ-cell { white-space: nowrap; position: relative; }
 .rune { width: 16px; height: 16px; border-radius: 50%; background: #0d0d0d; vertical-align: bottom; margin-left: -10px; border: 1px solid var(--border); }
 
-/* ---------- sezóny, prokliky, detail zápasu ---------- */
+/** @brief Seasons, click-throughs, match detail. */
 .pill-sep { width: 1px; height: 20px; background: var(--grid); margin: 0 4px; align-self: center; }
 .record-link { display: block; }
 .record-link:hover .record-value { color: var(--accent); }
@@ -152,8 +163,35 @@ table.games { width: 100%; border-collapse: collapse; font-size: 14px; }
 .dmg-cell { min-width: 130px; }
 .dmg-bar { display: inline-block; width: 60px; height: 8px; margin-right: 6px; vertical-align: middle; background: var(--grid); border-radius: 4px; overflow: hidden; }
 .dmg-bar .bar-fill { border-radius: 0; }
+.dmg-bar.taken .bar-fill { background: var(--bad); }
 
-/* ---------- detail championa: runy + build order ---------- */
+/** @brief Match table: loadout (spells+runes), badges, best-in-game highlighting. */
+.match-table .champ-cell { display: flex; align-items: center; gap: 4px; }
+.loadout { display: flex; gap: 2px; }
+.loadout-col { display: flex; flex-direction: column; gap: 2px; }
+.loadout-icon { width: 16px; height: 16px; border-radius: 4px; background: #0d0d0d; border: 1px solid var(--border); }
+.loadout-icon.round { border-radius: 50%; }
+.badge-row { margin-top: 2px; }
+.badge-tag {
+  display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px;
+  border-radius: 4px; margin-right: 3px; text-transform: uppercase;
+}
+.badge-tag.fb { background: rgba(200, 170, 110, 0.18); color: var(--accent); }
+.badge-tag.mk { background: rgba(12, 163, 12, 0.18); color: var(--good); }
+.stat-sub { font-size: 11px; color: var(--muted); }
+.stat-best { color: var(--accent); font-weight: 700; }
+.obj-icon { width: 15px; height: 15px; vertical-align: middle; margin: 0 2px 0 8px; opacity: 0.85; }
+
+/** @brief Arena (Cherry): subteam leaderboard. */
+.arena-place { font-size: 15px; font-weight: 600; color: var(--ink); }
+.team-panel.team-win .arena-place { color: var(--accent); }
+.augment { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); margin-right: 2px; vertical-align: middle; background: #0d0d0d; }
+.augment-unknown {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--muted);
+}
+
+/** @brief Champion detail: runes + build order. */
 a.bar-row:hover .bar-name { color: var(--accent); }
 .fill-good { background: var(--good) !important; }
 .fill-bad { background: var(--bad) !important; }
@@ -169,16 +207,70 @@ a.bar-row:hover .bar-name { color: var(--accent); }
 .build-order:last-child { border-bottom: 0; }
 .build-item { width: 30px; height: 30px; }
 
-/* ---------- line chart + tooltip ---------- */
-#wr-chart svg { display: block; width: 100%; height: 220px; }
+/** @brief Game activity: mode breakdown (data-driven, see stats.queue_counts). */
+.mode-counts { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.mc-row { display: grid; grid-template-columns: 110px 1fr 34px; gap: 10px; align-items: center; }
+.mc-name { font-size: 13px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/** @brief Sortable tables (champion pool). */
+table.sortable th[data-sort] { cursor: pointer; user-select: none; }
+table.sortable th[data-sort]:hover { color: var(--ink); }
+table.sortable th.sort-asc::after { content: " \25B2"; font-size: 9px; }
+table.sortable th.sort-desc::after { content: " \25BC"; font-size: 9px; }
+
+/** @brief Search field (champion search). */
+.champ-search {
+  display: block; width: 100%; margin-bottom: 10px; padding: 8px 12px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--ink); font: inherit;
+}
+.champ-search::placeholder { color: var(--muted); }
+.champ-search:focus { outline: none; border-color: var(--accent); }
+.champ-search.invalid { border-color: var(--bad); }
+.champ-search-form { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.champ-search-form .champ-search { margin-bottom: 0; flex: 1; }
+
+/** @brief "Show all" toggle under a capped table (champion pool). */
+.show-more {
+  display: block; margin: 8px auto 0; padding: 6px 14px; font: inherit; font-size: 13px;
+  background: none; border: 1px solid var(--border); border-radius: 20px;
+  color: var(--muted); cursor: pointer;
+}
+.show-more:hover { color: var(--ink); border-color: var(--accent); }
+
+/** @brief Shared tooltip. */
 .tooltip {
   position: fixed; z-index: 10; pointer-events: none;
   background: #0d0d0d; border: 1px solid var(--border); border-radius: 8px;
-  padding: 6px 10px; font-size: 13px; color: var(--ink);
+  padding: 10px 12px; font-size: 13px; color: var(--ink);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  max-width: 360px;
 }
 
-/* ---------- seznam her (rewind styl) ---------- */
+/* buff/nerf/adjust štítek v tabulce — celý (ne jen ⓘ) spouští tooltip */
+.kind-badge { display: inline-flex; align-items: center; cursor: help; }
+
+/* patch-note tooltip (buff/nerf) — mirrors Riot's own patch notes layout:
+   italic dev commentary, then one skill icon + name + stat list per ability,
+   each ability separated by a thin divider (see leagueoflegends.com/.../patch-notes). */
+.pn-commentary {
+  margin: 0 0 10px; padding: 0 0 10px; border-bottom: 1px solid var(--border);
+  color: var(--muted); font-size: 12px; font-style: italic; line-height: 1.45;
+}
+.pn-ability {
+  display: flex; align-items: center; gap: 10px; margin-top: 10px;
+  padding-top: 10px; border-top: 1px solid var(--border);
+}
+.pn-ability:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.pn-icon { width: 32px; height: 32px; border-radius: 6px; flex: none; border: 1px solid var(--border); }
+.pn-ability b { font-size: 13px; font-weight: 700; color: var(--ink); }
+.pn-stats { list-style: none; margin: 6px 0 0; padding: 0; font-size: 12px; color: var(--muted); }
+.pn-stats:first-child { margin-top: 6px; }
+.pn-stats li { margin: 3px 0; padding-left: 12px; position: relative; }
+.pn-stats li::before { content: "•"; position: absolute; left: 0; color: var(--accent); }
+.pn-stats strong { color: var(--ink); }
+
+/** @brief Game list (rewind.lol-inspired layout). */
 .all-games-link { float: right; font-size: 14px; font-weight: 400; }
 .all-games-link:hover { color: var(--accent); }
 .game-list { display: flex; flex-direction: column; gap: 8px; }
@@ -188,6 +280,7 @@ a.bar-row:hover .bar-name { color: var(--accent); }
   border-radius: 10px; color: inherit; text-decoration: none;
 }
 .game-card:hover { border-color: var(--accent); }
+.game-card[hidden] { display: none; }
 .game-card.row-w { box-shadow: inset 4px 0 0 var(--good); }
 .game-card.row-l { box-shadow: inset 4px 0 0 var(--bad); }
 .gc-result { width: 120px; flex-shrink: 0; }
@@ -206,7 +299,7 @@ a.bar-row:hover .bar-name { color: var(--accent); }
 .pager { display: flex; align-items: center; gap: 14px; justify-content: center; margin: 18px 0; }
 @media (max-width: 900px) { .gc-roster { display: none; } }
 
-/* ---------- pro scéna ---------- */
+/** @brief Pro scene (Leaguepedia-sourced pages). */
 .nav-link { color: var(--ink-2); text-decoration: none; margin-left: 18px; }
 .nav-link:hover { color: var(--accent); }
 .footer { padding: 24px 32px; font-size: 12px; border-top: 1px solid var(--grid); margin-top: 32px; }
@@ -215,12 +308,14 @@ a.bar-row:hover .bar-name { color: var(--accent); }
 /* bracket — styl lolesports Pick'Ems: tmavé karty, skóre v odděleném sloupci,
    vítězný řádek zeleně orámovaný, chip hlavičky kol, spojovací stuby v playoff */
 .bracket { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 8px; }
-.bracket-round { display: flex; flex-direction: column; gap: 14px; justify-content: space-around; min-width: 220px; }
+.bracket-round { display: flex; flex-direction: column; min-width: 220px; }
 .round-chip {
+  flex: 0 0 auto; margin-bottom: 14px;
   background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
   padding: 7px 10px; text-align: center; font-size: 12px; font-weight: 600;
   color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px;
 }
+.bracket-round-body { display: flex; flex-direction: column; gap: 14px; justify-content: space-around; flex: 1; }
 .bracket-cell { position: relative; }
 .bm-when { font-size: 11px; color: var(--muted); margin: 0 0 3px 2px; }
 .bracket-match {
@@ -247,11 +342,26 @@ a.bar-row:hover .bar-name { color: var(--accent); }
 .bm-win .bm-team, .bm-win .bm-score { color: var(--good); font-weight: 700; }
 .bm-win .bm-logo { color: var(--good); }
 .bracket.playoffs { position: relative; overflow: visible; width: 100%; }
-.bracket.playoffs .bracket-round { flex: 1; min-width: 150px; }
+.bracket.playoffs .bracket-round { flex: 1; min-width: 190px; }
 .bracket-svg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .bracket .bracket-cell, .bracket .round-chip { position: relative; z-index: 1; }
 
-/* základní část: rozklikávací týdny místo horizontálního scrollu */
+/* double-elim: Horní pavouk / Dolní pavouk / Grand finále jako 3 oddělené sekce */
+.bracket-section + .bracket-section { margin-top: 28px; }
+.bracket-section-title {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--muted); margin: 0 0 12px; padding-left: 10px;
+  border-left: 3px solid var(--accent);
+}
+
+/* panel roztažený přes celou šířku okna (uniká z max-width: 1080px u main) */
+.panel-fullbleed {
+  width: 100vw; position: relative; left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw;
+  padding-left: max(20px, calc(50vw - 500px)); padding-right: max(20px, calc(50vw - 500px));
+}
+
+/* základní část: rozklikávací týdny + odrážkový seznam sérií (žádný horizontální scroll) */
 .week-block { margin: 10px 0; }
 .week-block summary {
   cursor: pointer; background: var(--surface); border: 1px solid var(--border);
@@ -262,16 +372,41 @@ a.bar-row:hover .bar-name { color: var(--accent); }
 .week-block summary::before { content: "▸"; transition: transform 0.15s; }
 .week-block[open] summary::before { transform: rotate(90deg); }
 .week-block summary:hover { border-color: var(--accent); }
-.week-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 12px; padding: 12px 2px 4px;
+.results-list { list-style: none; margin: 10px 0 0; padding: 0; }
+.results-list li { border-bottom: 1px solid var(--grid); }
+.results-list li:last-child { border-bottom: 0; }
+.results-list a {
+  display: flex; align-items: center; gap: 12px; padding: 8px 4px;
+  color: inherit; text-decoration: none;
 }
+.results-list a:hover { background: rgba(255, 255, 255, 0.03); }
+.rl-date { flex: 0 0 90px; font-size: 12px; color: var(--muted); }
+.rl-team { flex: 1; font-size: 14px; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rl-team.rl-team2 { text-align: left; }
+.rl-win { color: var(--good); font-weight: 700; }
+.rl-score { flex: 0 0 52px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.rl-bo { flex: 0 0 44px; text-align: right; font-size: 12px; }
+
+/** @brief Tournament: phase tabs (group stage / playoffs / play-in / ...). */
+.phase-tabs { display: flex; gap: 8px; margin: 4px 0 18px; }
+.phase-tab {
+  padding: 7px 16px; border-radius: 20px; font-size: 13px; cursor: pointer;
+  border: 1px solid var(--border); background: none; color: var(--ink-2);
+}
+.phase-tab.active {
+  background: var(--accent); color: #0d0d0d; border-color: var(--accent);
+  font-weight: 600; box-shadow: 0 2px 10px rgba(200, 170, 110, 0.25);
+}
+.phase-tab:not(.active):hover { border-color: var(--accent); }
+.sibling-link { margin-left: auto; }
+.standings-table td, .standings-table th { text-align: right; }
+.standings-table td:nth-child(2), .standings-table th:nth-child(2) { text-align: left; }
 .draft { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
 .draft.team-win { border-color: var(--good); }
 .draft-row { display: flex; align-items: center; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
 .avatar.banned { filter: grayscale(1) brightness(0.6); position: relative; }
 
-/* ---------- vizuální upgrade (empty stavy, pro polish, rank tinty) ---------- */
+/** @brief Visual polish (empty states, pro-scene refinements, rank tints). */
 .empty { text-align: center; padding: 48px 20px; color: var(--muted); }
 .empty-icon { font-size: 40px; margin-bottom: 8px; }
 .empty code { background: var(--surface); border: 1px solid var(--border);
