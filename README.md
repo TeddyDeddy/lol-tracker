@@ -28,6 +28,14 @@ bash scripts/export_static.sh        # regenerates docs/ (starts the web server 
 git add -A && git commit -m "update data" && git push
 ```
 
+## API docs
+
+Code is documented with Doxygen-style comments. Generate HTML locally:
+
+```bash
+doxygen Doxyfile   # output at apidocs/html/index.html
+```
+
 ## Attribution
 
 - Match data: [Riot Games API](https://developer.riotgames.com). lol-tracker isn't endorsed by Riot Games.
