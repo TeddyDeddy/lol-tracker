@@ -734,14 +734,24 @@ async def pro_meta(request: Request, op: str):
 
     @param request Current FastAPI request.
     @param op Event tournament's Leaguepedia OverviewPage.
-    @return Rendered `pro_meta.html`.
-    @throws HTTPException 404 if the event isn't in the DB or has no games.
+    @return Rendered `pro_meta.html`, or an empty-state page if the tournament
+            exists but has no ingested games yet (static export needs 200,
+            or `wget` won't mirror the link).
+    @throws HTTPException 404 if the tournament isn't in the DB at all.
     """
     c = con()
+    t = c.execute("SELECT 1 FROM pro_tournaments WHERE overview_page = ?", (op,)).fetchone()
     shift = prostats.event_meta_shift(c, op)
     c.close()
+    if not t:
+        raise HTTPException(404, f"Turnaj {op} není v DB")
     if not shift:
-        raise HTTPException(404, f"Event {op} není v DB (nebo nemá hry)")
+        return templates.TemplateResponse(request, "empty.html", {
+            "riot_id": op,
+            "message": "Hry tohoto turnaje zatím nejsou stažené.",
+            "back_href": f"/pro/t/{quote(op, safe='')}",
+            "back_label": "← zpět na turnaj",
+        })
     return templates.TemplateResponse(request, "pro_meta.html", {
         **shift, "op": op, **_pro_common()})
 
